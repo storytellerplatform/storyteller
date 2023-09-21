@@ -4,6 +4,7 @@ import Root from "../root";
 import ErrorPage from './../pages/Error';
 import Home from './../pages/Home';
 import LoadingPage from "../pages/Loading";
+import Music from './../pages/music/index';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/music",
+        element: <Music />,
       },
       {
         path: "/collections",
