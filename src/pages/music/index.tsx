@@ -1,4 +1,5 @@
 import React from 'react'
+import EmotionButton from '../../components/EmotionButton'
 
 const Music = () => {
   return (
@@ -32,12 +33,29 @@ const Music = () => {
         {/* 右 */}
         <div className='w-1/2'>
           {/* 主旨顯示 */}
-          <h1 className='mb-4 text-2xl font-extrabold text-gray-900'>文章主旨</h1>
-          <textarea className='max-h-32 w-full p-2 px-4 border border-gray-400 rounded-lg overflow-auto focus:border-orange-300 outline-0' placeholder="文章主旨..." value={"a\n\n\n\n\nbcde"}>
+          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>文章主旨</h3>
+          <textarea
+            className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg  focus:border-orange-300 outline-0'
+            spellCheck={false}
+            placeholder="文章主旨..."
+            value={""}
+            readOnly
+          >
           </textarea>
 
           {/* 感情顯示 */}
+          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>感情</h3>
+          <div className=''>
+            <EmotionButton onClick={() => { }} color='yellow' label='開心' />
+
+
+            {/* <button type="button"
+              className="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-400 focus:outline-none font-bold rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2">
+              開心
+            </button> */}
+          </div>
           {/* 選取其他感情 */}
+          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>添加更多感受</h3>
           {/* 產生音樂按鈕 */}
         </div>
       </div>
