@@ -46,13 +46,20 @@ const Music = () => {
           {/* 感情顯示 */}
           <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>感情</h3>
           <div className=''>
-            <EmotionButton onClick={() => { }} color='yellow' label='開心' />
+            <EmotionButton onClick={() => { }} label='開心' />
+            <EmotionButton onClick={() => { }} label='悲傷' />
+            <EmotionButton onClick={() => { }} label='浪漫' />
+            <EmotionButton onClick={() => { }} label='憤怒' />
 
-
-            {/* <button type="button"
-              className="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-400 focus:outline-none font-bold rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2">
+            {/* test */}
+            {/* <button
+              className={`text-white bg-gradient-to-br from-orange-400 via-orange-400 to-white hover:text-white border border-orange-400 hover:bg-gradient-to-br 
+              hover:from-orange-300 hover:via-orange-300 hover:to-white
+               focus:outline-none font-bold rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2`}
+            >
               開心
             </button> */}
+
           </div>
           {/* 選取其他感情 */}
           <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>添加更多感受</h3>
