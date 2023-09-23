@@ -33,6 +33,7 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal }) => {
               <EmotionButton label='悲傷' />
               <EmotionButton label='浪漫' />
               <EmotionButton label='憤怒' />
+              <EmotionButton color='blue' label='緊張' />
             </div>
           </div>
         </div >
