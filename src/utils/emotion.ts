@@ -1,5 +1,6 @@
-export const emotions = ['開心', '悲傷', '浪漫', '憤怒', '緊張'];
+import { EmotionProps } from "../types/components";
 
+export const allEmotions: Array<EmotionProps> = ['開心', '悲傷', '浪漫', '憤怒', '緊張'];
 
 export const emotionStyles = {
   'red': ['from-red-400 via-red-400 border-red-400 hover:bg-red-300 hover:from-red-300 hover:via-red-300'],

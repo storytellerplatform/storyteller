@@ -1,12 +1,16 @@
 import React from 'react'
 import EmotionButton from '../../components/EmotionButton';
+import { EmotionProps } from '../../types/components';
+import { allEmotions } from '../../utils/emotion';
 
 interface MusicModalProps {
   showModal: boolean,
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  emotions: Array<EmotionProps>;
+  setEmotions: React.Dispatch<React.SetStateAction<Array<EmotionProps>>>;
 }
 
-const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal }) => {
+const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal, emotions, setEmotions }) => {
   const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as Element).className.match('modal-background')) setShowModal(false);
   };
@@ -29,11 +33,17 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal }) => {
 
             {/* 情緒列表 */}
             <div className='px-12 pb-4'>
-              <EmotionButton label='開心' />
-              <EmotionButton label='悲傷' />
-              <EmotionButton label='浪漫' />
-              <EmotionButton label='憤怒' />
-              <EmotionButton color='blue' label='緊張' />
+
+              {allEmotions.map((emotion: EmotionProps, index: React.Key | null | undefined) => (
+                <EmotionButton
+                  key={index}
+                  label={emotion}
+                  selected={emotions.includes(emotion)}
+                  disabled={emotions.includes(emotion)}
+                  onClick={() => setEmotions(preEmotions => [...preEmotions, emotion])}
+                />
+              ))}
+
             </div>
           </div>
         </div >

@@ -1,9 +1,11 @@
 import React from 'react'
 import EmotionButton from '../../components/EmotionButton'
 import MusicModal from './MusicModal';
+import { EmotionProps } from '../../types/components';
 
 const Music = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
+  const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
 
   return (
     <>
@@ -33,7 +35,7 @@ const Music = () => {
 
         </div>
 
-        {/* 右 */}
+        {/* 右區 */}
         <div className='w-1/2 flex flex-col'>
           <h1 className='mb-4 text-4xl font-extrabold text-black self-center'>深度解析</h1>
           {/* 主旨顯示 */}
@@ -50,12 +52,15 @@ const Music = () => {
           {/* 感情顯示 */}
           <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>情感評價</h3>
           <div className='flex flex-row'>
-            <EmotionButton onClick={() => { }} label='開心' />
-            <EmotionButton onClick={() => { }} label='悲傷' />
-            <EmotionButton onClick={() => { }} label='浪漫' />
-            <EmotionButton onClick={() => { }} label='憤怒' />
 
-
+            {/* 感情 */}
+            {emotions.map((selectEmotion: EmotionProps, index: React.Key | null | undefined) => (
+              <EmotionButton
+                key={index}
+                label={selectEmotion}
+                onClick={() => setEmotions(preEmotions => preEmotions.filter(emotion => emotion !== selectEmotion))}
+              />
+            ))}
 
             {/* test */}
             {/* <button
@@ -76,7 +81,12 @@ const Music = () => {
             </button>
 
             {/* 選取其他感情 */}
-            <MusicModal showModal={showModal} setShowModal={setShowModal} />
+            <MusicModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              emotions={emotions}
+              setEmotions={setEmotions}
+            />
 
           </div>
         </div>
