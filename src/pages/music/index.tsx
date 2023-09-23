@@ -2,10 +2,12 @@ import React from 'react'
 import EmotionButton from '../../components/EmotionButton'
 import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
+import classNames from 'classnames';
 
 const Music = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
+  const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
 
   return (
     <>
@@ -41,7 +43,7 @@ const Music = () => {
           {/* 主旨顯示 */}
           <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>主旨摘要</h3>
           <textarea
-            className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg  focus:border-orange-300 outline-0'
+            className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg  focus:border-orange-300 focus:drop-shadow-lg outline-0'
             spellCheck={false}
             placeholder="文章主旨..."
             value={""}
@@ -51,7 +53,7 @@ const Music = () => {
 
           {/* 感情顯示 */}
           <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>情感評價</h3>
-          <div className='flex flex-row'>
+          <div className='flex flex-row mb-10'>
 
             {/* 感情 */}
             {emotions.map((selectEmotion: EmotionProps, index: React.Key | null | undefined) => (
@@ -89,9 +91,24 @@ const Music = () => {
             />
 
           </div>
+
+          {/* 產生音樂按紐 */}
+          <button
+            type="button"
+            disabled={!isAllSet}
+            className={classNames(`flex items-center self-start to-red-300 text-white px-5 py-2.5 rounded-lg gap-2 hover:bg-gradient-to-br hover:from-orange-100 hover:via-orange-300 hover:to-red-300`,
+              { 'bg-gradient-to-br from-orange-100 via-orange-300 to-red-300 animate-none': !isAllSet },
+              { 'bg-gradient-to-br from-orange-200 via-orange-400 animate-bounce': isAllSet })}
+          >
+            <i className="fa-solid fa-arrow-right"></i>
+            開始創作音樂
+          </button>
         </div>
       </div>
       {/* 產生音樂列表 */}
+      <div className='flex'>
+        <h1 className=''> 音樂列表 </h1>
+      </div>
     </>
   )
 }

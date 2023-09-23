@@ -633,6 +633,18 @@ video {
   margin-top: 3rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .block {
   display: block;
 }
@@ -685,6 +697,48 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+@-webkit-keyframes bounce {
+  0%, 100% {
+    -webkit-transform: translateY(-25%);
+            transform: translateY(-25%);
+    -webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);
+            animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    -webkit-transform: none;
+            transform: none;
+    -webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);
+            animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    -webkit-transform: translateY(-25%);
+            transform: translateY(-25%);
+    -webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);
+            animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    -webkit-transform: none;
+            transform: none;
+    -webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);
+            animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  -webkit-animation: bounce 1s infinite;
+          animation: bounce 1s infinite;
+}
+
+.animate-none {
+  -webkit-animation: none;
+          animation: none;
 }
 
 .select-none {
@@ -886,6 +940,18 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-red-200 {
+  --tw-gradient-from: #fecaca var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(254 202 202 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-orange-300 {
+  --tw-gradient-from: #fdba74 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(253 186 116 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-blue-400 {
   --tw-gradient-to: rgb(96 165 250 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #60a5fa var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -921,6 +987,11 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), #facc15 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
+.via-red-300 {
+  --tw-gradient-to: rgb(252 165 165 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #fca5a5 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
 .to-red-200 {
   --tw-gradient-to: #fecaca var(--tw-gradient-to-position);
 }
@@ -939,6 +1010,14 @@ video {
 
 .to-yellow-200 {
   --tw-gradient-to: #fef08a var(--tw-gradient-to-position);
+}
+
+.to-rose-200 {
+  --tw-gradient-to: #fecdd3 var(--tw-gradient-to-position);
+}
+
+.to-red-300 {
+  --tw-gradient-to: #fca5a5 var(--tw-gradient-to-position);
 }
 
 .object-contain {
@@ -1223,6 +1302,12 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.hover\:from-orange-100:hover {
+  --tw-gradient-from: #ffedd5 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 237 213 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .hover\:via-blue-300:hover {
   --tw-gradient-to: rgb(147 197 253 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #93c5fd var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -1253,8 +1338,26 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), #fde047 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
+.hover\:via-orange-100:hover {
+  --tw-gradient-to: rgb(255 237 213 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #ffedd5 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.hover\:via-orange-200:hover {
+  --tw-gradient-to: rgb(254 215 170 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #fed7aa var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
 .hover\:to-white:hover {
   --tw-gradient-to: #fff var(--tw-gradient-to-position);
+}
+
+.hover\:to-red-200:hover {
+  --tw-gradient-to: #fecaca var(--tw-gradient-to-position);
+}
+
+.hover\:to-red-300:hover {
+  --tw-gradient-to: #fca5a5 var(--tw-gradient-to-position);
 }
 
 .hover\:text-orange-300:hover {
@@ -1277,6 +1380,25 @@ video {
   border-color: rgb(253 186 116 / var(--tw-border-opacity));
 }
 
+.focus\:bg-gradient-to-br:focus {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+.focus\:from-orange-100:focus {
+  --tw-gradient-from: #ffedd5 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 237 213 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.focus\:via-orange-100:focus {
+  --tw-gradient-to: rgb(255 237 213 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #ffedd5 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.focus\:to-red-200:focus {
+  --tw-gradient-to: #fecaca var(--tw-gradient-to-position);
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1297,6 +1419,18 @@ video {
 .focus\:ring-orange-200:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(254 215 170 / var(--tw-ring-opacity));
+}
+
+.focus\:drop-shadow-lg:focus {
+  --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+          filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.focus\:drop-shadow-md:focus {
+  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+          filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .focus-visible\:outline-0:focus-visible {
