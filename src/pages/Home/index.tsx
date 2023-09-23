@@ -35,7 +35,7 @@ const Home = () => {
 
           {/* 立即試用按鈕 */}
           <div className='flex justify-center my-12'>
-            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-xl font-bold text-gray-900 rounded-lg group bg-gradient-to-br from-yellow-200 to-red-200 focus:ring-4 focus:outline-none focus:ring-0" type='button'>
+            <button className="relative inline-flex items-center justify-center mb-2 mr-2 overflow-hidden text-xl font-bold text-gray-900 rounded-lg group bg-gradient-to-br from-yellow-200 to-red-200 focus:outline-none focus:ring-0" type='button'>
 
               <span className="relative px-7 py-3 transition-all ease-in duration-300 bg-white  rounded-md group-hover:bg-opacity-0">
                 <Link to="/music">

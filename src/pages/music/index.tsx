@@ -29,7 +29,12 @@ const Music = () => {
           </textarea>
 
           {/* 文章分析按鈕 */}
-          <button type="submit" className="relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200">
+          <button
+            // todo: 在分析完文章後才 setIsAllSet(true)
+            onClick={() => setIsAllSet(true)}
+            type="submit"
+            className="relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200"
+          >
             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 group-hover:text-white">
               分析
             </span>
@@ -39,7 +44,7 @@ const Music = () => {
 
         {/* 右區 */}
         <div className='w-1/2 flex flex-col'>
-          <h1 className='mb-4 text-4xl font-extrabold text-black self-center'>深度解析</h1>
+          <h1 className='mb-2 text-3xl font-extrabold text-black self-center'>深度解析</h1>
           {/* 主旨顯示 */}
           <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>主旨摘要</h3>
           <textarea
@@ -53,7 +58,7 @@ const Music = () => {
 
           {/* 感情顯示 */}
           <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>情感評價</h3>
-          <div className='flex flex-row mb-10'>
+          <div className='flex flex-row'>
 
             {/* 感情 */}
             {emotions.map((selectEmotion: EmotionProps, index: React.Key | null | undefined) => (
@@ -76,7 +81,8 @@ const Music = () => {
             {/* 產生音樂按鈕 */}
             <button
               type='button'
-              className='w-10 h-10 self-center flex items-center justify-center text-lg font-bold text-orange-400 border-2 border-orange-400 rounded-full hover:border-orange-300 hover:text-orange-300'
+              className={classNames(`w-10 h-10 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
+                { 'my-1': emotions })}
               onClick={() => setShowModal(true)}
             >
               <i className="fa-solid fa-plus"></i>
@@ -96,7 +102,7 @@ const Music = () => {
           <button
             type="button"
             disabled={!isAllSet}
-            className={classNames(`flex items-center self-start to-red-300 text-white px-5 py-2.5 rounded-lg gap-2 hover:bg-gradient-to-br hover:from-orange-100 hover:via-orange-300 hover:to-red-300`,
+            className={classNames(`flex items-center self-start mt-10 to-red-300 text-white px-5 py-2.5 rounded-lg gap-2 hover:bg-gradient-to-br hover:from-orange-100 hover:via-orange-300 hover:to-red-300`,
               { 'bg-gradient-to-br from-orange-100 via-orange-300 to-red-300 animate-none': !isAllSet },
               { 'bg-gradient-to-br from-orange-200 via-orange-400 animate-bounce': isAllSet })}
           >
@@ -104,11 +110,11 @@ const Music = () => {
             開始創作音樂
           </button>
         </div>
-      </div>
+      </div >
       {/* 產生音樂列表 */}
-      <div className='flex'>
+      <div className='flex' >
         <h1 className=''> 音樂列表 </h1>
-      </div>
+      </div >
     </>
   )
 }
