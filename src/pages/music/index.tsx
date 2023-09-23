@@ -1,7 +1,10 @@
 import React from 'react'
 import EmotionButton from '../../components/EmotionButton'
+import MusicModal from './MusicModal';
 
 const Music = () => {
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+
   return (
     <>
       {/* 主題 */}
@@ -11,7 +14,7 @@ const Music = () => {
           {/* 文字框 */}
 
           <label htmlFor="article" className="block mb-4 text-2xl font-extrabold text-gray-900 ">
-            輸入文字，開始創作音樂
+            分享您的故事，開始創作音樂
           </label>
           <textarea
             id="message"
@@ -31,9 +34,10 @@ const Music = () => {
         </div>
 
         {/* 右 */}
-        <div className='w-1/2'>
+        <div className='w-1/2 flex flex-col'>
+          <h1 className='mb-4 text-4xl font-extrabold text-black self-center'>深度解析</h1>
           {/* 主旨顯示 */}
-          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>文章主旨</h3>
+          <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>主旨摘要</h3>
           <textarea
             className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg  focus:border-orange-300 outline-0'
             spellCheck={false}
@@ -44,12 +48,14 @@ const Music = () => {
           </textarea>
 
           {/* 感情顯示 */}
-          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>感情</h3>
-          <div className=''>
+          <h3 className='mb-4 text-2xl font-normal text-gray-400 opacity-90'>情感評價</h3>
+          <div className='flex flex-row'>
             <EmotionButton onClick={() => { }} label='開心' />
             <EmotionButton onClick={() => { }} label='悲傷' />
             <EmotionButton onClick={() => { }} label='浪漫' />
             <EmotionButton onClick={() => { }} label='憤怒' />
+
+
 
             {/* test */}
             {/* <button
@@ -60,10 +66,19 @@ const Music = () => {
               開心
             </button> */}
 
+            {/* 產生音樂按鈕 */}
+            <button
+              type='button'
+              className='w-10 h-10 self-center flex items-center justify-center text-lg font-bold text-orange-400 border-2 border-orange-400 rounded-full hover:border-orange-300 hover:text-orange-300'
+              onClick={() => setShowModal(true)}
+            >
+              <i className="fa-solid fa-plus"></i>
+            </button>
+
+            {/* 選取其他感情 */}
+            <MusicModal showModal={showModal} setShowModal={setShowModal} />
+
           </div>
-          {/* 選取其他感情 */}
-          <h3 className='mb-4 text-2xl font-extrabold text-gray-900'>添加更多感受</h3>
-          {/* 產生音樂按鈕 */}
         </div>
       </div>
       {/* 產生音樂列表 */}

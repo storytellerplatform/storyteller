@@ -4,7 +4,7 @@ import Root from "../root";
 import ErrorPage from './../pages/Error';
 import Home from './../pages/Home';
 import LoadingPage from "../pages/Loading";
-import Music from './../pages/music/index';
+import Music from '../pages/Music/index';
 
 const router = createBrowserRouter([
   {
