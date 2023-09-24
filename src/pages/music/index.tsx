@@ -3,11 +3,12 @@ import EmotionButton from '../../components/EmotionButton'
 import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
+import MusicCard from '../../components/MusicCard';
 
 const Music = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
-  const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+  const [isAllSet, setIsAllSet] = React.useState<boolean>(true);
 
   return (
     <>
@@ -112,8 +113,9 @@ const Music = () => {
         </div>
       </div >
       {/* 產生音樂列表 */}
-      <div className='flex' >
-        <h1 className=''> 音樂列表 </h1>
+      <div className='flex flex-col p-10 gap-2' >
+        {isAllSet && <h1 className='text-3xl font-extrabold mb-4'> 音樂列表 </h1>}
+        <MusicCard name='onandon' emotions={['開心', '憤怒']} />
       </div >
     </>
   )
