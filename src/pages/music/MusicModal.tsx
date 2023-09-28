@@ -19,7 +19,7 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal, emotio
     <>
       {showModal ? (
         // modal background
-        <div className='modal-background absolute top-0 left-0 w-full h-full bg-slate-500 bg-opacity-50 flex items-center justify-center' onClick={closeModal}>
+        <div className='modal-background fixed top-0 left-0 w-full h-full bg-slate-500 bg-opacity-50 flex items-center justify-center z-50 overflow-auto' onClick={closeModal}>
           {/* modal content */}
           <div className='flex flex-col p-2 bg-slate-50 rounded-lg'>
             <button
