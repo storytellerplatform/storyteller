@@ -5,6 +5,8 @@ import ErrorPage from './../pages/Error';
 import Home from './../pages/Home';
 import LoadingPage from "../pages/Loading";
 import Music from '../pages/Music/index';
+import Collection from "../pages/Collection";
+import Collect from "../pages/Collect";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +23,12 @@ const router = createBrowserRouter([
         element: <Music />,
       },
       {
-        path: "/collections",
-        element: <h1>Collections</h1>,
+        path: "/collection",
+        element: <Collection />,
+      },
+      {
+        path: "/collection/:id",
+        element: <Collect />,
       },
       {
         path: "/error",

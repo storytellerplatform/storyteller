@@ -4,11 +4,24 @@ import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
 import MusicCard from '../../components/MusicCard';
+import { useTestApiQuery } from '../../feature/api/apiSlice';
+import ErrorPage from '../Error';
+import LoadingPage from '../Loading';
 
 const Music = () => {
+  const { data: test, isLoading: isTestLoading, isError: isTestError } = useTestApiQuery();
+
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
   const [isAllSet, setIsAllSet] = React.useState<boolean>(true);
+
+  if (isTestLoading) {
+    return <LoadingPage />
+  }
+
+  if (isTestError) {
+    return <ErrorPage />
+  }
 
   return (
     <>
