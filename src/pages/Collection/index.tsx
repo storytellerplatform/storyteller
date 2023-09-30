@@ -15,15 +15,19 @@ const Collection = () => {
             <div className='flex items-center justify-start gap-2'>
               <EmotionButton label='開心' />
               <i className="fa-solid fa-x text-red-500"></i>
-              <h6 className='text-3xl text-red-500 drop-shadow-lg'>55</h6>
+              <h6 className='mb-1 text-3xl text-red-500 drop-shadow-lg'>55</h6>
             </div>
           </div>
         </div>
       </div>
 
       {/* 右區 */}
-      <div className='w-2/3 grid grid-cols-3'>
+      <div className='w-2/3 grid grid-cols-3 gap-6'>
         {/* 收藏 */}
+        <CollectCard />
+        <CollectCard />
+        <CollectCard />
+        <CollectCard />
         <CollectCard />
       </div>
     </div>

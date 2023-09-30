@@ -1,5 +1,5 @@
 import React from 'react'
-import { EmotionProps } from '../../types/components'
+// import { EmotionProps } from '../../types/components'
 
 // interface CollectProps {
 //   image: string,
