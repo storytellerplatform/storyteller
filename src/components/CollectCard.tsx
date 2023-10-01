@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 // image, title, song
 const CollectCard = () => {
   return (
-    <div className='flex flex-col pb-2 gap-2   border-2 shadow-xl border-orange-200 rounded-lg hover:-translate-y-2 ease-out duration-500'>
+    <div className='flex flex-col pb-2 gap-4 border-2 shadow-xl border-orange-200 rounded-lg hover:-translate-y-2 ease-out duration-500'>
       <Link className='' to="/collection/1">
         <img className='rounded-t-lg object-contain' src={TestImage} alt="music" />
         <h1 className='text-center text-xl font-bold'> purpose </h1>
