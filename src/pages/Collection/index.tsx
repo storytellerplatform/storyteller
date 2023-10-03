@@ -6,7 +6,7 @@ const Collection = () => {
   return (
     <div className='flex flex-row m-12 justify-between'>
       {/* 左區 */}
-      <div className='w-1/4 p-[2px] rounded-lg h-fit bg-gradient-to-b from-orange-300 to-white-500'>
+      <div className='w-1/5 p-[2px] rounded-lg h-fit bg-gradient-to-b from-orange-300 to-white-500'>
         <div className='flex flex-col p-4 gap-6 items-center bg-white rounded-lg drop-shadow-xl shadow-lg'>
           {/* 標題 */}
           <h1 className='text-4xl font-bold black text-orange-500 tracking-widest'>情 緒</h1>
@@ -22,7 +22,7 @@ const Collection = () => {
       </div>
 
       {/* 右區 */}
-      <div className='w-2/3 grid grid-cols-3 gap-6'>
+      <div className='w-3/4 flex flex-col'>
         {/* 收藏 */}
         <CollectCard />
         <CollectCard />

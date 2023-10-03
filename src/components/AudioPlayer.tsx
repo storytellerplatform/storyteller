@@ -70,8 +70,7 @@ const AudioPlayer = () => {
         )}
       </button>
 
-      <div className="flex gap-2">
-        {/* <input
+      {/* <input
           type="range"
           className="w-full accent-orange-300"
           min={0}
@@ -80,16 +79,14 @@ const AudioPlayer = () => {
         />
         <h1> Speaker </h1> */}
 
-        <input
-          type="range"
-          className='w-full accent-orange-300  appearance-none bg-transparent [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-orange-100'
-          min="0"
-          max={duration}
-          value={currentTime}
-          onChange={handleRangeChange}
-          step="0.1"
-        />
-      </div>
+      <input
+        type="range"
+        min="0"
+        max={duration}
+        value={currentTime}
+        onChange={handleRangeChange}
+        className="self-center w-full h-2 bg-orange-100 rounded-lg appearance-none cursor-pointer accent-orange-300">
+      </input>
 
       <audio ref={audioRef} loop src={TestMusic} />
     </div>

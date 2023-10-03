@@ -8,4 +8,5 @@ export interface EmotionButtonProps extends React.ButtonHTMLAttributes<HTMLButto
   onClick?: () => void;
   selected?: boolean;
   size?: EmotionSizeProps;
+  defaultStyle?: boolean;
 }
