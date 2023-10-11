@@ -3,7 +3,7 @@ import { RootState } from '../../app/store';
 import { User } from '../../types/user';
 
 export const initialState: User = {
-  userId: '',
+  userId: '0',
   username: '',
   email: ''
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import EmotionButton from '../../components/EmotionButton'
-import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
 import MusicCard from '../../components/MusicCard';
@@ -8,8 +7,9 @@ import { useAddNewArticleMutation } from '../../feature/api/userSlice';
 import { getUserId } from '../../feature/user/userSlice';
 import { AddNewArticleRequest } from '../../types/api/user';
 import { useAppSelector } from '../../app/hooks';
+import MusicModal from './../Music/MusicModal';
 
-const Music = () => {
+const FreeMusic = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
@@ -147,4 +147,4 @@ const Music = () => {
   )
 }
 
-export default Music
+export default FreeMusic

@@ -1,4 +1,4 @@
 export interface Article {
-  articleId: BigInt,
+  articleId: Number,
   content: string
 }

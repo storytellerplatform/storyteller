@@ -55,6 +55,12 @@ const Signin: React.FC = () => {
         { expires: response.expiresIn, path: '/', secure: true, sameSite: 'strict' }
       );
 
+      Cookies.set(
+        'userId',
+        response.userId.toString(),
+        { expires: response.expiresIn, path: '/', secure: true, sameSite: 'strict' }
+      );
+
       dispatch(setToken(response.token));
       dispatch(setUserId(response.userId.toString()));
       dispatch(setUsername(response.username));

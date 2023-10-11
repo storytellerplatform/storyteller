@@ -4,7 +4,7 @@ import { apiSlice } from "./apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    GetUserData: builder.query<User, BigInt>({
+    GetUserData: builder.query<User, Number>({
       query: (id) => ({
         url: `/user/${id}`,
         method: 'GET',

@@ -9,6 +9,8 @@ import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
+import Admin from "../pages/Admin";
+import FreeMusic from "../pages/FreeMusic";
 
 const router = createBrowserRouter([
   {
@@ -29,16 +31,8 @@ const router = createBrowserRouter([
         element: <Signin />,
       },
       {
-        path: "/music",
-        element: <Music />,
-      },
-      {
-        path: "/collection",
-        element: <Collection />,
-      },
-      {
-        path: "/collection/:id",
-        element: <Collect />,
+        path: '/freemusic',
+        element: <FreeMusic />,
       },
       {
         path: "/error",
@@ -48,6 +42,23 @@ const router = createBrowserRouter([
         path: "/loading",
         element: <LoadingPage />,
       },
+      {
+        element: <Admin />,
+        children: [
+          {
+            path: "/collection",
+            element: <Collection />,
+          },
+          {
+            path: "/collection/:id",
+            element: <Collect />,
+          },
+          {
+            path: "/music",
+            element: <Music />,
+          },
+        ]
+      }
     ],
   },
 ])

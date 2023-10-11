@@ -6,8 +6,8 @@ import authSlice from '../feature/auth/authSlice';
 
 const store = configureStore({
   reducer: {
-    user: userSlice,
     auth: authSlice,
+    user: userSlice,
     sidebar: sidebarSlice,
     [apiSlice.reducerPath]: apiSlice.reducer  
   },

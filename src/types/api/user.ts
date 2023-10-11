@@ -1,7 +1,7 @@
 import { Article } from "../Article";
 
 export interface AddNewArticleRequest {
-  userId: BigInt,
+  userId: number,
   content: string,
 }
 

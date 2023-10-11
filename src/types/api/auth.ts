@@ -12,6 +12,6 @@ export interface SigninRequest extends SigninType {
 
 export interface SigninResponse extends AuthType {
   expiresIn: number,
-  userId: BigInt,
+  userId: number,
   username: string
 }

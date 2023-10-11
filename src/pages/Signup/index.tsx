@@ -118,11 +118,13 @@ const Signin: React.FC = () => {
         serverErrorNotify();
       }
 
-      if (err) {
+      if (err && err.data?.errorcode) {
         const errCode: ErrorCode = err.data.errorCode;
         const errorForm: ErrorForm = codeToMsg(errCode);
         setErrors((errs) => ({ ...errs, [errorForm.place]: errorForm.message }));
       }
+
+      serverErrorNotify();
     }
   }
 
