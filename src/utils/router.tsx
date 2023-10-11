@@ -7,6 +7,8 @@ import LoadingPage from "../pages/Loading";
 import Music from '../pages/Music/index';
 import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
+import Signin from "../pages/Signin";
+import Signup from "../pages/Signup";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: '/signup',
+        element: <Signup />,
+      },
+      {
+        path: '/signin',
+        element: <Signin />,
       },
       {
         path: "/music",
@@ -37,7 +47,7 @@ const router = createBrowserRouter([
       {
         path: "/loading",
         element: <LoadingPage />,
-      }
+      },
     ],
   },
 ])

@@ -4,24 +4,33 @@ import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
 import MusicCard from '../../components/MusicCard';
-import { useTestApiQuery } from '../../feature/api/apiSlice';
-import ErrorPage from '../Error';
-import LoadingPage from '../Loading';
+import { useAddNewArticleMutation } from '../../feature/api/userSlice';
+import { getUserId } from '../../feature/user/userSlice';
+import { Article } from '../../types/Article';
+import { AddNewArticleRequest } from '../../types/api/user';
 
 const Music = () => {
-  const { data: test, isLoading: isTestLoading, isError: isTestError } = useTestApiQuery();
-
+  const [articleContent, setArticleContent] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
-  const [isAllSet, setIsAllSet] = React.useState<boolean>(true);
+  const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
 
-  if (isTestLoading) {
-    return <LoadingPage />
+  const [addNewArticle, { isLoading }] = useAddNewArticleMutation()
+
+  const userId = getUserId;
+
+  const handleArticleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setArticleContent(e.target.value);
   }
 
-  if (isTestError) {
-    return <ErrorPage />
+  const handleAnalyzeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // const article: AddNewArticleRequest = {
+    //   userId: BigInt(userId),
+    //   content: articleContent,
+    // }
+    // addNewArticle();
   }
+
 
   return (
     <>
@@ -38,18 +47,19 @@ const Music = () => {
             id="message"
             cols={60}
             rows={10}
+            onChange={handleArticleChange}
+            value={articleContent}
             className="block p-4 w-full text-base text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring-orange-200 focus:border-orange-200 focus-visible:outline-0 select-none drop-shadow-xl"
             placeholder="我想要.....">
           </textarea>
 
           {/* 文章分析按鈕 */}
           <button
-            // todo: 在分析完文章後才 setIsAllSet(true)
-            onClick={() => setIsAllSet(true)}
+            onClick={handleAnalyzeClick}
             type="submit"
             className="relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200"
           >
-            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 group-hover:text-white">
+            <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 group-hover:text-white">
               分析
             </span>
           </button>
@@ -117,7 +127,7 @@ const Music = () => {
             type="button"
             disabled={!isAllSet}
             className={classNames(`flex items-center self-start mt-10 to-red-300 text-white px-5 py-2.5 rounded-lg gap-2 hover:bg-gradient-to-br hover:from-orange-100 hover:via-orange-300 hover:to-red-300`,
-              { 'bg-gradient-to-br from-orange-100 via-orange-300 to-red-300 animate-none': !isAllSet },
+              { 'bg-gradient-to-br from-orange-100 via-orange-300 to-red-300 animate-none opacity-60': !isAllSet },
               { 'bg-gradient-to-br from-orange-200 via-orange-400 animate-bounce': isAllSet })}
           >
             <i className="fa-solid fa-arrow-right"></i>
