@@ -5,11 +5,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import NavSigninButton from '../pages/Signin/components/NavSigninButton'
 import NavSignupButton from '../pages/Signup/components/NavSignupButton'
 import Cookies from 'js-cookie'
+import { useAppSelector } from '../app/hooks'
+import { getUsername } from '../feature/user/userSlice'
 
 const Navbar = () => {
   const navigete = useNavigate();
+  const username = useAppSelector(getUsername);
 
   const jwtTokenExists = Cookies.get('jwtToken');
+
 
   const handleLogoutClick = () => {
     Cookies.remove('jwtToken');
@@ -24,7 +28,7 @@ const Navbar = () => {
         <h1 className='p-2 text-xl'> <strong>說書人</strong> </h1>
       </Link>
 
-      {jwtTokenExists ?
+      {(jwtTokenExists && username) ?
         <div className='flex gap-4 items-center'>
 
           <Link to='/music'>
@@ -34,6 +38,10 @@ const Navbar = () => {
             <button className=''>收藏</button>
           </Link>
           <button className='' onClick={handleLogoutClick}>登出</button>
+
+          <div>
+            <h5> {username} </h5>
+          </div>
 
         </div> :
 

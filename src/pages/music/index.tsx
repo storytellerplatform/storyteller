@@ -3,17 +3,19 @@ import EmotionButton from '../../components/EmotionButton'
 import MusicModal from './MusicModal';
 import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
-import MusicCard from '../../components/MusicCard';
 import { useAddNewArticleMutation } from '../../feature/api/userSlice';
 import { getUserId } from '../../feature/user/userSlice';
 import { AddNewArticleRequest } from '../../types/api/user';
 import { useAppSelector } from '../../app/hooks';
+import { toast } from 'react-toastify';
+import { Emotion } from '../../types/emotion';
 
 const Music = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+  const [purpose, setPurpose] = React.useState<string>("");
 
   const [addNewArticle, { isLoading: isAddNewArticleLoading }] = useAddNewArticleMutation()
 
@@ -23,15 +25,28 @@ const Music = () => {
     setArticleContent(e.target.value);
   }
 
-  const handleAnalyzeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(userId);
+  const handleAnalyzeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const article: AddNewArticleRequest = {
+      userId: Number(userId),
+      content: articleContent,
+    }
 
-    // const article: AddNewArticleRequest = {
-    //   userId: BigInt(userId),
-    //   content: articleContent,
-    // }
+    try {
+      const response = await addNewArticle(article).unwrap();
 
-    // addNewArticle(article);
+      if (response.purpose) {
+        setPurpose(response.purpose);
+      }
+
+      const emotionList: Array<Emotion> = response.emotions;
+      if (emotionList && emotionList.length > 0) {
+        setEmotions(emotionList.at(emotionList.length - 1)?.emotions || []);
+      }
+
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+
     setIsAllSet(true);
   }
 
@@ -40,27 +55,28 @@ const Music = () => {
       {/* 主題 */}
       <div className='flex flex-row p-10 justify-between'>
         {/* 左區 */}
-        <div className='select-none'>
+        <div className='select-none lg:w-1/2'>
           {/* 文字框 */}
 
           <label htmlFor="article" className="block mb-4 text-2xl font-extrabold text-gray-900 ">
             分享您的故事，開始創作音樂
           </label>
           <textarea
-            id="message"
-            cols={60}
+            id="article"
             rows={10}
             onChange={handleArticleChange}
             value={articleContent}
-            className="block p-4 w-full text-base text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring-orange-200 focus:border-orange-200 focus-visible:outline-0 select-none drop-shadow-xl"
+            className="block p-4 w-full text-base text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring-orange-200 focus:border-orange-200 focus-visible:outline-0 select-none drop-shadow-xl sm:w-4/5 md:w-6/10 lg:w-4/5"
             placeholder="我想要.....">
           </textarea>
 
           {/* 文章分析按鈕 */}
           <button
             onClick={handleAnalyzeClick}
+            disabled={!articleContent}
             type="submit"
-            className="relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200"
+            className={classNames(`relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200`,
+              { 'opacity-50': !articleContent })}
           >
             <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 group-hover:text-white">
               分析
@@ -78,7 +94,8 @@ const Music = () => {
             className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg  focus:border-orange-300 focus:drop-shadow-lg outline-0'
             spellCheck={false}
             placeholder="文章主旨..."
-            value={""}
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
             readOnly
           >
           </textarea>
@@ -88,11 +105,11 @@ const Music = () => {
           <div className='flex flex-row'>
 
             {/* 感情 */}
-            {emotions.map((selectEmotion: EmotionProps, index: React.Key | null | undefined) => (
+            {emotions.map((selectedEmotion: EmotionProps, index: React.Key | null | undefined) => (
               <EmotionButton
                 key={index}
-                label={selectEmotion}
-                onClick={() => setEmotions(preEmotions => preEmotions.filter(emotion => emotion !== selectEmotion))}
+                label={selectedEmotion}
+                onClick={() => setEmotions(preEmotions => preEmotions.filter(emotion => emotion !== selectedEmotion))}
               />
             ))}
 
@@ -141,7 +158,7 @@ const Music = () => {
       {/* 產生音樂列表 */}
       <div className='flex flex-col p-10 gap-2' >
         {isAllSet && <h1 className='text-3xl font-extrabold mb-4'> 音樂列表 </h1>}
-        <MusicCard name='onandon' emotions={['開心', '憤怒']} />
+        {/* <MusicCard name='onandon' emotions={['開心', '憤怒']} /> */}
       </div >
     </>
   )

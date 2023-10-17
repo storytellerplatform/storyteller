@@ -4,7 +4,7 @@ import { User } from '../../types/user';
 
 export const initialState: User = {
   userId: '0',
-  username: '',
+  name: '',
   email: ''
 }
 
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
       state.userId = action.payload;
     },
     setUsername: (state, action: PayloadAction<string>) => {
-      state.username = action.payload;
+      state.name = action.payload;
     },
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
@@ -25,6 +25,7 @@ export const userSlice = createSlice({
 })
 
 export const getUserData = (state: RootState) => state.user;
+export const getUsername = (state: RootState) => state.user.name;
 export const getUserId = (state: RootState) => state.user.userId;
 
 export const { setUserId, setUsername, setEmail } = userSlice.actions

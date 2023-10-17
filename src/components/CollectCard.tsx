@@ -7,13 +7,30 @@ import TestMusic from '../assets/music/NCSBlank.mp3'
 import EmotionButton from './EmotionButton'
 import DownloadButton from './DownloadButton'
 import { useNavigate } from 'react-router-dom'
-// import { AudioPlayer } from './AudioPlayer'
-// import { Link } from 'react-router-dom'
+import { EmotionProps } from '../types/components'
 
-const CollectCard = () => {
+interface CollectCardProps {
+  articleId: string;
+  emotionId: string;
+  emotions: Array<EmotionProps>;
+  createDate: Date;
+}
+
+const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotions, createDate }) => {
   const [play, setPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigte = useNavigate();
+
+  let gridClass: string = "grid-cols-3";
+
+  if (emotions.length >= 3) {
+    gridClass = "grid-cols-3";
+  } else if (emotions.length === 2) {
+    gridClass = "grid-cols-2";
+  } else {
+    gridClass = "grid-cols-1";
+  }
+
 
   function toggleAudio(): void {
     if (play) {
@@ -37,26 +54,34 @@ const CollectCard = () => {
 
       <img
         className='w-1/6 rounded-md cursor-pointer'
-        onClick={() => navigte('/collection/1')}
+        onClick={() => navigte(`/collection/${articleId}/${emotionId}`)}
         src={TestImage}
         alt="Music"
       />
 
       <h1
         className='py-6 text-gray-600 text-lg font-bold cursor-pointer'
-        onClick={() => navigte('/collection/1')}
+        onClick={() => navigte(`/collection/${articleId}/${emotionId}`)}
       >
         purpose
       </h1>
 
-      <div className='grid grid-cols-3 gap-y-1'>
-        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' />
-        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' />
-        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' />
-        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' />
+      <div className={`grid ${gridClass} gap-y-1 text-xl font-semibold`}>
+        {emotions ? emotions.map((emotion) => {
+          return <EmotionButton
+            label={emotion}
+            defaultStyle={false}
+            className='px-3 py-1.5 rounded-full text-base'
+          />
+        })
+          : "無"
+        }
+
+        {/*
+        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' /> */}
       </div>
 
-      <span className='font-bold font-mono'>2023-10-06</span>
+      <span className='font-bold font-mono'>{createDate.toString().split('T')[0]}</span>
 
       <DownloadButton src={TestMusic} />
     </div>

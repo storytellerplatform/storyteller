@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import EmotionButton from '../../components/EmotionButton';
-import { BiPauseCircle, BiPlayCircle } from 'react-icons/bi';
-import WaveformVisualizer from '../../components/AudioVisualizer';
 import TestMusic from '../../assets/music/NCSBlank.mp3';
 import AudioVisualizer from '../../components/AudioVisualizer';
+import { useGetArticleQuery } from '../../feature/api/articleSlice';
 
 // interface CollectProps {
 //   image: string,
@@ -16,10 +15,12 @@ import AudioVisualizer from '../../components/AudioVisualizer';
 // }
 
 const Collect = () => {
-  const { id } = useParams();
+  const { articleId, emotionId } = useParams();
 
   const [play, setPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const { data: articleData } = useGetArticleQuery(Number(articleId));
 
   function toggleAudio(): void {
     if (play) {
@@ -55,11 +56,16 @@ const Collect = () => {
       {/* 左 */}
       <div className='w-7/12 p-5'>
         <h1 className='text-6xl font-extrabold mb-6'> purpose </h1>
-        <div className='flex w-1/2 mb-4'>
-          <EmotionButton defaultStyle={false} className='text-lg px-3 py-1.5 rounded-full' label={'開心'} />
-          <EmotionButton defaultStyle={false} className='text-lg px-3 py-1.5 rounded-full' label={'開心'} />
-          <EmotionButton defaultStyle={false} className='text-lg px-3 py-1.5 rounded-full' label={'開心'} />
-          <EmotionButton defaultStyle={false} className='text-lg px-3 py-1.5 rounded-full' label={'開心'} />
+        <div className='flex w-full mb-4 select-none'>
+          {/* 還要對上 emotionId */}
+          {articleData?.emotions.find(
+            emotion => emotion.emotionId === Number(emotionId))?.emotions.map((emotion) => {
+              return <EmotionButton
+                defaultStyle={false}
+                label={emotion}
+                className='text-lg px-3 py-1.5 rounded-full'
+              />
+            })}
         </div>
 
         <div className='flex items-center gap-2'>

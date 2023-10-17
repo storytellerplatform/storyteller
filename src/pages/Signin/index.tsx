@@ -9,7 +9,6 @@ import { PASSWORD_PATTERN } from '../../utils/config';
 import { useSigninMutation } from '../../feature/api/authSlice';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useLazyGetUserDataQuery } from '../../feature/api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { setEmail, setUserId, setUsername } from '../../feature/user/userSlice';
 import { setToken } from '../../feature/auth/authSlice';
@@ -18,8 +17,6 @@ const Signin: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-
-  const [triggerGetUserData, getUserDataResult] = useLazyGetUserDataQuery();
 
   const [errors, setErrors] = useState<SigninType>({
     email: "",
@@ -55,15 +52,9 @@ const Signin: React.FC = () => {
         { expires: response.expiresIn, path: '/', secure: true, sameSite: 'strict' }
       );
 
-      Cookies.set(
-        'userId',
-        response.userId.toString(),
-        { expires: response.expiresIn, path: '/', secure: true, sameSite: 'strict' }
-      );
-
       dispatch(setToken(response.token));
       dispatch(setUserId(response.userId.toString()));
-      dispatch(setUsername(response.username));
+      dispatch(setUsername(response.name));
       dispatch(setEmail(user.email));
 
       navigate('/');

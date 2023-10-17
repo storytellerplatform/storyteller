@@ -1,17 +1,29 @@
-import { AddNewArticleRequest } from "../../types/api/user";
+import { AddNewArticleRequest, AddNewArticleResponse, GetAllArticlesResponse } from "../../types/api/user";
 import { User } from "../../types/user";
 import { apiSlice } from "./apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    // <User, void>
+    GetCurrentUser: builder.query<User, void>({
+      query: () => ({
+        url: '/user/me',
+        method: 'GET',
+      })
+    }),
     GetUserData: builder.query<User, Number>({
       query: (id) => ({
         url: `/user/${id}`,
         method: 'GET',
       })
     }),
-    // <AddNewArticleResponse, AddNewArticleRequest>
-    AddNewArticle: builder.mutation<any, AddNewArticleRequest>({
+    GetAllArticles: builder.query<GetAllArticlesResponse, number>({
+      query: (userId) => ({
+        url: `/user/article/${userId}`,
+        method: 'GET',
+      })
+    }),
+    AddNewArticle: builder.mutation<AddNewArticleResponse, AddNewArticleRequest>({
       query: (article: AddNewArticleRequest) => ({
         url: '/user/article',
         method: 'POST',
@@ -33,4 +45,4 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   })
 })
 
-export const { useGetUserDataQuery, useLazyGetUserDataQuery, useAddNewArticleMutation, useCheckUsernameQuery, useLazyCheckUsernameQuery, useCheckEmailQuery, useLazyCheckEmailQuery } = extendedApiSlice;
+export const { useGetCurrentUserQuery, useLazyGetCurrentUserQuery, useGetUserDataQuery, useLazyGetUserDataQuery, useGetAllArticlesQuery, useLazyGetAllArticlesQuery, useAddNewArticleMutation, useCheckUsernameQuery, useLazyCheckUsernameQuery, useCheckEmailQuery, useLazyCheckEmailQuery } = extendedApiSlice;

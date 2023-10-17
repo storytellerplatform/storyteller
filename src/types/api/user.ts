@@ -1,4 +1,5 @@
-import { Article } from "../Article";
+import { Article } from "../article";
+import { Emotion } from "../emotion";
 
 export interface AddNewArticleRequest {
   userId: number,
@@ -6,5 +7,10 @@ export interface AddNewArticleRequest {
 }
 
 export interface AddNewArticleResponse {
-  articleList: Array<Article>;
+  articleId: number;
+  content: string;
+  purpose: string;
+  emotions: Array<Emotion>;
 }
+
+export type GetAllArticlesResponse = Array<Article>; 

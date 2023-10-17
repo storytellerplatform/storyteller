@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useLazyGetUserDataQuery } from '../../feature/api/userSlice';
+import { useLazyGetCurrentUserQuery, useLazyGetUserDataQuery } from '../../feature/api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { setEmail, setUserId, setUsername } from '../../feature/user/userSlice';
 import LoadingPage from './../Loading/index';
@@ -12,38 +12,32 @@ const Admin = () => {
   const dispatch = useAppDispatch();
 
   const jwtToken = Cookies.get('jwtToken');
-  const userIdString = Cookies.get('userId');
-  const userIdInt = userIdString ? Number(userIdString) : undefined;
 
-  const [triggerGetUserData, userDataResult] = useLazyGetUserDataQuery();
+  const [triggerGetCurrentUser, currentUserResult] = useLazyGetCurrentUserQuery();
 
   useEffect(() => {
-    if (!jwtToken) {
-      navigate('/signin', { replace: true });
-      return;
-    }
+    const fetchData = async () => {
+      if (!jwtToken) {
+        navigate('/signin', { replace: true });
+        return;
+      }
 
-    dispatch(setToken(jwtToken));
-  }, [jwtToken, userIdInt, navigate, triggerGetUserData, dispatch]);
+      dispatch(setToken(jwtToken));
+      await triggerGetCurrentUser();
+    };
 
-  useEffect(() => {
-    if (!userIdInt) {
-      navigate('/signin', { replace: true });
-      return;
-    }
+    fetchData();
+  }, [jwtToken, navigate, dispatch, triggerGetCurrentUser]);
 
-    triggerGetUserData(userIdInt);
-  }, [jwtToken, userIdInt, navigate, triggerGetUserData, dispatch]);
-
-  const { data: userData, isLoading: isGetUserDataLoading } = userDataResult;
+  const { data: userData, isLoading: isGetUserDataLoading } = currentUserResult;
 
   useEffect(() => {
     if (userData) {
-      dispatch(setUserId(userIdString || '0'));
-      dispatch(setUsername(userData.username || 'user'));
+      dispatch(setUserId(userData.userId || '0'));
+      dispatch(setUsername(userData.name || 'user'));
       dispatch(setEmail(userData.email || 'email'));
     }
-  }, [userData, dispatch, userIdString]);
+  }, [userData, dispatch]);
 
   return isGetUserDataLoading ? <LoadingPage /> : <Outlet />;
 };

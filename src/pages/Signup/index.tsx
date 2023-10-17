@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { ErrorCode, ErrorForm, codeToMsg } from '../../utils/errorCodeToMsg';
 import { useLazyCheckEmailQuery, useLazyCheckUsernameQuery } from '../../feature/api/userSlice';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Signin: React.FC = () => {
@@ -20,13 +20,13 @@ const Signin: React.FC = () => {
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState<SignupType>({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
 
   const [user, setUser] = useState<SignupType>({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -44,7 +44,7 @@ const Signin: React.FC = () => {
 
     setUser(prevUser => ({
       ...prevUser as SignupType,
-      username: newUsername
+      name: newUsername
     }));
   };
 
@@ -75,9 +75,9 @@ const Signin: React.FC = () => {
   };
 
   const validateUsername = () => {
-    triggerCheckUsernameExists(user.username);
+    triggerCheckUsernameExists(user.name);
     const { data: checkUsernameExists } = checkUsernameExistsResult;
-    if (user.username && checkUsernameExists) {
+    if (user.name && checkUsernameExists) {
       setErrors((errs) => ({ ...errs, username: '使用者名稱已存在!' }));
     } else {
       setErrors((errs) => ({ ...errs, username: '' }));
@@ -134,9 +134,6 @@ const Signin: React.FC = () => {
 
         {/* Test error message */}
         {/* {error && <p> {JSON.stringify(error)} </p>} */}
-        <div>
-          <ToastContainer />
-        </div>
 
         <label htmlFor="storyteller-signip-username" className="block mb-2 text-lg font-bold text-gray-900">您的名稱</label>
         <div className="flex flex-col gap-2 mb-4">
@@ -149,21 +146,21 @@ const Signin: React.FC = () => {
             </span>
             <input
               type="text"
-              name='username'
+              name='name'
               id="storyteller-signip-username"
-              value={user?.username}
+              value={user?.name}
               onChange={handleUsernameChange}
               minLength={6}
               onBlur={validateUsername}
               autoFocus
               className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
-                { 'outline outline-red-400': errors.username }
+                { 'outline outline-red-400': errors.name }
               )}
               placeholder="onandon"
             />
           </div>
 
-          {errors.username && <div className='text-red-500'>{errors.username}</div>}
+          {errors.name && <div className='text-red-500'>{errors.name}</div>}
         </div>
 
         <label htmlFor="storyteller-signup-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
@@ -214,7 +211,7 @@ const Signin: React.FC = () => {
         </div>
 
         <div className='self-center'>
-          <NavSignupButton type='button' className='' isLoading={isLoading} onClick={handleSignupClick} />
+          <NavSignupButton type='submit' className='' isLoading={isLoading} onClick={handleSignupClick} />
         </div>
       </form>
     </div>
