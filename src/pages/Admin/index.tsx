@@ -18,7 +18,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!jwtToken) {
-        navigate('/signin', { replace: true });
+        navigate('/', { replace: true });
         return;
       }
 

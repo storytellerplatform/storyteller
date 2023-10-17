@@ -1,36 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import EmotionButton from '../../components/EmotionButton';
-import TestMusic from '../../assets/music/NCSBlank.mp3';
-import AudioVisualizer from '../../components/AudioVisualizer';
 import { useGetArticleQuery } from '../../feature/api/articleSlice';
+import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 
-// interface CollectProps {
-//   image: string,
-//   content: string,
-//   purpose: string,
-//   emotion: Array<EmotionProps>,
-//   song
-//   created_at: Date
-// }
+import AudioData from '../../assets/music/NCSBlank.mp3';
 
 const Collect = () => {
   const { articleId, emotionId } = useParams();
 
-  const [play, setPlay] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
   const { data: articleData } = useGetArticleQuery(Number(articleId));
-
-  function toggleAudio(): void {
-    if (play) {
-      audioRef.current?.pause();
-      setPlay(false);
-    } else {
-      void audioRef.current?.play();
-      setPlay(true);
-    }
-  }
 
   const audioContextRef = useRef<AudioContext | null>(null);
 
@@ -39,18 +18,6 @@ const Collect = () => {
 
   }, []);
 
-  const playSound = () => {
-    if (!audioContextRef.current) return;
-
-    const oscillator = audioContextRef.current.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(440, audioContextRef.current.currentTime);
-
-    oscillator.connect(audioContextRef.current.destination);
-    oscillator.start();
-    oscillator.stop(audioContextRef.current.currentTime + 1);
-  };
-
   return (
     <div className='flex justify-around'>
       {/* 左 */}
@@ -58,8 +25,8 @@ const Collect = () => {
         <h1 className='text-6xl font-extrabold mb-6'> purpose </h1>
         <div className='flex w-full mb-4 select-none'>
           {/* 還要對上 emotionId */}
-          {articleData?.emotions.find(
-            emotion => emotion.emotionId === Number(emotionId))?.emotions.map((emotion) => {
+          {articleData?.emotions && articleData?.emotions.length > 0 &&
+            articleData?.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map((emotion) => {
               return <EmotionButton
                 defaultStyle={false}
                 label={emotion}
@@ -68,11 +35,12 @@ const Collect = () => {
             })}
         </div>
 
-        <div className='flex items-center gap-2'>
-
-          <AudioVisualizer audioUrl={TestMusic} />
-
-        </div>
+        <WaveSurferPlayer
+          height={100}
+          waveColor="rgb(255, 189, 67)"
+          progressColor="rgb(159, 157, 149)"
+          url={AudioData}
+        />
       </div>
 
 

@@ -12,7 +12,7 @@ import { EmotionProps } from '../types/components'
 interface CollectCardProps {
   articleId: string;
   emotionId: string;
-  emotions: Array<EmotionProps>;
+  emotions: Array<EmotionProps> | null;
   createDate: Date;
 }
 
@@ -23,7 +23,9 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
 
   let gridClass: string = "grid-cols-3";
 
-  if (emotions.length >= 3) {
+  if (!emotions) {
+    gridClass = "";
+  } else if (emotions.length >= 3) {
     gridClass = "grid-cols-3";
   } else if (emotions.length === 2) {
     gridClass = "grid-cols-2";
@@ -85,28 +87,6 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
 
       <DownloadButton src={TestMusic} />
     </div>
-
-    //     {/* <Link className='' to="/collection/1">
-    //       <img className='rounded-t-lg object-contain' src={TestImage} alt="music" />
-    //       <h1 className='text-center text-xl font-bold'> purpose </h1>
-    //       <h3 className='px-4 text-base text-neutral-500 font-medium'> content </h3>
-    //     </Link>
-
-    //     {/* emotion */}
-    // {/* <div className='px-4'>
-    //       <EmotionButton size='sm' label='開心' />
-    //     </div> */}
-
-    // {/* <audio className='self-center' src={TestMusic} > */ }
-    // {/* <p>
-    //         Your browser doesn't support HTML5 audio. Here is a
-    //         <a href="myAudio.mp4">link to the audio</a> instead.
-    //       </p> */}
-    // {/* </audio> */ }
-
-    // {/* <div className='self-center'>
-    //       <AudioPlayer />
-    //     </div> */}
   )
 }
 
