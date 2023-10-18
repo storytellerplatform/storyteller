@@ -5,6 +5,8 @@ import Letter from '../../assets/letter3.jpg';
 import A from '../../assets/letter-a.png';
 import B from '../../assets/letter-b.png';
 import C from '../../assets/letter-c.png';
+import MusicIcon from '../../assets/music.png';
+import MusicNote from '../../assets/musical-note.png';
 
 import { Link } from 'react-router-dom';
 
@@ -48,7 +50,10 @@ const Home = () => {
         </div>
 
         {/* 跳動音符 */}
-        <div className='w-1/4'>Music</div>
+        <div className='flex flex-col justify-center w-1/4 gap-2'>
+          <img className='self-center w-16' src={MusicIcon} alt="music" />
+          <img className='self-center w-16' src={MusicNote} alt="music" />
+        </div>
       </div>
 
 
