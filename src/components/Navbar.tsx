@@ -14,7 +14,6 @@ const Navbar = () => {
 
   const jwtTokenExists = Cookies.get('jwtToken');
 
-
   const handleLogoutClick = () => {
     Cookies.remove('jwtToken');
     navigete('/');
@@ -32,15 +31,18 @@ const Navbar = () => {
         <div className='flex gap-4 items-center'>
 
           <Link to='/music'>
-            <button className=''>創造音樂</button>
+            <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>創造音樂</button>
           </Link>
           <Link to="/collection">
-            <button className=''>收藏</button>
+            <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>收藏</button>
           </Link>
-          <button className='' onClick={handleLogoutClick}>登出</button>
+
+          <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out' onClick={handleLogoutClick}>登出</button>
 
           <div>
-            <h5> {username} </h5>
+            <span className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>
+              {username}
+            </span>
           </div>
 
         </div> :

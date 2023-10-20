@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Signin: React.FC = () => {
   const passwordPattern = "^[a-zA-Z0-9]{6,}$";
 
-  const serverErrorNotify = () => toast.error("Server Error");
+  const serverErrorNotify = (errorMsg: string) => toast.error(errorMsg);
 
   const navigate = useNavigate();
 
@@ -109,28 +109,32 @@ const Signin: React.FC = () => {
       console.log(response);
       navigate('/signin');
     } catch (err: any) {
+      console.log(err);
+
+      if (err && err.data?.errorCode) {
+        const errCode: ErrorCode = err.data.errorCode;
+        const errorForm: ErrorForm = codeToMsg(errCode);
+        setErrors((errs) => ({ ...errs, [errorForm.place]: errorForm.message }));
+        serverErrorNotify(errorForm.message);
+        return;
+      }
+
       if (err.status === 'FETCH_ERROR') {
-        serverErrorNotify();
+        serverErrorNotify("Server error");
         return;
       }
 
       if (!err.data && err.status === 403) {
-        serverErrorNotify();
+        serverErrorNotify("Server error");
       }
 
-      if (err && err.data?.errorcode) {
-        const errCode: ErrorCode = err.data.errorCode;
-        const errorForm: ErrorForm = codeToMsg(errCode);
-        setErrors((errs) => ({ ...errs, [errorForm.place]: errorForm.message }));
-      }
-
-      serverErrorNotify();
+      serverErrorNotify("Server error");
     }
   }
 
   return (
     <div className='flex justify-center'>
-      <form className='flex flex-col w-1/3 p-5'>
+      <div className='flex flex-col w-1/3 p-5'>
 
         {/* Test error message */}
         {/* {error && <p> {JSON.stringify(error)} </p>} */}
@@ -150,7 +154,7 @@ const Signin: React.FC = () => {
               id="storyteller-signip-username"
               value={user?.name}
               onChange={handleUsernameChange}
-              minLength={6}
+              // minLength={6}
               onBlur={validateUsername}
               autoFocus
               className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
@@ -213,7 +217,7 @@ const Signin: React.FC = () => {
         <div className='self-center'>
           <NavSignupButton type='submit' className='' isLoading={isLoading} onClick={handleSignupClick} />
         </div>
-      </form>
+      </div>
     </div>
   )
 }

@@ -1,22 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import EmotionButton from '../../components/EmotionButton';
 import { useGetArticleQuery } from '../../feature/api/articleSlice';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 
 import AudioData from '../../assets/music/NCSBlank.mp3';
+import { EmotionProps } from '../../types/components';
 
 const Collect = () => {
   const { articleId, emotionId } = useParams();
 
   const { data: articleData } = useGetArticleQuery(Number(articleId));
 
-  const audioContextRef = useRef<AudioContext | null>(null);
-
-  useEffect(() => {
-    audioContextRef.current = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
-
-  }, []);
+  // const findEmotionsInArticle = (emotionId: number) => {
+  //   if (!articleData?.emotions || articleData?.emotions.length === 0) return null;
+  //   return articleData?.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions;
+  // };
 
   return (
     <div className='flex justify-around'>
@@ -24,15 +23,21 @@ const Collect = () => {
       <div className='w-7/12 p-5'>
         <h1 className='text-6xl font-extrabold mb-6'> purpose </h1>
         <div className='flex w-full mb-4 select-none'>
-          {/* 還要對上 emotionId */}
-          {articleData?.emotions && articleData?.emotions.length > 0 &&
-            articleData?.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map((emotion) => {
-              return <EmotionButton
-                defaultStyle={false}
-                label={emotion}
-                className='text-lg px-3 py-1.5 rounded-full'
-              />
-            })}
+
+          {/* 對上 emotionId */}
+          {
+            articleData?.emotions && articleData.emotions.length > 0 &&
+              articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions
+              ? articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map(emotion => (
+                <EmotionButton
+                  defaultStyle={false}
+                  label={emotion}
+                  className='text-lg px-3 py-1.5 rounded-full'
+                />
+              ))
+              : null
+          }
+
         </div>
 
         <WaveSurferPlayer
@@ -41,6 +46,15 @@ const Collect = () => {
           progressColor="rgb(159, 157, 149)"
           url={AudioData}
         />
+
+        <div className='mt-8 select-none'>
+          <textarea
+            className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg drop-shadow-lg focus:border-orange-300 focus:drop-shadow-lg outline-0'
+            spellCheck={false}
+            value={articleData?.content}
+            readOnly
+          ></textarea>
+        </div>
       </div>
 
 

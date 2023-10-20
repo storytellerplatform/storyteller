@@ -85,7 +85,7 @@ const Signin: React.FC = () => {
 
   return (
     <div className='flex justify-center'>
-      <form className='flex flex-col w-1/3 p-5'>
+      <div className='flex flex-col w-1/3 p-5'>
 
         <label htmlFor="storyteller-signin-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
         <div className="flex flex-col gap-2 mb-46">
@@ -136,7 +136,7 @@ const Signin: React.FC = () => {
         <div className='self-center '>
           <NavSigninButton type='submit' isLoading={isLoading} onClick={handleSigninClick} />
         </div>
-      </form>
+      </div>
     </div>
   )
 }
