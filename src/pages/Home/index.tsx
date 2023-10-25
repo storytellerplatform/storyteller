@@ -17,7 +17,7 @@ const Home = () => {
       <div className='w-full flex flex-row items-center justify-center'>
         {/* 跳動文字 */}
         <div className='w-1/4 flex flex-col items-center justify-start'>
-          <div className='w-1/3 flex flex-col'>
+          <div className='w-1/3 flex flex-col select-none'>
             <img className='w-16 self-start' src={A} alt="a" />
             <img className='w-16 self-end' src={B} alt="b" />
             <img className='w-16 self-center' src={C} alt="c" />
@@ -36,7 +36,7 @@ const Home = () => {
           </div>
 
           {/* 立即試用按鈕 */}
-          <div className='flex justify-center my-12'>
+          <div className='flex justify-center my-12 select-none'>
             <button className="relative inline-flex items-center justify-center mb-2 mr-2 overflow-hidden text-xl font-bold text-gray-900 rounded-lg group bg-gradient-to-br from-yellow-200 to-red-200 focus:outline-none focus:ring-0" type='button'>
 
               <span className="relative px-7 py-3 transition-all ease-in duration-300 bg-white  rounded-md group-hover:bg-opacity-0">
@@ -50,9 +50,9 @@ const Home = () => {
         </div>
 
         {/* 跳動音符 */}
-        <div className='flex flex-col justify-center w-1/4 gap-2'>
-          <img className='self-center w-16' src={MusicIcon} alt="music" />
-          <img className='self-center w-16' src={MusicNote} alt="music" />
+        <div className='flex flex-col justify-center w-1/4 gap-4 select-none'>
+          <img className='self-center w-16 rotate-12' src={MusicIcon} alt="music" />
+          <img className='self-center w-16 -rotate-12' src={MusicNote} alt="music" />
         </div>
       </div>
 

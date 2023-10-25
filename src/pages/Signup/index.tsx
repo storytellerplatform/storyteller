@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { HiOutlineMail } from 'react-icons/hi';
 import { BiSolidLockAlt } from 'react-icons/bi';
@@ -9,14 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { ErrorCode, ErrorForm, codeToMsg } from '../../utils/errorCodeToMsg';
 import { useLazyCheckEmailQuery, useLazyCheckUsernameQuery } from '../../feature/api/userSlice';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { isEmailValid, isPasswordValid } from '../../utils/validator';
+import { serverErrorNotify } from '../../utils/toast';
 
 const Signin: React.FC = () => {
-  const passwordPattern = "^[a-zA-Z0-9]{6,}$";
-
-  const serverErrorNotify = (errorMsg: string) => toast.error(errorMsg);
-
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState<SignupType>({
@@ -33,11 +30,20 @@ const Signin: React.FC = () => {
 
   const [signup, { isLoading }] = useSignupMutation();
 
-  // const { data: checkUsernameExists } = useLazyCheckUsernameQuery(user.username);
   const [triggerCheckUsernameExists, checkUsernameExistsResult] = useLazyCheckUsernameQuery();
-
-  // const { trigger: checkEmailExists } = useLazyCheckEmailQuery(user.email);
   const [triggerCheckEmailExists, checkEmailExistsResult] = useLazyCheckEmailQuery();
+
+  useEffect(() => {
+    if (errors.name !== "") {
+      serverErrorNotify(errors.name);
+    }
+    if (errors.email !== "") {
+      serverErrorNotify(errors.email);
+    }
+    if (errors.password !== "") {
+      serverErrorNotify(errors.password);
+    }
+  }, [errors])
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUsername = e.target.value;
@@ -66,15 +72,8 @@ const Signin: React.FC = () => {
     }));
   };
 
-  const isPasswordValid = (password: string) => {
-    return (
-      password.length >= 6 &&
-      /[A-Za-z]/.test(password) &&
-      /\d/.test(password)
-    );
-  };
-
   const validateUsername = () => {
+    // 從資料庫確認是否使用者名稱有重複
     triggerCheckUsernameExists(user.name);
     const { data: checkUsernameExists } = checkUsernameExistsResult;
     if (user.name && checkUsernameExists) {
@@ -84,8 +83,13 @@ const Signin: React.FC = () => {
     }
   };
 
-  // TODO: 驗證 Email
+  // 從資料庫確認是否使用者信箱有重複
   const validateEmail = () => {
+    if (!isEmailValid(user.email)) {
+      setErrors((errs) => ({ ...errs, email: '電子郵件格式錯誤!' }));
+      return;
+    }
+
     triggerCheckEmailExists(user.email);
     const { data: checkEmailExists } = checkEmailExistsResult;
     if (user.email && checkEmailExists) {
@@ -97,7 +101,7 @@ const Signin: React.FC = () => {
 
   const validatePassword = () => {
     if (!isPasswordValid(user.password)) {
-      setErrors((errs) => ({ ...errs, password: '密碼必須至少包括一個數字、一個字母，並且其長度必須超過6個字符' }));
+      setErrors((errs) => ({ ...errs, password: '密碼必須至少包括一個數字、一個字母, 並且其長度必須超過6個字符' }));
     } else {
       setErrors((errs) => ({ ...errs, password: '' }));
     }
@@ -120,12 +124,8 @@ const Signin: React.FC = () => {
       }
 
       if (err.status === 'FETCH_ERROR') {
-        serverErrorNotify("Server error");
+        serverErrorNotify("Server not connected!");
         return;
-      }
-
-      if (!err.data && err.status === 403) {
-        serverErrorNotify("Server error");
       }
 
       serverErrorNotify("Server error");
@@ -142,7 +142,7 @@ const Signin: React.FC = () => {
         <label htmlFor="storyteller-signip-username" className="block mb-2 text-lg font-bold text-gray-900">您的名稱</label>
         <div className="flex flex-col gap-2 mb-4">
 
-          <div className='flex'>
+          <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <svg className="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
@@ -154,7 +154,6 @@ const Signin: React.FC = () => {
               id="storyteller-signip-username"
               value={user?.name}
               onChange={handleUsernameChange}
-              // minLength={6}
               onBlur={validateUsername}
               autoFocus
               className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
@@ -170,7 +169,7 @@ const Signin: React.FC = () => {
         <label htmlFor="storyteller-signup-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
         <div className="flex flex-col gap-2 mb-4">
 
-          <div className='flex'>
+          <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <HiOutlineMail size={24} />
             </span>
@@ -192,7 +191,7 @@ const Signin: React.FC = () => {
         <label htmlFor="storyteller-signup-password" className="block mb-2 text-lg font-bold text-gray-900">密碼</label>
         <div className="flex flex-col gap-2 mb-4">
 
-          <div className='flex'>
+          <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <BiSolidLockAlt size={24} />
             </span>
@@ -202,7 +201,6 @@ const Signin: React.FC = () => {
               name='password'
               value={user.password}
               onChange={handlePasswordChange}
-              pattern={passwordPattern}
               title="Password should be at least 6 characters long and contain only letters and numbers."
               onBlur={validatePassword}
               required
@@ -215,7 +213,7 @@ const Signin: React.FC = () => {
         </div>
 
         <div className='self-center'>
-          <NavSignupButton type='submit' className='' isLoading={isLoading} onClick={handleSignupClick} />
+          <NavSignupButton type='submit' isLoading={isLoading} onClick={handleSignupClick} />
         </div>
       </div>
     </div>

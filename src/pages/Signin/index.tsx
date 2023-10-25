@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { HiOutlineMail } from 'react-icons/hi';
 import { BiSolidLockAlt } from 'react-icons/bi';
@@ -12,6 +12,8 @@ import Cookies from 'js-cookie';
 import { useAppDispatch } from '../../app/hooks';
 import { setEmail, setUserId, setUsername } from '../../feature/user/userSlice';
 import { setToken } from '../../feature/auth/authSlice';
+import { serverErrorNotify } from '../../utils/toast';
+import { isEmailValid, isPasswordValid } from '../../utils/validator';
 
 const Signin: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +32,37 @@ const Signin: React.FC = () => {
 
   const [signin, { isLoading }] = useSigninMutation();
 
+  useEffect(() => {
+    if (errors.email !== "") {
+      serverErrorNotify(errors.email);
+    }
+    if (errors.password !== "") {
+      serverErrorNotify(errors.password);
+    }
+  }, [errors])
+
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser(prevUser => ({
       ...prevUser as SigninType,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const validateEmail = () => {
+    if (!isEmailValid(user.email)) {
+      setErrors((errs) => ({ ...errs, email: '電子郵件格式錯誤!' }));
+      return;
+    } else {
+      setErrors((errs) => ({ ...errs, email: "" }));
+    }
+  }
+
+  const validatePassword = () => {
+    if (!isPasswordValid(user.password)) {
+      setErrors((errs) => ({ ...errs, password: '密碼必須至少包括一個數字、一個字母, 並且其長度必須超過6個字符' }));
+    } else {
+      setErrors((errs) => ({ ...errs, password: '' }));
+    }
   };
 
   const handleSigninClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,9 +85,6 @@ const Signin: React.FC = () => {
 
     try {
       const response = await signin(user as SigninType).unwrap();
-
-      // console.log(response);
-      // console.log(response.token);
 
       Cookies.set(
         'jwtToken',
@@ -90,7 +115,7 @@ const Signin: React.FC = () => {
         <label htmlFor="storyteller-signin-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
         <div className="flex flex-col gap-2 mb-46">
 
-          <div className='flex'>
+          <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <HiOutlineMail size={24} />
             </span>
@@ -100,9 +125,12 @@ const Signin: React.FC = () => {
               name="email"
               value={user.email}
               onChange={handleFormChange}
+              onBlur={validateEmail}
+              autoFocus
               className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
                 { 'outline outline-red-400': errors.email })}
-              placeholder="onandon@gmail.com" />
+              placeholder="onandon@gmail.com"
+            />
           </div>
 
           {errors.email && <div className='text-red-500'>{errors.email}</div>}
@@ -111,7 +139,7 @@ const Signin: React.FC = () => {
         <label htmlFor="storyteller-signin-username" className="block mb-2 text-lg font-bold text-gray-900">密碼</label>
         <div className="flex flex-col gap-2 mb-4">
 
-          <div className='flex'>
+          <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <BiSolidLockAlt size={24} />
             </span>
@@ -121,7 +149,7 @@ const Signin: React.FC = () => {
               name="password"
               value={user.password}
               onChange={handleFormChange}
-              pattern={PASSWORD_PATTERN}
+              onBlur={validatePassword}
               title="Password should be at least 6 characters long and contain only letters and numbers."
               required
               className={classNames("rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5",
