@@ -25,6 +25,7 @@ const Collect = () => {
         <div className='flex w-full mb-4 select-none'>
 
           {/* 對上 emotionId */}
+          {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
           {
             articleData?.emotions && articleData.emotions.length > 0 &&
               articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions
@@ -42,9 +43,11 @@ const Collect = () => {
 
         <WaveSurferPlayer
           height={100}
-          waveColor="rgb(255, 189, 67)"
-          progressColor="rgb(159, 157, 149)"
+          waveColor={["rgb(255, 189, 67)", "rgba(255, 237, 98, 0.8)"]}
+          progressColor={["rgb(169, 115, 14)", "rgba(247, 241, 191, 0.8)"]}
           url={AudioData}
+          cursorWidth={3}
+          cursorColor="rgb(250, 204, 120)"
         />
 
         <div className='mt-8 select-none'>

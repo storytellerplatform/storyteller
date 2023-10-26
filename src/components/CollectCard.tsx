@@ -21,19 +21,6 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigte = useNavigate();
 
-  let gridClass: string = "grid-cols-3";
-
-  if (!emotions) {
-    gridClass = "";
-  } else if (emotions.length >= 3) {
-    gridClass = "grid-cols-3";
-  } else if (emotions.length === 2) {
-    gridClass = "grid-cols-2";
-  } else {
-    gridClass = "grid-cols-1";
-  }
-
-
   function toggleAudio(): void {
     if (play) {
       audioRef.current?.pause();
@@ -68,7 +55,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
         purpose
       </h1>
 
-      <div className={`grid ${gridClass} gap-y-1 text-xl font-semibold`}>
+      <div className={`grid grid-cols-3 gap-y-1 text-xl font-semibold`}>
         {emotions ? emotions.map((emotion) => {
           return <EmotionButton
             label={emotion}
@@ -76,11 +63,8 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
             className='px-3 py-1.5 rounded-full text-base'
           />
         })
-          : "無"
+          : <span className='px-3 w-16 col-start-2 col-end-3'>無</span>
         }
-
-        {/*
-        <EmotionButton label={'開心'} defaultStyle={false} className='px-3 py-1.5 rounded-full text-base' /> */}
       </div>
 
       <span className='font-bold font-mono'>{createDate.toString().split('T')[0]}</span>

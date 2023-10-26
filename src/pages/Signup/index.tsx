@@ -11,7 +11,7 @@ import { ErrorCode, ErrorForm, codeToMsg } from '../../utils/errorCodeToMsg';
 import { useLazyCheckEmailQuery, useLazyCheckUsernameQuery } from '../../feature/api/userSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { isEmailValid, isPasswordValid } from '../../utils/validator';
-import { serverErrorNotify } from '../../utils/toast';
+import { emailSendingNotification, serverErrorNotify } from '../../utils/toast';
 
 const Signin: React.FC = () => {
   const navigate = useNavigate();
@@ -101,7 +101,7 @@ const Signin: React.FC = () => {
 
   const validatePassword = () => {
     if (!isPasswordValid(user.password)) {
-      setErrors((errs) => ({ ...errs, password: '密碼必須至少包括一個數字、一個字母, 並且其長度必須超過6個字符' }));
+      setErrors((errs) => ({ ...errs, password: '密碼必須至少包括一個數字、一個字母，並且其長度必須超過6個字符' }));
     } else {
       setErrors((errs) => ({ ...errs, password: '' }));
     }
@@ -109,9 +109,9 @@ const Signin: React.FC = () => {
 
   const handleSignupClick = async () => {
     try {
-      const response = await signup(user as SignupType).unwrap();
-      console.log(response);
+      await signup(user as SignupType).unwrap();
       navigate('/signin');
+      emailSendingNotification("為了完成註冊，請點擊您的信箱中的授權連結。")
     } catch (err: any) {
       console.log(err);
 

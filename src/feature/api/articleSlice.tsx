@@ -1,5 +1,11 @@
 import { Article } from "../../types/article";
+import { EmotionProps } from "../../types/components";
 import { apiSlice } from "./apiSlice";
+
+export interface UpdateEmotionsRequest {
+  articleId: number,
+  emotions: Array<EmotionProps>
+}
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -9,7 +15,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       })
     }),
+    UpdateEmotions: builder.mutation<Article, UpdateEmotionsRequest>({
+      query: ({ articleId, emotions }) => ({
+        url: `/article/emotion/${articleId}`,
+        method: 'POST',
+        body: emotions
+      })
+    })
   })
 })
 
-export const { useGetArticleQuery } = extendedApiSlice;
+export const { useGetArticleQuery, useUpdateEmotionsMutation } = extendedApiSlice;

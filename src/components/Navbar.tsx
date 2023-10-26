@@ -31,16 +31,16 @@ const Navbar = () => {
         <div className='flex gap-4 items-center'>
 
           <Link to='/music'>
-            <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>創造音樂</button>
+            <button className='text-lg text-gray-700 font-bold hover:text-orange-300 transition-all duration-200 ease-in-out'>創造音樂</button>
           </Link>
           <Link to="/collection">
-            <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>收藏</button>
+            <button className='text-lg text-gray-700 font-bold hover:text-orange-300 transition-all duration-200 ease-in-out'>收藏</button>
           </Link>
 
-          <button className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out' onClick={handleLogoutClick}>登出</button>
+          <button className='text-lg text-gray-700 font-bold hover:text-orange-300 transition-all duration-200 ease-in-out' onClick={handleLogoutClick}>登出</button>
 
           <div>
-            <span className='text-lg text-orange-400 font-bold hover:text-orange-200 transition-all duration-300 ease-in-out'>
+            <span className='text-lg text-gray-700 font-bold hover:text-orange-300 transition-all duration-200 ease-in-out'>
               {username}
             </span>
           </div>
