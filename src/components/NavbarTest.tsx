@@ -4,20 +4,24 @@ import { AiOutlineRead } from 'react-icons/ai'
 import { BsCollection } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames';
+import LoginForm from '../pages/Home/components/LoginForm'
 
 const NavbarTest = () => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const [showLoginForm, setShowLoginForm] = React.useState<boolean>(false);
 
-  const createNavLink = (name: string, nameWidth: string, lineWidth: string, isPresent: boolean, icon: ReactNode) => {
+  const createNavLink = (name: string, nameWidth: string, lineWidth: string, isPresent: boolean, icon: ReactNode, handleClick?: React.MouseEventHandler<HTMLButtonElement>) => {
     return <>
-      <span
-        className={classNames(`relative cursor-pointer
+      <button
+        type='button'
+        onClick={handleClick}
+        className={classNames(`relative cursor-pointer text-start
             before:content-[""] before:absolute before:w-0 ${lineWidth} before:h-[1.5px] before:bottom-0 before:left-10 before:bg-white before:z-50 before:transition-all  before:duration-300 before:ease-out-in 
             ${name} ${nameWidth} after:absolute after:top-0 after:left-10 after:text-white after:font-bold after:text-sm after:tracking-widest after:z-50 after:opacity-0  after:transition-all after:ease-in-out after:duration-150`,
           { 'after:opacity-100': isPresent })}
       >
         {icon}
-      </span>
+      </button>
     </>
   }
 
@@ -41,7 +45,8 @@ const NavbarTest = () => {
             <FiLogIn
               color='white'
               size={24}
-            />
+            />,
+            () => setShowLoginForm((prevShowLoginForm) => !prevShowLoginForm)
           )}
 
           {createNavLink(
@@ -76,9 +81,9 @@ const NavbarTest = () => {
         >
         </div>
 
+        <LoginForm showLoginForm={showLoginForm} setShowLoginForm={setShowLoginForm} />
+
       </div>
-
-
     </>
   )
 }
