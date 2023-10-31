@@ -112,7 +112,7 @@ const Signin: React.FC = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className='flex flex-col w-1/3 p-5'>
+      <div className='flex flex-col p-5 w-4/5 lg:w-1/3 md:w-2/3'>
 
         <label htmlFor="storyteller-signin-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
 
@@ -140,7 +140,7 @@ const Signin: React.FC = () => {
 
         <label htmlFor="storyteller-signin-username" className="block mb-2 text-lg font-bold text-gray-900">密碼</label>
 
-        <div className="flex flex-col gap-2 mb-4">
+        <div className="flex flex-col gap-2 mb-6">
           <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
               <BiSolidLockAlt size={24} />

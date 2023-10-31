@@ -21,7 +21,7 @@ const Collect = () => {
     <div className='flex justify-around'>
       {/* 左 */}
       <div className='w-7/12 p-5'>
-        <h1 className='text-6xl font-extrabold mb-6'> purpose </h1>
+        {/* <h1 className='text-6xl font-extrabold mb-6'> purpose </h1> */}
         <div className='flex w-full mb-4 select-none'>
 
           {/* 對上 emotionId */}

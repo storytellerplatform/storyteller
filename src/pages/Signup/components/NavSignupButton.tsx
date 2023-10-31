@@ -11,7 +11,7 @@ const NavSignupButton: React.FC<NavSignupButtonProps> = ({ type, className, onCl
     <button
       type={type}
       onClick={onClick}
-      className={classNames(`flex items-center justify-start bg-white px-4 py-1.5 ring-2 ring-orange-300 rounded-2xl text-lg text-orange-300 font-bold transition-all duration-150 ease-in hover:text-white`,
+      className={classNames(`flex items-center justify-start bg-white px-4 py-1.5 ring-2 ring-orange-300 rounded-2xl text-lg text-orange-300 font-bold transition-all duration-150 ease-in hover:text-white select-none`,
         className,
         { 'hover:bg-orange-300': !isLoading })}>
 

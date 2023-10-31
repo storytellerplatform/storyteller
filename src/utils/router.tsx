@@ -11,6 +11,7 @@ import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import Admin from "../pages/Admin";
 import FreeMusic from "../pages/FreeMusic";
+import TestHome from "../pages/Home/testPage";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Home />,
+            element: <TestHome />,
           },
           {
             path: "/collection",

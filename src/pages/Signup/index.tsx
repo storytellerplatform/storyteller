@@ -134,7 +134,7 @@ const Signin: React.FC = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className='flex flex-col w-1/3 p-5'>
+      <div className='flex flex-col p-5 w-4/5 lg:w-1/3 md:w-2/3'>
 
         {/* Test error message */}
         {/* {error && <p> {JSON.stringify(error)} </p>} */}
@@ -144,6 +144,7 @@ const Signin: React.FC = () => {
 
           <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
+              {/* icon */}
               <svg className="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
               </svg>
@@ -156,7 +157,7 @@ const Signin: React.FC = () => {
               onChange={handleUsernameChange}
               onBlur={validateUsername}
               autoFocus
-              className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
+              className={classNames(`rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
                 { 'outline outline-red-400': errors.name }
               )}
               placeholder="onandon"
@@ -165,6 +166,7 @@ const Signin: React.FC = () => {
 
           {errors.name && <div className='text-red-500'>{errors.name}</div>}
         </div>
+
 
         <label htmlFor="storyteller-signup-email" className="block mb-2 text-lg font-bold text-gray-900">電子信箱</label>
         <div className="flex flex-col gap-2 mb-4">
@@ -180,7 +182,7 @@ const Signin: React.FC = () => {
               value={user.email}
               onChange={handleEmailChange}
               onBlur={validateEmail}
-              className={classNames(`rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
+              className={classNames(`rounded-r-lg bg-gray-50 border text-gray-900 focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-orange-300 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5`,
                 { 'outline outline-red-400': errors.email })}
               placeholder="onandon@gmail.com" />
           </div>
@@ -189,7 +191,7 @@ const Signin: React.FC = () => {
         </div>
 
         <label htmlFor="storyteller-signup-password" className="block mb-2 text-lg font-bold text-gray-900">密碼</label>
-        <div className="flex flex-col gap-2 mb-4">
+        <div className="flex flex-col gap-2 mb-6">
 
           <div className='flex select-none'>
             <span className="inline-flex items-center px-3 text-sm text-gray-400 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">

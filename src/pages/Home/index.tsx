@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <main className='flex flex-col relative bg-gradient-to-br from-orange-100 to-rose-100'>
+    <main className='relative flex flex-col w-full bg-gradient-to-br from-orange-100 to-rose-100'>
 
       <div className='w-full flex flex-row items-center justify-center'>
         {/* 跳動文字 */}

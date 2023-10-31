@@ -14,6 +14,7 @@ import { serverErrorNotify } from '../../utils/toast';
 
 const Music = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
+  const [articleName, setArticleName] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
@@ -24,6 +25,10 @@ const Music = () => {
   const [updateEmotions, { isLoading: isUpdateEmotionsLoading }] = useUpdateEmotionsMutation();
 
   const userId: string = useAppSelector(getUserId);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setArticleName(e.target.value);
+  }
 
   const handleArticleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setArticleContent(e.target.value);
@@ -75,12 +80,22 @@ const Music = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex flex-row p-10 justify-between'>
+      <div className='flex flex-row w-full p-8 justify-between bg-white'>
         {/* 左區 */}
         <div className='select-none lg:w-1/2'>
-          {/* 文字框 */}
+          {/* 命名該文章創作的音樂 可以 random */}
+          <label htmlFor='name' className='block mb-1 text-xl font-bold text-gray-700'>命名您的主題</label>
+          <input
+            type='text'
+            value={articleName}
+            onChange={handleNameChange}
+            className='block mb-4 p-2 indent-2 w-4/5 text-base text-gray-900 drop-shadow-md focus-visible:outline-none'
+            maxLength={20}
+            placeholder='說書人...'
+          />
 
-          <label htmlFor="article" className="block mb-4 text-2xl font-extrabold text-gray-900 ">
+          {/* 文字框 */}
+          <label htmlFor="article" className="block mb-1 text-2xl font-extrabold text-gray-900">
             分享您的故事，開始創作音樂
           </label>
           <textarea
@@ -97,8 +112,8 @@ const Music = () => {
             onClick={handleAnalyzeClick}
             disabled={!articleContent}
             type="submit"
-            className={classNames(`relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200`,
-              { 'opacity-50': !articleContent })}
+            className={classNames(`relative inline-flex items-center justify-center p-0.5 m-4 overflow-hidden text-xl font-extrabold text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200`,
+              { 'opacity-50 group-hover:bg-white': !articleContent })}
           >
             <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 group-hover:text-white">
               分析
@@ -148,7 +163,7 @@ const Music = () => {
             {/* 產生音樂按鈕 */}
             <button
               type='button'
-              className={classNames(`w-10 h-10 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
+              className={classNames(`my-2 w-8 h-8 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
                 { 'my-1': emotions })}
               onClick={() => setShowModal(true)}
             >
@@ -194,10 +209,10 @@ const Music = () => {
         </div>
       </div >
       {/* 產生音樂列表 */}
-      <div className='flex flex-col p-10 gap-2' >
-        {isAllSet && <h1 className='text-3xl font-extrabold mb-4'> 音樂列表 </h1>}
-        {/* <MusicCard name='onandon' emotions={['開心', '憤怒']} /> */}
-      </div >
+      {/* <div className='flex flex-col p-10 gap-2' > */}
+      {/* {isAllSet && <h1 className='text-3xl font-extrabold mb-4'> 音樂列表 </h1>} */}
+      {/* <MusicCard name='onandon' emotions={['開心', '憤怒']} /> */}
+      {/* </div > */}
     </>
   )
 }
