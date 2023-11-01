@@ -1,8 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import Book from '../../assets/homePageImage.svg'
+import { useAppDispatch } from '../../app/hooks';
+import { taggleRegisterForm, turnOffLoginFormDelayMove, turnOffRegisterFormDelayMove } from '../../feature/authSidebar';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 const TestHome = () => {
+  const dispatch = useAppDispatch();
+
+  const handleOpenRegisterFormClick = () => {
+    dispatch(taggleRegisterForm());
+    dispatch(turnOffLoginFormDelayMove());
+  }
+
   return (
     <main className='relative px-8 flex flex-row justify-evenly w-full bg-gradient-to-r from-zinc-950 via-zinc-900 via-50% to-zinc-700 text-white'>
 
@@ -20,7 +30,9 @@ const TestHome = () => {
           </button>
 
           <button
-            type='button' className='px-14 py-2 w-fit border border-white bg-white font-bold text-black text-lg rounded-full transition-all duration-300 ease-out hover:bg-black hover:text-white'
+            type='button'
+            onClick={handleOpenRegisterFormClick}
+            className='px-14 py-2 w-fit border border-white bg-white font-bold text-black text-lg rounded-full transition-all duration-300 ease-out hover:bg-black hover:text-white'
           >
             註冊
           </button>
@@ -28,6 +40,9 @@ const TestHome = () => {
       </div>
 
       <img className='w-1/2' src={Book} alt="book" />
+
+      <LoginForm />
+      <RegisterForm />
     </main>
   )
 }

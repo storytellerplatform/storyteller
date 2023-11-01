@@ -4,11 +4,16 @@ import { AiOutlineRead } from 'react-icons/ai'
 import { BsCollection } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames';
-import LoginForm from '../pages/Home/components/LoginForm'
+import { taggleLoginForm, turnOffLoginFormDelayMove, turnOffRegisterFormDelayMove } from '../feature/authSidebar'
+import { useAppDispatch } from '../app/hooks'
 
 const NavbarTest = () => {
   const [isHovered, setIsHovered] = React.useState(false);
-  const [showLoginForm, setShowLoginForm] = React.useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  const handleOpenLoginFormClick = () => {
+    dispatch(taggleLoginForm());
+  }
 
   const createNavLink = (name: string, nameWidth: string, lineWidth: string, isPresent: boolean, icon: ReactNode, handleClick?: React.MouseEventHandler<HTMLButtonElement>) => {
     return <>
@@ -46,8 +51,8 @@ const NavbarTest = () => {
               color='white'
               size={24}
             />,
-            () => setShowLoginForm((prevShowLoginForm) => !prevShowLoginForm)
-          )}
+            handleOpenLoginFormClick)
+          }
 
           {createNavLink(
             "after:content-['創作音樂']",
@@ -80,8 +85,6 @@ const NavbarTest = () => {
           { 'w-0': !isHovered })}
         >
         </div>
-
-        <LoginForm showLoginForm={showLoginForm} setShowLoginForm={setShowLoginForm} />
 
       </div>
     </>
