@@ -6,6 +6,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames';
 import { taggleLoginForm } from '../feature/authSidebar'
 import { useAppDispatch } from '../app/hooks'
+import LoginForm from './LoginForm'
+import RegisterForm from './RegisterForm'
+
 
 const NavbarTest = () => {
   const navigate = useNavigate();
@@ -90,6 +93,9 @@ const NavbarTest = () => {
         </div>
 
       </div>
+
+      <LoginForm />
+      <RegisterForm />
     </>
   )
 }

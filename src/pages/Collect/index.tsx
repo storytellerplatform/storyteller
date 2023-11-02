@@ -6,6 +6,9 @@ import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 
 import AudioData from '../../assets/music/NCSBlank.mp3';
 import { EmotionProps } from '../../types/components';
+import DownloadButton from '../../components/DownloadButton';
+
+import TestMusic from '../../assets/music/NCSBlank.mp3'
 
 const Collect = () => {
   const { articleId, emotionId } = useParams();
@@ -18,11 +21,13 @@ const Collect = () => {
   // };
 
   return (
-    <div className='flex justify-around'>
+    <div className='flex w-full'>
       {/* 左 */}
-      <div className='w-7/12 p-5'>
-        {/* <h1 className='text-6xl font-extrabold mb-6'> purpose </h1> */}
-        <div className='flex w-full mb-4 select-none'>
+      <div className='flex flex-col gap-8 w-7/12 p-5 bg-black h-screen'>
+
+        <h1 className='text-6xl font-extrabold text-white'> purpose </h1>
+
+        <div className='flex w-full select-none'>
 
           {/* 對上 emotionId */}
           {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
@@ -41,28 +46,39 @@ const Collect = () => {
 
         </div>
 
-        <WaveSurferPlayer
-          height={100}
-          waveColor={["rgb(255, 189, 67)", "rgba(255, 237, 98, 0.8)"]}
-          progressColor={["rgb(169, 115, 14)", "rgba(247, 241, 191, 0.8)"]}
-          url={AudioData}
-          cursorWidth={3}
-          cursorColor="rgb(250, 204, 120)"
-        />
+        <hr className='p-0 mb-4 w-full bg-white' />
+
+        <div className='mb-8'>
+          <WaveSurferPlayer
+            height={100}
+            waveColor={"#e1e1e1"}
+            progressColor={"rgba(112, 112, 112, 0.5)"}
+            url={AudioData}
+            cursorWidth={3}
+            cursorColor="rgb(255, 255, 255)"
+          />
+        </div>
+
+        <div className='w-1/3'>
+          <DownloadButton src={TestMusic} whitemode={false} />
+        </div>
+
+      </div>
+
+      {/* 右 */}
+      <div className='w-5/12 p-8'>
 
         <div className='mt-8 select-none'>
+          <h1 className='text-4xl font-bold mb-4'> 文章呈現 </h1>
           <textarea
-            className='h-32 w-full mb-4 p-2 px-4 border border-gray-400 rounded-lg drop-shadow-lg focus:border-orange-300 focus:drop-shadow-lg outline-0'
+            className='h-32 w-full mb-4 p-2 px-4 bg-slate-100 rounded-lg drop-shadow-lg  outline-0 text-black'
             spellCheck={false}
-            value={articleData?.content}
+            // value={articleData?.content}
+            value={"好玩"}
             readOnly
           ></textarea>
         </div>
       </div>
-
-
-      {/* 右 */}
-      <div className='w-4/12'></div>
     </div>
   )
 }

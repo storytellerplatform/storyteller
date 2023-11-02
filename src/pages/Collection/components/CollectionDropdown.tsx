@@ -4,9 +4,10 @@ import { FaAngleUp } from 'react-icons/fa';
 
 interface CollectionDropdownProps {
   name: string;
+  isAngleIconShow?: boolean;
 };
 
-const CollectionDropdown: React.FC<CollectionDropdownProps> = ({ name }) => {
+const CollectionDropdown: React.FC<CollectionDropdownProps> = ({ name, isAngleIconShow = true }) => {
   return (
     <>
       <button
@@ -21,7 +22,7 @@ const CollectionDropdown: React.FC<CollectionDropdownProps> = ({ name }) => {
           </i>
           {name}
         </span>
-        <FaAngleUp />
+        {isAngleIconShow && <FaAngleUp />}
       </button>
     </>
   )

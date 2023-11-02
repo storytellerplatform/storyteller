@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import EmotionButton from '../../components/EmotionButton'
 import CollectCard from '../../components/CollectCard'
 import { useGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
@@ -7,17 +6,34 @@ import { getUserId } from '../../feature/user/userSlice';
 import { Article } from '../../types/article';
 import CollectionDropdown from './components/CollectionDropdown';
 
-const Collection = () => {
-  const [articles, setArticles] = React.useState<Array<Article>>([]);
-  const userId: string = useAppSelector(getUserId);
-  const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
+const testArticles: Array<Article> = [
+  {
+    articleId: 1,
+    content: "今天天氣不錯",
+    purpose: "名稱",
+    emotions: [
+      {
+        emotionId: 1,
+        emotions: ["開心"]
+      }
+    ],
+    createdDate: new Date(Date.now()),
+  }
+]
 
-  useEffect(() => {
-    setArticles(articlesData || []);
-  }, [articlesData]);
+const Collection = () => {
+  const [articles, setArticles] = React.useState<Array<Article>>(testArticles);
+
+  // const userId: string = useAppSelector(getUserId);
+  // const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
+
+
+  // useEffect(() => {
+  // setArticles(articlesData || []);
+  // }, [articlesData]);
 
   return (
-    <div className='flex flex-row justify-between h-screen'>
+    <div className='flex flex-col h-screen w-full gap-3'>
 
       {/* 左區 */}
       {/* <div className='w-1/5 md:w-fit lg:w-1/5 p-[2px] rounded-lg h-fit bg-gradient-to-b from-orange-300 to-white-500'> */}
@@ -42,29 +58,47 @@ const Collection = () => {
 
       {/* 搜尋區域 */}
       {/* bg-gradient-to-b from-orange-300 to-white-500 */}
-      <div className='w-1/5 p-4 rounded-lg ml-12'>
-        {/* 改變日期先後 */}
+      <div className='flex justify-evenly gap-4 p-4 ml-12 rounded-lg'>
+        {/*搜尋名稱 */}
+        <div className='w-1/5'>
+          <CollectionDropdown name='搜尋名稱' />
+        </div>
 
         {/* 搜尋情緒 */}
-        <CollectionDropdown name='搜尋情緒' />
+        <div className='w-1/5'>
+          <CollectionDropdown name='搜尋情緒' />
+        </div>
+
+        {/* 搜尋情境 */}
+        <div className='w-1/5'>
+          <CollectionDropdown name='搜尋情境' />
+        </div>
+
+        {/* 改變日期先後 */}
+        <div className='w-1/5'>
+          <CollectionDropdown name='日期順序' isAngleIconShow={false} />
+        </div>
       </div>
 
-      {/* 右區 */}
-      <div className='w-3/4 flex flex-col pr-12 bg-slate-100 select-none'>
-        {/* 收藏 */}
-        {articles.length !== 0 && articles.map(article => {
-          return article.emotions.map((emotion) => {
-            return <CollectCard
-              key={article.articleId.toString()}
-              articleId={article.articleId.toString()}
-              emotionId={emotion.emotionId.toString()}
-              emotions={emotion.emotions}
-              createDate={article.createdDate}
-            />;
-          })
-        })}
+      {/* 收藏區 */}
+      <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
+        {/* table */}
+        <div className='w-4/5 bg-white select-none'>
+          {/* 收藏 */}
+          {articles.length !== 0 && articles.map(article => {
+            return article.emotions.map((emotion) => {
+              return <CollectCard
+                key={article.articleId.toString()}
+                articleId={article.articleId.toString()}
+                emotionId={emotion.emotionId.toString()}
+                emotions={emotion.emotions}
+                createDate={article.createdDate}
+              />;
+            })
+          })}
+        </div>
       </div>
-    </div>
+    </div >
   )
 }
 

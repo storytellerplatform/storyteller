@@ -1,19 +1,24 @@
+import classNames from 'classnames'
 import React from 'react'
 
-import { BiSolidDownload } from 'react-icons/bi'
+import { LiaDownloadSolid } from 'react-icons/lia'
 
 interface DownloadButtonProps {
-  src: 'string',
+  src: string,
+  whitemode: boolean
+  classnames?: string
 }
 
-const DownloadButton: React.FC<DownloadButtonProps> = ({ src }) => {
+const DownloadButton: React.FC<DownloadButtonProps> = ({ src, whitemode, classnames }) => {
   return (
     <button
       type='button'
-      className='py-2 px-4 ring-2 ring-orange-300 rounded-full text-lg text-orange-300 font-bold cursor-pointer transition-all duration-200 ease-out hover:text-white hover:bg-orange-300'
+      className={classNames(`flex items-center justify-center w-full py-2 px-8 border-2 rounded-full text-base tracking-widest  font-semibold cursor-pointer transition-all duration-200 ease-out ${classnames}`,
+        { 'border-white text-white bg-black hover:text-black hover:bg-white': !whitemode },
+        { 'border-black text-black hover:text-white hover:bg-black': whitemode })}
     >
-      <a className='flex items-center gap-2' href={src} download>
-        <BiSolidDownload size={24} className='font-bold' />
+      <a className='flex items-center' href={src} download>
+        <LiaDownloadSolid size={24} className='font-bold' />
         下載
       </a>
     </button>

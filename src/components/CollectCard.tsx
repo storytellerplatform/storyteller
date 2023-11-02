@@ -32,12 +32,12 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
   }
 
   return (
-    <div className='flex justify-between w-full p-4 items-center border border-y-orange-200 border-x-white'>
+    <div className='flex justify-between w-full p-4 items-center border border-white'>
 
       {play ?
-        <BiPauseCircle onClick={toggleAudio} size={36} className='text-orange-300 cursor-pointer' />
+        <BiPauseCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
         :
-        <BiPlayCircle onClick={toggleAudio} size={36} className='text-orange-300 cursor-pointer' />
+        <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
       }
       <audio ref={audioRef} src={TestMusic} />
 
@@ -52,24 +52,27 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
         className='py-6 text-gray-600 text-lg font-bold cursor-pointer'
         onClick={() => navigte(`/collection/${articleId}/${emotionId}`)}
       >
-        purpose
+        名稱
       </h1>
 
-      <div className={`grid grid-cols-3 gap-y-1 text-xl font-semibold`}>
+      <div className={`grid grid-cols-2 gap-y-1 text-xl font-semibold`}>
         {emotions ? emotions.map((emotion) => {
           return <EmotionButton
             label={emotion}
             defaultStyle={false}
-            className='px-3 py-1.5 rounded-full text-base'
+            className='px-4 py-1 rounded-full text-sm'
           />
         })
-          : <span className='px-3 w-16 col-start-2 col-end-3'>無</span>
+          : <span className='px-3 w-16'>無</span>
         }
       </div>
 
-      <span className='font-bold font-mono'>{createDate.toString().split('T')[0]}</span>
+      {/* <span className='font-bold font-mono'>{createDate.toString().split('T')[0]}</span> */}
+      <span className='font-bold font-mono'>{createDate.toDateString()}</span>
 
-      <DownloadButton src={TestMusic} />
+      <div className='w-1/10'>
+        <DownloadButton src={TestMusic} whitemode={true} />
+      </div>
     </div>
   )
 }

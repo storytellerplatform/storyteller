@@ -42,8 +42,12 @@ const WaveSurferPlayer: React.FC<UseWavesurferProps> = (props) => {
       <div className='flex flex-row gap-4'>
         <button onClick={onPlayClick} className='mt-2 inline-block'>
           {isPlaying ?
-            <span className=' text-orange-300'> <BiPauseCircle size={42} /> </span> :
-            <span className=' text-orange-300'> <BiPlayCircle size={42} /> </span>}
+            <span className='text-white'>
+              <BiPauseCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
+            </span> :
+            <span className='text-white'>
+              <BiPlayCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
+            </span>}
         </button>
 
         <div ref={containerRef} className='w-full' />

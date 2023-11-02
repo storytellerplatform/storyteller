@@ -2,8 +2,6 @@ import React from 'react'
 import Book from '../../assets/homePageImage.svg'
 import { useAppDispatch } from '../../app/hooks';
 import { taggleRegisterForm } from '../../feature/authSidebar';
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
 
 const TestHome = () => {
   const dispatch = useAppDispatch();
@@ -40,8 +38,6 @@ const TestHome = () => {
 
       <img className='w-1/2' src={Book} alt="book" />
 
-      <LoginForm />
-      <RegisterForm />
     </main>
   )
 }
