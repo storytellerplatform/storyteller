@@ -1,7 +1,7 @@
 import React from 'react'
 import Book from '../../assets/homePageImage.svg'
 import { useAppDispatch } from '../../app/hooks';
-import { taggleRegisterForm, turnOffLoginFormDelayMove, turnOffRegisterFormDelayMove } from '../../feature/authSidebar';
+import { taggleRegisterForm } from '../../feature/authSidebar';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
@@ -10,7 +10,6 @@ const TestHome = () => {
 
   const handleOpenRegisterFormClick = () => {
     dispatch(taggleRegisterForm());
-    dispatch(turnOffLoginFormDelayMove());
   }
 
   return (

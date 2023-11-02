@@ -1818,14 +1818,6 @@ video {
   transition-duration: 150ms;
 }
 
-.delay-150 {
-  transition-delay: 150ms;
-}
-
-.delay-700 {
-  transition-delay: 700ms;
-}
-
 .delay-200 {
   transition-delay: 200ms;
 }

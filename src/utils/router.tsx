@@ -12,6 +12,7 @@ import Signup from "../pages/Signup";
 import Admin from "../pages/Admin";
 import FreeMusic from "../pages/FreeMusic";
 import TestHome from "../pages/Home/testPage";
+import TestMusic from "../pages/Music/test";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/music",
-            element: <Music />,
+            element: <TestMusic />,
           },
         ]
       }

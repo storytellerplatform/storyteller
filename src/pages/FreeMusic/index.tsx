@@ -7,7 +7,7 @@ import { useAddNewArticleMutation } from '../../feature/api/userSlice';
 import { getUserId } from '../../feature/user/userSlice';
 import { AddNewArticleRequest } from '../../types/api/user';
 import { useAppSelector } from '../../app/hooks';
-import MusicModal from './../Music/MusicModal';
+import MusicModal from '../Music/components/MusicModal';
 
 const FreeMusic = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');

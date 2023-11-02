@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { getLoginForm, getLoginFormDelayMove, taggleLoginForm, turnOffLoginFormDelayMove } from '../../../feature/authSidebar';
+import { getLoginForm, taggleLoginForm } from '../../../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 interface LoginFormProps {
@@ -9,19 +9,17 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = () => {
   const isLoginFormOpen = useAppSelector(getLoginForm);
-  const delayMove = useAppSelector(getLoginFormDelayMove);
   const dispatch = useAppDispatch();
 
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleLoginForm());
-    dispatch(turnOffLoginFormDelayMove())
   }
 
   return (
     <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-5/12 max-w-full px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in`,
       { 'translate-x-full': !isLoginFormOpen },
-      { 'delay-200 ease-in-out': delayMove })}
+      { 'delay-200': isLoginFormOpen })}
     >
       <div className='flex justify-between items-start'>
         <h1 className='text-3xl font-extrabold'> 登入 </h1>

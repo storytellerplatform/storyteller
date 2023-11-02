@@ -12,7 +12,7 @@ import { Emotion } from '../../types/emotion';
 import { UpdateEmotionsRequest, useUpdateEmotionsMutation } from '../../feature/api/articleSlice';
 import { serverErrorNotify } from '../../utils/toast';
 
-const Music = () => {
+const TestMusic = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
   const [articleName, setArticleName] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -89,7 +89,7 @@ const Music = () => {
             type='text'
             value={articleName}
             onChange={handleNameChange}
-            className='block mb-4 p-2 indent-2 w-4/5 text-base text-gray-900 drop-shadow-md focus-visible:outline-none'
+            className='block mb-4 p-2 indent-2 w-4/5 text-base text-gray-900 drop-shadow-md  rounded-lg focus-visible:outline-none'
             maxLength={20}
             placeholder='說書人...'
           />
@@ -217,4 +217,4 @@ const Music = () => {
   )
 }
 
-export default Music
+export default TestMusic

@@ -2,12 +2,13 @@ import React, { ReactNode } from 'react'
 import { FiLogIn, FiMusic } from 'react-icons/fi'
 import { AiOutlineRead } from 'react-icons/ai'
 import { BsCollection } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames';
-import { taggleLoginForm, turnOffLoginFormDelayMove, turnOffRegisterFormDelayMove } from '../feature/authSidebar'
+import { taggleLoginForm } from '../feature/authSidebar'
 import { useAppDispatch } from '../app/hooks'
 
 const NavbarTest = () => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = React.useState(false);
   const dispatch = useAppDispatch();
 
@@ -63,7 +64,8 @@ const NavbarTest = () => {
               color='white'
               size={24}
               className='cursor-pointer'
-            />
+            />,
+            () => navigate('/music')
           )}
 
           {createNavLink(
@@ -74,7 +76,8 @@ const NavbarTest = () => {
             <BsCollection
               color='white'
               size={24}
-            />
+            />,
+            () => navigate('/collection')
           )}
 
         </nav>

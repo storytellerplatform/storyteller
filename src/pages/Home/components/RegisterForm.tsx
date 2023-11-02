@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { getRegisterForm, getRegisterFormDelayMove, taggleRegisterForm, turnOffRegisterFormDelayMove } from '../../../feature/authSidebar';
+import { getRegisterForm, taggleRegisterForm } from '../../../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 interface RegisterFormProps {
@@ -9,19 +9,17 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
-  const delayMove = useAppSelector(getRegisterFormDelayMove);
   const dispatch = useAppDispatch();
 
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleRegisterForm());
-    dispatch(turnOffRegisterFormDelayMove())
   }
 
   return (
     <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-5/12 max-w-full px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in`,
       { 'translate-x-full': !isRegisterFormOpen },
-      { 'delay-200 ease-in-out': delayMove })}
+      { 'delay-200': isRegisterFormOpen })}
     >
       <div className='flex justify-between items-start'>
         <h1 className='text-3xl font-extrabold'> 註冊 </h1>
