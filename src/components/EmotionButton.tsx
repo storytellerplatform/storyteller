@@ -15,7 +15,7 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({ label, onClick, color, se
       type='button'
       onClick={onClick}
       disabled={disabled}
-      className={classNames(`h-fit text-white bg-gradient-to-br to-slate-100 border hover:to-white hover:text-white focus:outline-none font-bold text-center transition-all ease-in duration-100`,
+      className={classNames(`h-fit text-white bg-gradient-to-br to-slate-100 border mr-2 rounded-xl  hover:to-white hover:text-white focus:outline-none font-bold text-center transition-all ease-in duration-100`,
         emotionClass,
         { 'opacity-50 border-opacity-50': selected },
         { 'px-3 py-1.5 text-sm': size === 'sm' },

@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import EmotionButton from '../../components/EmotionButton';
 import { useGetArticleQuery } from '../../feature/api/articleSlice';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 
 import AudioData from '../../assets/music/NCSBlank.mp3';
-import { EmotionProps } from '../../types/components';
 import DownloadButton from '../../components/DownloadButton';
 
 import TestMusic from '../../assets/music/NCSBlank.mp3'
@@ -15,6 +14,8 @@ const Collect = () => {
 
   const { data: articleData } = useGetArticleQuery(Number(articleId));
 
+  const [name, setName] = useState<string>("名字")
+
   // const findEmotionsInArticle = (emotionId: number) => {
   //   if (!articleData?.emotions || articleData?.emotions.length === 0) return null;
   //   return articleData?.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions;
@@ -23,9 +24,13 @@ const Collect = () => {
   return (
     <div className='flex w-full'>
       {/* 左 */}
-      <div className='flex flex-col gap-8 w-7/12 p-5 bg-black h-screen'>
+      <div className='flex flex-col gap-8 w-7/12 h-screen p-5 bg-black backdrop-blur-lg'>
 
-        <h1 className='text-6xl font-extrabold text-white'> purpose </h1>
+        <input
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          className='w-1/2 text-5xl font-extrabold text-white bg-black mt-6 focus-visible:outline-none'
+        />
 
         <div className='flex w-full select-none'>
 
@@ -50,16 +55,17 @@ const Collect = () => {
 
         <div className='mb-8'>
           <WaveSurferPlayer
-            height={100}
+            height={80}
             waveColor={"#e1e1e1"}
+            barWidth={4}
+            barRadius={4}
             progressColor={"rgba(112, 112, 112, 0.5)"}
+            hideScrollbar={true}
             url={AudioData}
-            cursorWidth={3}
-            cursorColor="rgb(255, 255, 255)"
           />
         </div>
 
-        <div className='w-1/3'>
+        <div className='w-1/4'>
           <DownloadButton src={TestMusic} whitemode={false} />
         </div>
 
@@ -68,7 +74,7 @@ const Collect = () => {
       {/* 右 */}
       <div className='w-5/12 p-8'>
 
-        <div className='mt-8 select-none'>
+        <div className='mt-8'>
           <h1 className='text-4xl font-bold mb-4'> 文章呈現 </h1>
           <textarea
             className='h-32 w-full mb-4 p-2 px-4 bg-slate-100 rounded-lg drop-shadow-lg  outline-0 text-black'

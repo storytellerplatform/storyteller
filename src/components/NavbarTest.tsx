@@ -39,7 +39,7 @@ const NavbarTest = () => {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className='relative flex flex-col gap-16 p-4 w-fit items-center h-screen bg-[#191d24]'
+        className='fixed top-0 left-0 flex flex-col gap-16 p-4 w-fit items-center h-full bg-[#191d24] z-50'
       >
         <Link to='/'>
           <AiOutlineRead color='white' size={40} className='cursor-pointer' />

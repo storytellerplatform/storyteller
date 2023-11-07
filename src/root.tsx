@@ -8,7 +8,7 @@ function Root() {
   return (
     <>
       <ToastContainer />
-      <div className='flex w-full'>
+      <div className='h-screen'>
         <NavbarTest />
         <Outlet />
       </div>

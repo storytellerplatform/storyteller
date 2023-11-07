@@ -83,7 +83,7 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='w-4/5 bg-white select-none'>
+        <div className='w-4/5 bg-white'>
           {/* 收藏 */}
           {articles.length !== 0 && articles.map(article => {
             return article.emotions.map((emotion) => {
