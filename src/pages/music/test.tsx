@@ -12,7 +12,8 @@ import { Emotion } from '../../types/emotion';
 import { UpdateEmotionsRequest, useUpdateEmotionsMutation } from '../../feature/api/articleSlice';
 import { serverErrorNotify } from '../../utils/toast';
 import { MdOutlineManageSearch } from 'react-icons/md';
-import { BsFileEarmarkText } from 'react-icons/bs';
+import { BsMusicNoteList } from 'react-icons/bs';
+import reportWebVitals from './../../reportWebVitals';
 
 const TestMusic = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
@@ -87,8 +88,8 @@ const TestMusic = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full justify-between h-auto min-h-screen px-20 pt-8 ml-8 dark:bg-black  '>
-        <div className='flex flex-col gap-4 w-1/2'>
+      <div className='flex w-full justify-around bg-slate-50 h-auto min-h-screen pl-24 dark:bg-black  '>
+        <div className='flex flex-col pt-8 gap-4 w-5/12'>
 
           <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
           <input
@@ -113,7 +114,7 @@ const TestMusic = () => {
             placeholder="我想要.....">
           </textarea>
 
-          <span className='mb-4 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:-translate-x-1/2  after:w-fit after:text-2xl after:font-bold after:py-1 after:bg-white after:text-stone-400 dark:after:bg-black'> </span>
+          <span className='mb-4 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:-translate-x-1/2  after:w-fit after:text-2xl after:font-bold after:px-2 after:bg-slate-50 after:text-stone-400 dark:after:bg-black'> </span>
 
 
           <div className="flex flex-col gap-1 justify-center w-full">
@@ -151,9 +152,12 @@ const TestMusic = () => {
 
         </div>
 
-        <div className='flex flex-col gap-4 w-5/12'>
+        <div className='flex flex-col pt-8 pl-12 gap-4 w-1/2 bg-white'>
 
-          <h3 className='text-3xl font-bold text-black opacity-90'>情感分析</h3>
+          <h3 className='flex flex-col text-3xl font-bold text-black opacity-90'>
+            情感分析
+            <span className='text-sm font-bold bg-gradient-to-r from-yellow-500 via-yellow-300 to-slate-100 text-transparent bg-clip-text'> 加入您想要的情緒或情境 </span>
+          </h3>
           <div className='flex flex-row'>
 
             {/* 感情 */}
@@ -165,7 +169,7 @@ const TestMusic = () => {
               />
             ))}
 
-            {/* 產生音樂按鈕 */}
+            {/* 情緒按鈕 */}
             <button
               type='button'
               className={classNames(`my-2 w-8 h-8 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
@@ -182,8 +186,30 @@ const TestMusic = () => {
               emotions={emotions}
               setEmotions={setEmotions}
             />
-
           </div>
+
+          {/* 生成音樂 */}
+          <button
+            onClick={handleAnalyzeClick}
+            type="submit"
+            className="relative group flex justify-center items-center gap-3 w-5/12 mb-4 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
+          >
+            <span className='absolute top-0 right-2/3 -rotate-12'>
+              <BsMusicNoteList
+                size={50}
+                className=' text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400 group-hover:animate-bouncing'
+              />
+            </span>
+            生成音樂
+          </button>
+
+          {/* 音樂生成列表 */}
+          <div className='flex flex-col'>
+            <ul>
+
+            </ul>
+          </div>
+
         </div>
 
       </div>

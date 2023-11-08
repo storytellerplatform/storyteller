@@ -5,6 +5,8 @@ import { useAppSelector } from '../../app/hooks';
 import { getUserId } from '../../feature/user/userSlice';
 import { Article } from '../../types/article';
 import CollectionDropdown from './components/CollectionDropdown';
+import CollectionSearch from './components/CollectionSearch';
+import { allEmotions } from '../../utils/emotion';
 
 const testArticles: Array<Article> = [
   {
@@ -58,24 +60,24 @@ const Collection = () => {
 
       {/* 搜尋區域 */}
       {/* bg-gradient-to-b from-orange-300 to-white-500 */}
-      <div className='flex justify-evenly gap-4 p-4 ml-12 rounded-lg'>
+      <div className='flex justify-evenly pt-4 pb-2 ml-16 rounded-lg'>
         {/*搜尋名稱 */}
-        <div className='w-1/5'>
-          <CollectionDropdown name='搜尋名稱' />
+        <div className='w-[23%]'>
+          <CollectionSearch name='搜尋名稱' />
         </div>
 
         {/* 搜尋情緒 */}
-        <div className='w-1/5'>
-          <CollectionDropdown name='搜尋情緒' />
+        <div className='w-[23%]'>
+          <CollectionDropdown name='搜尋情緒' dropdownList={allEmotions} />
         </div>
 
         {/* 搜尋情境 */}
-        <div className='w-1/5'>
+        <div className='w-[23%]'>
           <CollectionDropdown name='搜尋情境' />
         </div>
 
         {/* 改變日期先後 */}
-        <div className='w-1/5'>
+        <div className='w-[23%]'>
           <CollectionDropdown name='日期順序' isAngleIconShow={false} />
         </div>
       </div>
