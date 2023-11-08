@@ -2,8 +2,10 @@ import React from 'react'
 import Book from '../../assets/homePageImage.svg'
 import { useAppDispatch } from '../../app/hooks';
 import { taggleRegisterForm } from '../../feature/authSidebar';
+import { Link } from 'react-router-dom';
 
 const TestHome = () => {
+
   const dispatch = useAppDispatch();
 
   const handleOpenRegisterFormClick = () => {
@@ -20,11 +22,12 @@ const TestHome = () => {
         <h3 className='mb-8 text-2xl font-semibold'> 將你的故事、詩或任何文字轉換為美妙的音樂 </h3>
 
         <div className='flex gap-6'>
-          <button
-            type='button' className='px-14 py-2 w-fit border border-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-white hover:text-black'
+          <Link
+            to='/music'
+            className='px-14 py-2 w-fit border border-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-white hover:text-black'
           >
             開始創作音樂
-          </button>
+          </Link>
 
           <button
             type='button'

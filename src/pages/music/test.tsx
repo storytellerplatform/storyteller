@@ -87,7 +87,7 @@ const TestMusic = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full h-auto min-h-screen px-20 pt-8 ml-8 dark:bg-black  '>
+      <div className='flex w-full justify-between h-auto min-h-screen px-20 pt-8 ml-8 dark:bg-black  '>
         <div className='flex flex-col gap-4 w-1/2'>
 
           <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
@@ -116,33 +116,34 @@ const TestMusic = () => {
           <span className='mb-4 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:-translate-x-1/2  after:w-fit after:text-2xl after:font-bold after:py-1 after:bg-white after:text-stone-400 dark:after:bg-black'> </span>
 
 
-
-          <div className="flex items-center justify-center w-full">
-            <label htmlFor="dropzone-file" className="m-0 flex flex-col items-center justify-center w-full border border-gray-200 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+          <div className="flex flex-col gap-1 justify-center w-full">
+            <label htmlFor="dropzone-file" className="m-0 first-letter:flex flex-col items-center justify-center w-full border border-gray-200 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
               <div className="w-full flex flex-row items-center cursor-pointer">
-                <span className='py-2 px-4 text-black border-r-2 border-l-gray-200  font-bold text-lg'> 選擇檔案 </span>
-                <span className='py-2 px-4'>
-                  沒有選擇檔案
+                <span className='py-2 px-4 text-white bg-gray-700 border-r-2 border-l-gray-200 font-bold text-base rounded-l-lg'> 選擇檔案 </span>
+                <span className='py-2 px-4 font-semibold text-gray-500 text-sm'>
+                  {!file ?
+                    "沒有選擇檔案" :
+                    file.name
+                  }
                 </span>
               </div>
-              <input id="dropzone-file" type="file" className="hidden" />
+              <input onChange={handleFileChange} id="dropzone-file" type="file" className="hidden" />
             </label>
+
+            <p
+              className="mb-4 text-xs text-gray-500 dark:text-gray-300"
+              id="file_input_help"
+            >
+              SVG, PNG, JPG or GIF (MAX. 800x400px).
+            </p>
           </div>
-
-          <p
-            className="mb-4 text-sm text-gray-500 dark:text-gray-300"
-            id="file_input_help"
-          >
-            SVG, PNG, JPG or GIF (MAX. 800x400px).
-          </p>
-
 
           {/* 文章分析按鈕 */}
           <button
             onClick={handleAnalyzeClick}
             disabled={!articleContent}
             type="submit"
-            className="flex justify-center items-center gap-1 w-1/3 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300"
+            className="flex justify-center items-center gap-1 w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300"
           >
             <MdOutlineManageSearch size={28} />
             分析
@@ -150,7 +151,39 @@ const TestMusic = () => {
 
         </div>
 
-        <div className='flex flex-col gap-4 w-1/2'>
+        <div className='flex flex-col gap-4 w-5/12'>
+
+          <h3 className='text-3xl font-bold text-black opacity-90'>情感分析</h3>
+          <div className='flex flex-row'>
+
+            {/* 感情 */}
+            {emotions.map((selectedEmotion: EmotionProps, index: React.Key | null | undefined) => (
+              <EmotionButton
+                key={index}
+                label={selectedEmotion}
+                onClick={() => setEmotions(preEmotions => preEmotions.filter(emotion => emotion !== selectedEmotion))}
+              />
+            ))}
+
+            {/* 產生音樂按鈕 */}
+            <button
+              type='button'
+              className={classNames(`my-2 w-8 h-8 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
+                { 'my-1': emotions })}
+              onClick={() => setShowModal(true)}
+            >
+              <i className="fa-solid fa-plus"></i>
+            </button>
+
+            {/* 選取其他感情 */}
+            <MusicModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              emotions={emotions}
+              setEmotions={setEmotions}
+            />
+
+          </div>
         </div>
 
       </div>
