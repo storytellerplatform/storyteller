@@ -3,10 +3,14 @@ import { WaveSurferOptions } from 'wavesurfer.js';
 import useWavesurfer from '../hooks/useWavesurfer';
 
 import { BiPauseCircle, BiPlayCircle } from 'react-icons/bi';
+import classNames from 'classnames';
 
 type UseWavesurferProps = Omit<WaveSurferOptions, 'container'>;
+interface WaveSurferPlayerProps extends UseWavesurferProps {
+  playbtnStyle: string;
+}
 
-const WaveSurferPlayer: React.FC<UseWavesurferProps> = (props) => {
+const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
   const [currentTime, setCurrentTime] = useState<number>(0)
@@ -42,12 +46,20 @@ const WaveSurferPlayer: React.FC<UseWavesurferProps> = (props) => {
       <div className='flex flex-row gap-4'>
         <button onClick={onPlayClick} className='mt-2 inline-block'>
           {isPlaying ?
-            <span className='text-white'>
+            <span className={classNames(
+              { 'text-white': props.playbtnStyle === 'dark' },
+              { 'text-black': props.playbtnStyle === 'light' }
+            )}>
               <BiPauseCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
             </span> :
-            <span className='text-white'>
+
+            <span className={classNames(
+              { 'text-white': props.playbtnStyle === 'dark' },
+              { 'text-black': props.playbtnStyle === 'light' }
+            )}>
               <BiPlayCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
             </span>}
+
         </button>
 
         <div ref={containerRef} className='w-full' />

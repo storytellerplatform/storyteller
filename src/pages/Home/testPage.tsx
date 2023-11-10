@@ -13,7 +13,7 @@ const TestHome = () => {
   }
 
   return (
-    <main className='pl-16 flex flex-row justify-evenly h-screen w-full bg-gradient-to-r from-zinc-950 via-zinc-900 via-50% to-zinc-700 text-white '>
+    <main className='flex flex-row justify-evenly h-screen w-full bg-gradient-to-r from-zinc-950 via-zinc-900 via-50% to-zinc-700 text-white '>
 
       {/* 標題 */}
       <div className='flex flex-col gap-12 mt-24'>

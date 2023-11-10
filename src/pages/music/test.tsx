@@ -14,6 +14,7 @@ import { serverErrorNotify } from '../../utils/toast';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import { BsMusicNoteList } from 'react-icons/bs';
 import reportWebVitals from './../../reportWebVitals';
+import MusicPost from './components/MusicPost';
 
 const TestMusic = () => {
   const [articleContent, setArticleContent] = React.useState<string>('');
@@ -88,7 +89,7 @@ const TestMusic = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full justify-around bg-slate-50 h-auto min-h-screen pl-24 dark:bg-black  '>
+      <div className='flex w-full justify-around bg-slate-50 h-auto min-h-screen pl-6 dark:bg-black  '>
         <div className='flex flex-col pt-8 gap-4 w-5/12'>
 
           <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
@@ -192,7 +193,7 @@ const TestMusic = () => {
           <button
             onClick={handleAnalyzeClick}
             type="submit"
-            className="relative group flex justify-center items-center gap-3 w-5/12 mb-4 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
+            className="relative group flex justify-center items-center gap-3 w-5/12 mb-8 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
           >
             <span className='absolute top-0 right-2/3 -rotate-12'>
               <BsMusicNoteList
@@ -204,10 +205,10 @@ const TestMusic = () => {
           </button>
 
           {/* 音樂生成列表 */}
-          <div className='flex flex-col'>
-            <ul>
-
-            </ul>
+          <div className='flex flex-col gap-10 w-5/6'>
+            <MusicPost />
+            <MusicPost />
+            <MusicPost />
           </div>
 
         </div>

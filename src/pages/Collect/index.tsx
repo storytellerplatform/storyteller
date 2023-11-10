@@ -4,10 +4,11 @@ import EmotionButton from '../../components/EmotionButton';
 import { useGetArticleQuery } from '../../feature/api/articleSlice';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 
-import AudioData from '../../assets/music/NCSBlank.mp3';
 import DownloadButton from '../../components/DownloadButton';
 
+// test
 import TestMusic from '../../assets/music/NCSBlank.mp3'
+import AudioData from '../../assets/music/NCSBlank.mp3';
 
 const Collect = () => {
   const { articleId, emotionId } = useParams();
@@ -22,9 +23,9 @@ const Collect = () => {
   // };
 
   return (
-    <div className='flex w-full'>
+    <div className='flex w-full '>
       {/* 左 */}
-      <div className='flex flex-col gap-8 w-7/12 h-screen p-5 bg-black backdrop-blur-lg'>
+      <div className='flex flex-col gap-8 w-7/12 h-auto min-h-screen p-5 bg-black backdrop-blur-lg'>
 
         <input
           onChange={(e) => setName(e.target.value)}
@@ -53,7 +54,7 @@ const Collect = () => {
 
         <hr className='p-0 mb-4 w-full bg-white' />
 
-        <div className='mb-8'>
+        <div className='mb-8 w-5/6'>
           <WaveSurferPlayer
             height={80}
             waveColor={"#e1e1e1"}
@@ -62,6 +63,7 @@ const Collect = () => {
             progressColor={"rgba(112, 112, 112, 0.5)"}
             hideScrollbar={true}
             url={AudioData}
+            playbtnStyle='dark'
           />
         </div>
 
@@ -72,12 +74,12 @@ const Collect = () => {
       </div>
 
       {/* 右 */}
-      <div className='w-5/12 p-8'>
+      <div className='w-5/12 p-8 bg-slate-100'>
 
         <div className='mt-8'>
           <h1 className='text-4xl font-bold mb-4'> 文章呈現 </h1>
           <textarea
-            className='h-32 w-full mb-4 p-2 px-4 bg-slate-100 rounded-lg drop-shadow-lg  outline-0 text-black'
+            className='h-32 w-full mb-4 p-2 px-4 bg-white rounded-lg drop-shadow-lg  outline-0 text-black'
             spellCheck={false}
             // value={articleData?.content}
             value={"好玩"}
