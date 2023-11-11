@@ -39,13 +39,13 @@ const NavbarTest = () => {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className='fixed top-0 left-0 flex flex-col gap-16 p-4 w-fit items-center h-full bg-[#191d24] z-50'
+        className='fixed top-0 left-0 flex flex-row justify-between items-center gap-16 p-4 pr-8 h-fit w-full bg-[#191d24] z-50 sm:w-16 sm:h-full sm:flex-col sm:justify-normal sm:pr-4'
       >
         <Link to='/'>
           <AiOutlineRead color='white' size={40} className='cursor-pointer' />
         </Link>
 
-        <nav className='flex flex-col gap-6'>
+        <nav className='flex flex-row gap-6 sm:flex-col'>
           {createNavLink(
             "after:content-['登入']",
             "after:w-10",
