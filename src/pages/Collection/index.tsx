@@ -35,7 +35,7 @@ const Collection = () => {
   // }, [articlesData]);
 
   return (
-    <div className='flex flex-col h-screen w-full gap-3'>
+    <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
 
       {/* 左區 */}
       {/* <div className='w-1/5 md:w-fit lg:w-1/5 p-[2px] rounded-lg h-fit bg-gradient-to-b from-orange-300 to-white-500'> */}
@@ -60,24 +60,24 @@ const Collection = () => {
 
       {/* 搜尋區域 */}
       {/* bg-gradient-to-b from-orange-300 to-white-500 */}
-      <div className='flex justify-evenly pt-4 pb-2 ml-16 rounded-lg'>
+      <div className='flex pt-4 pb-2 ml-2 sm:ml-16 rounded-lg md:w-auto flex-col md:flex-row md:justify-evenly pl-6 md:pl-0 gap-4 md:gap-0'>
         {/*搜尋名稱 */}
-        <div className='w-[23%]'>
+        <div className='w-full md:w-[23%]'>
           <CollectionSearch name='搜尋名稱' />
         </div>
 
         {/* 搜尋情緒 */}
-        <div className='w-[23%]'>
+        <div className='w-full md:w-[23%]'>
           <CollectionDropdown name='搜尋情緒' dropdownList={allEmotions} />
         </div>
 
         {/* 搜尋情境 */}
-        <div className='w-[23%]'>
+        <div className='w-full md:w-[23%]'>
           <CollectionDropdown name='搜尋情境' />
         </div>
 
         {/* 改變日期先後 */}
-        <div className='w-[23%]'>
+        <div className='w-full md:w-[23%]'>
           <CollectionDropdown name='日期順序' isAngleIconShow={false} />
         </div>
       </div>
@@ -85,7 +85,7 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='w-4/5 bg-white'>
+        <div className='w-full sm:w-4/5 bg-white'>
           {/* 收藏 */}
           {articles.length !== 0 && articles.map(article => {
             return article.emotions.map((emotion) => {

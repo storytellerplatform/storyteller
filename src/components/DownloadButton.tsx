@@ -13,7 +13,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ src, whitemode, classna
   return (
     <button
       type='button'
-      className={classNames(`flex items-center justify-center w-full py-2 px-8 border-2 rounded-full text-base tracking-widest  font-semibold cursor-pointer transition-all duration-200 ease-out ${classnames}`,
+      className={classNames(`flex items-center justify-center w-full py-1 md:py-2 px-2 md:px-8 border-2 rounded-full text-sm md:text-base tracking-widest  font-semibold cursor-pointer transition-all duration-200 ease-out ${classnames}`,
         { 'border-white text-white bg-black hover:text-black hover:bg-white': !whitemode },
         { 'border-black text-black hover:text-white hover:bg-black': whitemode })}
     >
