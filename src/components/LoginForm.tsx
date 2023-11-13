@@ -1,8 +1,14 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { getLoginForm, taggleLoginForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useSigninMutation } from '../feature/api/authSlice';
+import Cookies from 'js-cookie';
+import { SigninType } from '../types/auth';
+import { setToken } from '../feature/auth/authSlice';
+import { setEmail, setUserId, setUsername } from '../feature/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormProps {
 }
@@ -10,10 +16,70 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = () => {
   const isLoginFormOpen = useAppSelector(getLoginForm);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const [user, setUser] = useState<SigninType>({
+    email: "",
+    password: "",
+  });
+
+  const [signin, { isLoading }] = useSigninMutation();
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser(prevUser => ({
+      ...prevUser as SigninType,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleCloseClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleLoginForm());
+  }
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    // for admin
+    if (user.email === 'admin@admin.com' && user.password === 'admin123') {
+      Cookies.set(
+        'jwtToken',
+        'admin',
+        { expires: 1, path: '/', secure: true, sameSite: 'strict' }
+      );
+
+      dispatch(setToken('admin'));
+      dispatch(setUserId('0'));
+      dispatch(setUsername('admin'));
+      dispatch(setEmail('admin'));
+
+      navigate('/');
+      return;
+    }
+
+    try {
+      const response = await signin(user as SigninType).unwrap();
+
+      Cookies.set(
+        'jwtToken',
+        response.token,
+        { expires: response.expiresIn, path: '/', secure: true, sameSite: 'strict' }
+      );
+
+      dispatch(setToken(response.token));
+      dispatch(setUserId(response.userId.toString()));
+      dispatch(setUsername(response.name));
+      dispatch(setEmail(user.email));
+
+      navigate('/');
+
+    } catch (err: any) {
+      if (err.status === 403) {
+        // setErrors((errs) => ({ ...errs, email: '帳號或密碼錯誤', password: '帳號或密碼錯誤' }));
+      } else if (err.status === 500) {
+        // setErrors((errs) => ({ ...errs, email: '伺服器發生錯誤' }));
+      }
+    }
   }
 
   return (
@@ -36,17 +102,29 @@ const LoginForm: React.FC<LoginFormProps> = () => {
           type="email"
           id="login-email"
           className='w-full p-2 indent-2 border border-black rounded-sm'
+          value={user.email}
+          onChange={handleFormChange}
         />
       </div>
 
-      <div className='flex flex-col gap-1 select-none'>
+      <div className='flex flex-col gap-1 select-none mb-4'>
         <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
         <input
           type="password"
           id="login-password"
           className='w-full p-2 indent-2 border border-black rounded-sm'
+          value={user.password}
+          onChange={handleFormChange}
         />
       </div>
+
+      <button
+        type='submit'
+        className='py-2 px-8 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        onClick={handleClick}
+      >
+        登入
+      </button>
 
     </div>
   )

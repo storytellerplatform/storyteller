@@ -1,8 +1,11 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { getRegisterForm, taggleRegisterForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { SignupType } from '../types/auth';
+import { useSignupMutation } from '../feature/api/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface RegisterFormProps {
 }
@@ -10,10 +13,28 @@ interface RegisterFormProps {
 const RegisterForm: React.FC<RegisterFormProps> = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState<SignupType>({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [signup, { isLoading }] = useSignupMutation();
 
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleRegisterForm());
+  }
+
+  const handleSignupClick = async () => {
+    try {
+      await signup(user as SignupType).unwrap();
+      navigate('/signin');
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   return (
@@ -48,7 +69,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         />
       </div>
 
-      <div className='flex flex-col gap-1 select-none'>
+      <div className='flex flex-col gap-1 select-none mb-4'>
         <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
         <input
           type="password"
@@ -56,6 +77,14 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>
+
+      <button
+        type='submit'
+        className='py-2 px-8 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        onClick={handleSignupClick}
+      >
+        註冊
+      </button>
 
     </div>
   )

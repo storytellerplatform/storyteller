@@ -5,18 +5,27 @@ import { BsCollection } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames';
 import { taggleLoginForm } from '../feature/authSidebar'
-import { useAppDispatch } from '../app/hooks'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
+import { getToken } from '../feature/auth/authSlice'
+import Cookies from 'js-cookie'
+import { LuLogOut } from 'react-icons/lu'
 
 
 const NavbarTest = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = React.useState(false);
   const dispatch = useAppDispatch();
+  const token = useAppSelector(getToken);
 
   const handleOpenLoginFormClick = () => {
     dispatch(taggleLoginForm());
+  }
+
+  const handleLogoutClick = () => {
+    Cookies.remove('jwtToken');
+    navigate('/');
   }
 
   const createNavLink = (name: string, nameWidth: string, lineWidth: string, isPresent: boolean, icon: ReactNode, handleClick?: React.MouseEventHandler<HTMLButtonElement>) => {
@@ -71,7 +80,7 @@ const NavbarTest = () => {
             () => navigate('/music')
           )}
 
-          {createNavLink(
+          {token && createNavLink(
             "sm:after:content-['收藏']",
             "sm:after:w-10",
             "sm:hover:before:w-9",
@@ -81,6 +90,18 @@ const NavbarTest = () => {
               size={24}
             />,
             () => navigate('/collection')
+          )}
+
+          {token && createNavLink(
+            "sm:after:content-['登出']",
+            "sm:after:w-10",
+            "sm:hover:before:w-9",
+            isHovered,
+            <LuLogOut
+              color='white'
+              size={24}
+            />,
+            handleLogoutClick
           )}
 
         </nav>
