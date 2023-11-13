@@ -1769,6 +1769,10 @@ video {
   padding-top: 4rem;
 }
 
+.pl-16 {
+  padding-left: 4rem;
+}
+
 .text-center {
   text-align: center;
 }

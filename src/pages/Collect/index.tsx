@@ -23,9 +23,9 @@ const Collect = () => {
   // };
 
   return (
-    <div className='flex w-full '>
+    <div className='flex w-full'>
       {/* 左 */}
-      <div className='flex flex-col gap-8 w-7/12 h-auto min-h-screen p-5 bg-black backdrop-blur-lg'>
+      <div className='flex flex-col gap-8 w-7/12 pl-20 h-auto min-h-screen p-5 bg-black backdrop-blur-lg '>
 
         <input
           onChange={(e) => setName(e.target.value)}
