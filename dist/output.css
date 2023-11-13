@@ -942,20 +942,12 @@ video {
   width: 100%;
 }
 
-.w-9\/12 {
-  width: 75%;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
 
 .min-w-full {
   min-width: 100%;
-}
-
-.max-w-full {
-  max-width: 100%;
 }
 
 .flex-1 {
@@ -1308,11 +1300,6 @@ video {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
-.bg-blue-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
-}
-
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1595,16 +1582,6 @@ video {
   padding-right: 0.5rem;
 }
 
-.px-2\.5 {
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
-}
-
-.px-24 {
-  padding-left: 6rem;
-  padding-right: 6rem;
-}
-
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1633,16 +1610,6 @@ video {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
-}
-
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.py-0\.5 {
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
 }
 
 .py-1 {
@@ -1696,6 +1663,10 @@ video {
   padding-left: 3rem;
 }
 
+.pl-20 {
+  padding-left: 5rem;
+}
+
 .pl-6 {
   padding-left: 1.5rem;
 }
@@ -1726,6 +1697,18 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pl-0 {
+  padding-left: 0px;
+}
+
+.pl-32 {
+  padding-left: 8rem;
+}
+
+.pt-12 {
+  padding-top: 3rem;
 }
 
 .text-center {
@@ -1833,11 +1816,6 @@ video {
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
-.text-blue-800 {
-  --tw-text-opacity: 1;
-  color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
 .text-gray-200 {
@@ -2146,16 +2124,6 @@ input:focus-visible {
   z-index: 50;
 }
 
-.after\:w-10::after {
-  content: var(--tw-content);
-  width: 2.5rem;
-}
-
-.after\:w-20::after {
-  content: var(--tw-content);
-  width: 5rem;
-}
-
 .after\:w-fit::after {
   content: var(--tw-content);
   width: -webkit-fit-content;
@@ -2252,21 +2220,6 @@ input:focus-visible {
 
 .after\:content-\[\"or\"\]::after {
   --tw-content: "or";
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'\5275\4F5C\97F3\6A02\'\]::after {
-  --tw-content: '創作音樂';
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'\6536\85CF\'\]::after {
-  --tw-content: '收藏';
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'\767B\5165\'\]::after {
-  --tw-content: '登入';
   content: var(--tw-content);
 }
 
@@ -2511,16 +2464,6 @@ input:focus-visible {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-.hover\:before\:w-16:hover::before {
-  content: var(--tw-content);
-  width: 4rem;
-}
-
-.hover\:before\:w-9:hover::before {
-  content: var(--tw-content);
-  width: 2.25rem;
-}
-
 .focus\:border-orange-200:focus {
   --tw-border-opacity: 1;
   border-color: rgb(254 215 170 / var(--tw-border-opacity));
@@ -2654,11 +2597,6 @@ input:focus-visible {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
-:is(.dark .dark\:bg-blue-900) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
-}
-
 :is(.dark .dark\:bg-gray-700) {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -2667,11 +2605,6 @@ input:focus-visible {
 :is(.dark .dark\:bg-slate-700) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-
-:is(.dark .dark\:text-blue-300) {
-  --tw-text-opacity: 1;
-  color: rgb(147 197 253 / var(--tw-text-opacity));
 }
 
 :is(.dark .dark\:text-gray-300) {
@@ -2710,6 +2643,10 @@ input:focus-visible {
     margin-bottom: 2rem;
   }
 
+  .sm\:mb-2 {
+    margin-bottom: 0.5rem;
+  }
+
   .sm\:h-full {
     height: 100%;
   }
@@ -2724,6 +2661,30 @@ input:focus-visible {
 
   .sm\:w-4\/5 {
     width: 80%;
+  }
+
+  .sm\:w-8 {
+    width: 2rem;
+  }
+
+  .sm\:w-5\/12 {
+    width: 41.666667%;
+  }
+
+  .sm\:w-5\/6 {
+    width: 83.333333%;
+  }
+
+  .sm\:w-6\/12 {
+    width: 50%;
+  }
+
+  .sm\:w-7\/12 {
+    width: 58.333333%;
+  }
+
+  .sm\:w-4\/12 {
+    width: 33.333333%;
   }
 
   .sm\:flex-row {
@@ -2755,6 +2716,10 @@ input:focus-visible {
     padding-right: 1rem;
   }
 
+  .sm\:pt-0 {
+    padding-top: 0px;
+  }
+
   .sm\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -2780,11 +2745,6 @@ input:focus-visible {
     width: 5rem;
   }
 
-  .sm\:after\:content-\[\'\767B\5165\'\]::after {
-    --tw-content: '登入';
-    content: var(--tw-content);
-  }
-
   .sm\:after\:content-\[\'\5275\4F5C\97F3\6A02\'\]::after {
     --tw-content: '創作音樂';
     content: var(--tw-content);
@@ -2795,20 +2755,29 @@ input:focus-visible {
     content: var(--tw-content);
   }
 
-  .sm\:hover\:before\:w-9:hover::before {
+  .sm\:after\:content-\[\'\767B\5165\'\]::after {
+    --tw-content: '登入';
     content: var(--tw-content);
-    width: 2.25rem;
   }
 
   .sm\:hover\:before\:w-16:hover::before {
     content: var(--tw-content);
     width: 4rem;
   }
+
+  .sm\:hover\:before\:w-9:hover::before {
+    content: var(--tw-content);
+    width: 2.25rem;
+  }
 }
 
 @media (min-width: 768px) {
   .md\:w-2\/3 {
     width: 66.666667%;
+  }
+
+  .md\:w-3\/5 {
+    width: 60%;
   }
 
   .md\:w-9\/12 {
@@ -2821,12 +2790,16 @@ input:focus-visible {
     width: fit-content;
   }
 
-  .md\:w-1\/2 {
-    width: 50%;
+  .md\:flex-row {
+    flex-direction: row;
   }
 
-  .md\:w-3\/5 {
-    width: 60%;
+  .md\:pl-6 {
+    padding-left: 1.5rem;
+  }
+
+  .md\:pl-24 {
+    padding-left: 6rem;
   }
 }
 
@@ -2843,6 +2816,10 @@ input:focus-visible {
     width: 20%;
   }
 
+  .lg\:w-2\/5 {
+    width: 40%;
+  }
+
   .lg\:w-4\/5 {
     width: 80%;
   }
@@ -2851,7 +2828,41 @@ input:focus-visible {
     width: 58.333333%;
   }
 
-  .lg\:w-2\/5 {
-    width: 40%;
+  .lg\:w-5\/12 {
+    width: 41.666667%;
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:pl-0 {
+    padding-left: 0px;
+  }
+
+  .lg\:pl-20 {
+    padding-left: 5rem;
+  }
+
+  .lg\:pt-0 {
+    padding-top: 0px;
+  }
+
+  .lg\:pl-6 {
+    padding-left: 1.5rem;
+  }
+
+  .lg\:pl-16 {
+    padding-left: 4rem;
+  }
+
+  .lg\:pl-12 {
+    padding-left: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:w-1\/3 {
+    width: 33.333333%;
   }
 }

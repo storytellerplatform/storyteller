@@ -89,8 +89,8 @@ const TestMusic = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full justify-around bg-slate-50 h-auto min-h-screen pl-6 dark:bg-black  '>
-        <div className='flex flex-col pt-8 gap-4 w-5/12'>
+      <div className='flex w-full justify-around bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pt-12 sm:pt-0'>
+        <div className='flex flex-col pt-8 gap-4 w-5/6 pl-6 sm:pl-24 md:pl-24 lg:pl-12 lg:w-5/12'>
 
           <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
           <input
@@ -145,7 +145,7 @@ const TestMusic = () => {
             onClick={handleAnalyzeClick}
             disabled={!articleContent}
             type="submit"
-            className="flex justify-center items-center gap-1 w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300"
+            className="flex justify-center items-center gap-1 w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300"
           >
             <MdOutlineManageSearch size={28} />
             分析
@@ -153,7 +153,7 @@ const TestMusic = () => {
 
         </div>
 
-        <div className='flex flex-col pt-8 pl-12 gap-4 w-1/2 bg-white'>
+        <div className='flex flex-col pt-8 pl-6 sm:pl-24 lg:pl-6 gap-4 w-full lg:w-5/12 bg-white'>
 
           <h3 className='flex flex-col text-3xl font-bold text-black opacity-90'>
             情感分析
@@ -193,7 +193,7 @@ const TestMusic = () => {
           <button
             onClick={handleAnalyzeClick}
             type="submit"
-            className="relative group flex justify-center items-center gap-3 w-5/12 mb-8 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
+            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
           >
             <span className='absolute top-0 right-2/3 -rotate-12'>
               <BsMusicNoteList
@@ -205,7 +205,7 @@ const TestMusic = () => {
           </button>
 
           {/* 音樂生成列表 */}
-          <div className='flex flex-col gap-10 w-5/6'>
+          <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
             <MusicPost />
             <MusicPost />
             <MusicPost />
