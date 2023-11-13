@@ -17,7 +17,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
   }
 
   return (
-    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-5/12 max-w-full px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in`,
+    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-2/5 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in`,
       { 'translate-x-full': !isRegisterFormOpen },
       { 'delay-200': isRegisterFormOpen })}
     >

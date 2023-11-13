@@ -47,9 +47,9 @@ const NavbarTest = () => {
 
         <nav className='flex flex-row gap-6 sm:flex-col'>
           {createNavLink(
-            "after:content-['登入']",
-            "after:w-10",
-            "hover:before:w-9",
+            "sm:after:content-['登入']",
+            "sm:after:w-10",
+            "sm:hover:before:w-9",
             isHovered,
             <FiLogIn
               color='white'
@@ -59,9 +59,9 @@ const NavbarTest = () => {
           }
 
           {createNavLink(
-            "after:content-['創作音樂']",
-            "after:w-20",
-            "hover:before:w-16",
+            "sm:after:content-['創作音樂']",
+            "sm:after:w-20",
+            "sm:hover:before:w-16",
             isHovered,
             <FiMusic
               color='white'
@@ -72,9 +72,9 @@ const NavbarTest = () => {
           )}
 
           {createNavLink(
-            "after:content-['收藏']",
-            "after:w-10",
-            "hover:before:w-9",
+            "sm:after:content-['收藏']",
+            "sm:after:w-10",
+            "sm:hover:before:w-9",
             isHovered,
             <BsCollection
               color='white'
