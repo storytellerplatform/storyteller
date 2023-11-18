@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { getLoginForm, taggleLoginForm } from '../feature/authSidebar';
+import { changeOpenForm, getLoginForm, taggleLoginForm, taggleRegisterForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useSigninMutation } from '../feature/api/authSlice';
 import Cookies from 'js-cookie';
@@ -9,11 +9,9 @@ import { SigninType } from '../types/auth';
 import { setToken } from '../feature/auth/authSlice';
 import { setEmail, setUserId, setUsername } from '../feature/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import Google from '../assets/google.png'
 
-interface LoginFormProps {
-}
-
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm: React.FC = () => {
   const isLoginFormOpen = useAppSelector(getLoginForm);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -35,7 +33,17 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   const handleCloseClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleLoginForm());
-  }
+  };
+
+  const handleGoogleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
+
+  const handleToRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(changeOpenForm());
+  };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -80,10 +88,10 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         // setErrors((errs) => ({ ...errs, email: '伺服器發生錯誤' }));
       }
     }
-  }
+  };
 
   return (
-    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-2/5 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in `,
+    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
       { 'translate-x-full': !isLoginFormOpen },
       { 'delay-200': isLoginFormOpen })}
     >
@@ -94,7 +102,19 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         </button>
       </div>
 
+      <hr className='h-[2px] w-full bg-black select-none' />
+
+      <button
+        type='button'
+        className='flex justify-center items-center gap-2 py-3 w-full border border-black text-sm font-bold rounded-md'
+        onClick={handleGoogleClick}
+      >
+        <img className='w-4' src={Google} alt='google' />
+        使用 Google 帳號登入
+      </button>
+
       <hr className='h-[2.5px] w-full bg-black select-none' />
+
 
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="login-email" className='text-base font-bold' >電子郵件</label>
@@ -107,7 +127,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         />
       </div>
 
-      <div className='flex flex-col gap-1 select-none mb-4'>
+      <div className='flex flex-col gap-1 select-none mb-2'>
         <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
         <input
           type="password"
@@ -120,11 +140,23 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
       <button
         type='submit'
-        className='py-2 px-8 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleClick}
       >
         登入
       </button>
+
+      <span className='text-sm font-bold'>
+        尚未擁有帳號？立即
+        <button
+          type='button'
+          onClick={handleToRegister}
+          className='self-start mb-4 underline underline-offset-2'
+        >
+          註冊
+        </button>
+      </span>
+
 
     </div>
   )

@@ -26,6 +26,7 @@ const NavbarTest = () => {
   const handleLogoutClick = () => {
     Cookies.remove('jwtToken');
     navigate('/');
+    window.location.reload();
   }
 
   const createNavLink = (name: string, nameWidth: string, lineWidth: string, isPresent: boolean, icon: ReactNode, handleClick?: React.MouseEventHandler<HTMLButtonElement>) => {
@@ -55,7 +56,7 @@ const NavbarTest = () => {
         </Link>
 
         <nav className='flex flex-row gap-6 sm:flex-col'>
-          {createNavLink(
+          {!token && createNavLink(
             "sm:after:content-['登入']",
             "sm:after:w-10",
             "sm:hover:before:w-9",

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLazyGetCurrentUserQuery, useLazyGetUserDataQuery } from '../../feature/api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { setEmail, setUserId, setUsername } from '../../feature/user/userSlice';
@@ -10,8 +10,9 @@ import { setToken } from '../../feature/auth/authSlice';
 const Admin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams,] = useSearchParams();
 
-  const jwtToken = Cookies.get('jwtToken');
+  const jwtToken = searchParams.get('token') || Cookies.get('jwtToken');
 
   const [triggerGetCurrentUser, currentUserResult] = useLazyGetCurrentUserQuery();
 

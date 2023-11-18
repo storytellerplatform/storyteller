@@ -17,6 +17,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       })
     }),
+    GetGoogleData: builder.query<any, void>({
+      query: () => ({
+        url: '/user/info',
+        method: 'GET',
+      }),
+    }),
     GetAllArticles: builder.query<GetAllArticlesResponse, number>({
       query: (userId) => ({
         url: `/user/article/${userId}`,
@@ -45,4 +51,4 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   })
 })
 
-export const { useGetCurrentUserQuery, useLazyGetCurrentUserQuery, useGetUserDataQuery, useLazyGetUserDataQuery, useGetAllArticlesQuery, useLazyGetAllArticlesQuery, useAddNewArticleMutation, useCheckUsernameQuery, useLazyCheckUsernameQuery, useCheckEmailQuery, useLazyCheckEmailQuery } = extendedApiSlice;
+export const { useGetCurrentUserQuery, useLazyGetCurrentUserQuery, useGetUserDataQuery, useLazyGetGoogleDataQuery, useGetGoogleDataQuery, useLazyGetUserDataQuery, useGetAllArticlesQuery, useLazyGetAllArticlesQuery, useAddNewArticleMutation, useCheckUsernameQuery, useLazyCheckUsernameQuery, useCheckEmailQuery, useLazyCheckEmailQuery } = extendedApiSlice;

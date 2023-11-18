@@ -6,6 +6,9 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
+      backgroundImage: {
+        'home-image': "url('./assets/bg.jpg')",
+      },
       animation: {
         bouncing: 'bouncing 1s infinite',
       },

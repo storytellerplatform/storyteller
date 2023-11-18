@@ -25,12 +25,17 @@ export const authSidebarSlice = createSlice({
       loginFormOpen: false,
       registerFormOpen: !state.registerFormOpen
     }),
+    changeOpenForm: state => ({
+      ...state,
+      loginFormOpen: !state.loginFormOpen,
+      registerFormOpen: !state.registerFormOpen
+    }),
   }
 })
 
 export const getLoginForm = (state: RootState) => state.authSidebar.loginFormOpen;
 export const getRegisterForm = (state: RootState) => state.authSidebar.registerFormOpen;
 
-export const { taggleLoginForm, taggleRegisterForm } = authSidebarSlice.actions
+export const { taggleLoginForm, taggleRegisterForm, changeOpenForm } = authSidebarSlice.actions
 
 export default authSidebarSlice.reducer
