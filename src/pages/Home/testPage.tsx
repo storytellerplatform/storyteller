@@ -21,7 +21,7 @@ const TestHome = () => {
 
       <main className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-home-image bg-center bg-cover'>
 
-        <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-60'></div>
+        <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-30'></div>
 
         {/* 標題 */}
         <div className='w-11/12 flex flex-col items-start sm:items-center gap-6 mt-40 sm:w-11/12 md:w-9/12 lg:w-7/12 z-20'>

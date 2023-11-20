@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import WaveSurferPlayer from '../../../components/WaveSurferPlayer';
 import { HiDownload } from 'react-icons/hi';
 import { FaRegHeart } from 'react-icons/fa';
@@ -28,11 +28,13 @@ const MusicPost: React.FC = () => {
         </button>
 
         <button type='button' className='p-2 rounded-full cursor-pointer hover:bg-slate-100 hover:text-slate-600'>
-          <HiDownload size={24} />
+          <a href={TestMusic} download>
+            <HiDownload size={24} />
+          </a>
         </button>
       </div>
     </div>
   )
 }
 
-export default MusicPost
+export default memo(MusicPost);
