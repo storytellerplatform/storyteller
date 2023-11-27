@@ -26,40 +26,17 @@ const testArticles: Array<Article> = [
 const Collection = () => {
   const [articles, setArticles] = React.useState<Array<Article>>(testArticles);
 
-  // const userId: string = useAppSelector(getUserId);
-  // const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
+  const userId: string = useAppSelector(getUserId);
+  const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
 
 
-  // useEffect(() => {
-  // setArticles(articlesData || []);
-  // }, [articlesData]);
+  useEffect(() => {
+    setArticles(articlesData || []);
+  }, [articlesData]);
 
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
 
-      {/* 左區 */}
-      {/* <div className='w-1/5 md:w-fit lg:w-1/5 p-[2px] rounded-lg h-fit bg-gradient-to-b from-orange-300 to-white-500'> */}
-
-      {/* <div className='flex flex-col p-4 gap-6 items-center bg-white rounded-lg drop-shadow-xl shadow-lg'> */}
-      {/* 標題 */}
-
-      {/* <h1 className='text-4xl font-bold black text-orange-500 tracking-widest'>情 緒</h1> */}
-      {/* 情緒統計 */}
-
-      {/* <div className='flex flex-col w-full'> */}
-
-      {/* <div className='flex items-center justify-start gap-2'>
-              <EmotionButton label='開心' />
-              <i className="fa-solid fa-x text-red-500"></i>
-              <h6 className='mb-1 text-3xl text-red-500 drop-shadow-lg'>55</h6>
-            </div> */}
-
-      {/* </div> */}
-      {/* </div> */}
-      {/* </div> */}
-
-      {/* 搜尋區域 */}
-      {/* bg-gradient-to-b from-orange-300 to-white-500 */}
       <div className='flex pt-4 pb-2 ml-2 sm:ml-16 rounded-lg md:w-auto flex-col md:flex-row md:justify-evenly pl-6 md:pl-0 gap-4 md:gap-0'>
         {/*搜尋名稱 */}
         <div className='w-full md:w-[23%]'>

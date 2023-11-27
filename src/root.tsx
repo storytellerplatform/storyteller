@@ -1,15 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import { ToastContainer } from 'react-toastify';
-import NavbarTest from './components/NavbarTest';
+import Navbar from './components/Navbar';
 
 function Root() {
   return (
     <>
       <ToastContainer />
       <div className='h-screen'>
-        <NavbarTest />
+        <Navbar />
         <Outlet />
       </div>
     </>

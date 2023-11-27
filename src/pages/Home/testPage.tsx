@@ -1,5 +1,4 @@
 import React from 'react'
-import Book from '../../assets/homePageImage.svg'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { taggleRegisterForm } from '../../feature/authSidebar';
 import { Link } from 'react-router-dom';
@@ -18,7 +17,6 @@ const TestHome = () => {
 
   return (
     <>
-
       <main className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-home-image bg-center bg-cover'>
 
         <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-30'></div>
@@ -48,9 +46,6 @@ const TestHome = () => {
             }
           </div>
         </div>
-
-        {/* <img className='fixed left-[42rem] top-32 w-[36rem] overflow-hidden' src={Book} alt="book" /> */}
-
       </main>
     </>
   )

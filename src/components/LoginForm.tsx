@@ -10,6 +10,7 @@ import { setToken } from '../feature/auth/authSlice';
 import { setEmail, setUserId, setUsername } from '../feature/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Google from '../assets/google.png'
+import { FiAlertTriangle } from "react-icons/fi";
 
 const LoginForm: React.FC = () => {
   const isLoginFormOpen = useAppSelector(getLoginForm);
@@ -20,6 +21,7 @@ const LoginForm: React.FC = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string>("測試");
 
   const [signin, { isLoading }] = useSigninMutation();
 
@@ -83,9 +85,9 @@ const LoginForm: React.FC = () => {
 
     } catch (err: any) {
       if (err.status === 403) {
-        // setErrors((errs) => ({ ...errs, email: '帳號或密碼錯誤', password: '帳號或密碼錯誤' }));
+        setError("帳號或密碼錯誤，請重試一次!");
       } else if (err.status === 500) {
-        // setErrors((errs) => ({ ...errs, email: '伺服器發生錯誤' }));
+        setError("伺服器發生錯誤!");
       }
     }
   };
@@ -115,6 +117,13 @@ const LoginForm: React.FC = () => {
 
       <hr className='h-[2.5px] w-full bg-black select-none' />
 
+      {/* todo: error msg */}
+      <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+        <span className='text-white text-base'>
+          <FiAlertTriangle />
+        </span>
+        {error}
+      </div>
 
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="login-email" className='text-base font-bold' >電子郵件</label>

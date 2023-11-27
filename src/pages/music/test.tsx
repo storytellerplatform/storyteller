@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import EmotionButton from '../../components/EmotionButton'
 import MusicModal from './components/MusicModal';
 import { EmotionProps } from '../../types/components';
@@ -16,13 +16,16 @@ import { BsMusicNoteList } from 'react-icons/bs';
 import MusicPost from './components/MusicPost';
 
 const TestMusic = () => {
-  const [articleContent, setArticleContent] = React.useState<string>('');
-  const [articleName, setArticleName] = React.useState<string>('');
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
+
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
-  const [purpose, setPurpose] = React.useState<string>("");
+
   const [articleId, setArticleId] = React.useState<number | null>(null);
+  const [articleName, setArticleName] = React.useState<string>('');
+  const [articleContent, setArticleContent] = React.useState<string>('');
+
+  const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
+
   const [file, setFile] = React.useState<File | null>(null);
 
   const [addNewArticle, { isLoading: isAddNewArticleLoading }] = useAddNewArticleMutation();
@@ -30,19 +33,23 @@ const TestMusic = () => {
 
   const userId: string = useAppSelector(getUserId);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setArticleName(e.target.value);
-  }
+  }, []);
 
-  const handleArticleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleArticleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
     setArticleContent(e.target.value);
-  }
+  }, []);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setFile(e.target.files ? e.target.files[0] : null);
-  };
+  }, []);
 
-  const handleAnalyzeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //todo: 傳到情緒模型 API
+  const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     const article: AddNewArticleRequest = {
       userId: Number(userId),
       content: articleContent,
@@ -50,10 +57,6 @@ const TestMusic = () => {
 
     try {
       const response = await addNewArticle(article).unwrap();
-
-      if (response.purpose) {
-        setPurpose(response.purpose);
-      }
 
       const emotionList: Array<Emotion> = response.emotions;
       if (emotionList && emotionList.length > 0) {
@@ -67,11 +70,10 @@ const TestMusic = () => {
     }
 
     setIsAllSet(true);
-  }
+  }, [addNewArticle, articleContent, userId]);
 
+  //todo: 傳到音樂模型 API
   const handleGenerateMusicClick = async () => {
-    console.log(emotions);
-
     if (!articleId) {
       serverErrorNotify('發生錯誤');
       return;
@@ -197,7 +199,7 @@ const TestMusic = () => {
             <span className='absolute top-0 right-2/3 -rotate-12'>
               <BsMusicNoteList
                 size={50}
-                className=' text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400 group-hover:animate-bouncing'
+                className='text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400 group-hover:animate-bouncing'
               />
             </span>
             生成音樂

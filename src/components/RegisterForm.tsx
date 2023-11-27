@@ -7,6 +7,7 @@ import { SignupType } from '../types/auth';
 import { useSignupMutation } from '../feature/api/authSlice';
 import { useNavigate } from 'react-router-dom';
 import Google from '../assets/google.png'
+import { FiAlertTriangle } from "react-icons/fi";
 
 interface RegisterFormProps {
 }
@@ -21,6 +22,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string>("測試");
 
   const [signup, { isLoading }] = useSignupMutation();
 
@@ -39,7 +41,11 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
       await signup(user as SignupType).unwrap();
       navigate('/signin');
     } catch (err: any) {
-      console.log(err);
+      if (err.status === 403) {
+        setError("帳號或密碼錯誤，請重試一次!");
+      } else if (err.status === 500) {
+        setError("伺服器發生錯誤!");
+      }
     }
   }
 
@@ -72,6 +78,13 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
       </button>
 
       <hr className='h-[2.5px] w-full bg-black select-none' />
+
+      <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+        <span className='text-white text-base'>
+          <FiAlertTriangle />
+        </span>
+        {error}
+      </div>
 
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="register-username" className='text-base font-bold' >名稱</label>
