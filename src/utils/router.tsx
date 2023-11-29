@@ -4,13 +4,13 @@ import Root from "../root";
 import ErrorPage from './../pages/Error';
 import Home from './../pages/Home';
 import LoadingPage from "../pages/Loading";
-import Music from '../pages/Music/index';
+import Music from '../pages/Musics/index';
 import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import TestHome from "../pages/Home/testPage";
-import TestMusic from "../pages/Music/test";
+import TestMusic from "../pages/Musics/test";
 
 // todo: test完後復原
 import Admin from "../pages/Admin";
