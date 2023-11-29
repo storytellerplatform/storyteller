@@ -1,4 +1,4 @@
-import { Article } from "../article";
+import { Article } from "../articles";
 import { Emotion } from "../emotion";
 
 export interface AddNewArticleRequest {

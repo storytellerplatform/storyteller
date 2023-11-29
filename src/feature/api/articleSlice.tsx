@@ -1,4 +1,4 @@
-import { Article } from "../../types/article";
+import { Article } from "../../types/articles";
 import { EmotionProps } from "../../types/components";
 import { apiSlice } from "./apiSlice";
 

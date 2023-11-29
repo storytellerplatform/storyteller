@@ -3,7 +3,7 @@ import CollectCard from '../../components/CollectCard'
 import { useGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
 import { getUserId } from '../../feature/user/userSlice';
-import { Article } from '../../types/article';
+import { Article } from '../../types/articles';
 import CollectionDropdown from './components/CollectionDropdown';
 import CollectionSearch from './components/CollectionSearch';
 import { allEmotions } from '../../utils/emotion';
