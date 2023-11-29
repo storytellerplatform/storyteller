@@ -91,6 +91,8 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         <input
           type="text"
           id="register-username"
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+          value={user.name}
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>
@@ -100,6 +102,8 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         <input
           type="email"
           id="register-email"
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          value={user.email}
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>
@@ -109,6 +113,8 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         <input
           type="password"
           id="register-password"
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          value={user.password}
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>

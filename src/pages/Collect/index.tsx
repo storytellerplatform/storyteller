@@ -25,34 +25,38 @@ const Collect = () => {
   return (
     <div className='flex w-full'>
       {/* 左 */}
-      <div className='flex flex-col gap-8 w-7/12 pl-20 h-auto min-h-screen p-5 bg-black backdrop-blur-lg '>
+      <div className='flex flex-col gap-8 w-7/12 ml-4 pl-20 h-auto min-h-screen p-5 bg-gradient-to-r from-slate-900 to-slate-700 backdrop-blur-lg '>
 
         <input
           onChange={(e) => setName(e.target.value)}
           value={name}
-          className='w-1/2 text-5xl font-extrabold text-white bg-black mt-6 focus-visible:outline-none'
+          className='w-1/2 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
         />
 
-        <div className='flex w-full select-none'>
 
-          {/* 對上 emotionId */}
-          {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
-          {
-            articleData?.emotions && articleData.emotions.length > 0 &&
-              articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions
-              ? articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map(emotion => (
-                <EmotionButton
-                  defaultStyle={false}
-                  label={emotion}
-                  className='text-lg px-3 py-1.5 rounded-full'
-                />
-              ))
-              : null
-          }
 
-        </div>
+        {/* 對上 emotionId */}
+        {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
+        {
+          articleData?.emotions && articleData.emotions.length > 0 &&
+            articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions
+            ? <div className='flex w-full select-none'>
+              {
+                articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map(emotion => (
+                  <EmotionButton
+                    defaultStyle={false}
+                    label={emotion}
+                    className='text-lg px-3 py-1.5 rounded-full'
+                  />
+                ))
+              }
+            </div>
+            : null
+        }
 
-        <hr className='p-0 mb-4 w-full bg-white' />
+
+
+        <hr className='p-0 mb-4 w-11/12 bg-white' />
 
         <div className='mb-8 w-5/6'>
           <WaveSurferPlayer
@@ -74,15 +78,15 @@ const Collect = () => {
       </div>
 
       {/* 右 */}
-      <div className='w-5/12 p-8 bg-slate-100'>
+      <div className='w-5/12 p-8 bg-slate-800'>
 
         <div className='mt-8'>
-          <h1 className='text-4xl font-bold mb-4'> 文章呈現 </h1>
+          <h1 className='text-4xl font-bold mb-4 text-white'> 文章呈現 </h1>
           <textarea
-            className='h-32 w-full mb-4 p-2 px-4 bg-white rounded-lg drop-shadow-lg  outline-0 text-black'
+            className='h-32 w-full mb-4 p-2 px-4 bg-slate-100 rounded-lg drop-shadow-lg font-bold outline-0 text-black'
             spellCheck={false}
             // value={articleData?.content}
-            value={"好玩"}
+            value={"好玩遊戲一直玩"}
             readOnly
           ></textarea>
         </div>

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <LoadingPage />,
       },
       {
-        element: <Admin />,
+        // element: <Admin />,
         children: [
           {
             index: true,
