@@ -9,10 +9,11 @@ import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
-import Admin from "../pages/Admin";
-import FreeMusic from "../pages/FreeMusic";
 import TestHome from "../pages/Home/testPage";
 import TestMusic from "../pages/Music/test";
+
+// todo: test完後復原
+import Admin from "../pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -27,10 +28,6 @@ const router = createBrowserRouter([
       {
         path: '/signin',
         element: <Signin />,
-      },
-      {
-        path: '/freemusic',
-        element: <FreeMusic />,
       },
       {
         path: "/error",

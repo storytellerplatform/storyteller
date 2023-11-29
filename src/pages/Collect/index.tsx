@@ -9,6 +9,7 @@ import DownloadButton from '../../components/DownloadButton';
 // test
 import TestMusic from '../../assets/music/NCSBlank.mp3'
 import AudioData from '../../assets/music/NCSBlank.mp3';
+import { Emotion } from './../../types/emotion';
 
 const Collect = () => {
   const { articleId, emotionId } = useParams();
@@ -33,16 +34,14 @@ const Collect = () => {
           className='w-1/2 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
         />
 
-
-
         {/* 對上 emotionId */}
         {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
         {
           articleData?.emotions && articleData.emotions.length > 0 &&
-            articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions
+            articleData.emotions.find((emotion: Emotion) => emotion.emotionId === Number(emotionId))?.emotions
             ? <div className='flex w-full select-none'>
               {
-                articleData.emotions.find(emotion => emotion.emotionId === Number(emotionId))?.emotions.map(emotion => (
+                articleData.emotions.find((emotion: Emotion) => emotion.emotionId === Number(emotionId))?.emotions.map(emotion => (
                   <EmotionButton
                     defaultStyle={false}
                     label={emotion}
