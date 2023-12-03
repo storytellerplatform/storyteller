@@ -1,5 +1,5 @@
 export type EmotionColorProps = 'red' | 'green' | 'yellow' | 'blue' | 'rose' | 'orange';  
-export type EmotionProps = '開心' | '悲傷' | '浪漫' | '憤怒' | '緊張';
+export type EmotionProps = '喜歡' | '悲傷' | '厭惡' | '憤怒' | '幸福' | '無';
 export type EmotionSizeProps = 'sm' | 'lg';
 
 export interface EmotionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

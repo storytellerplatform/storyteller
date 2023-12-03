@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { EmotionButtonProps, EmotionColorProps } from '../types/components';
-import { emotionStyles } from '../utils/emotion';
+import { emotionStyles } from '../utils/emotionConfig';
 import emotionToColor from '../utils/emotionToColor';
 
 

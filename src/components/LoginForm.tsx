@@ -81,6 +81,8 @@ const LoginForm: React.FC = () => {
       dispatch(setUsername(response.name));
       dispatch(setEmail(user.email));
 
+      dispatch(taggleLoginForm());
+
       navigate('/');
 
     } catch (err: any) {
@@ -129,6 +131,7 @@ const LoginForm: React.FC = () => {
         <label htmlFor="login-email" className='text-base font-bold' >電子郵件</label>
         <input
           type="email"
+          name="email"
           id="login-email"
           className='w-full p-2 indent-2 border border-black rounded-sm'
           value={user.email}
@@ -140,6 +143,7 @@ const LoginForm: React.FC = () => {
         <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
         <input
           type="password"
+          name="password"
           id="login-password"
           className='w-full p-2 indent-2 border border-black rounded-sm'
           value={user.password}

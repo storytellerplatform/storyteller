@@ -1,7 +1,7 @@
 import React from 'react'
 import EmotionButton from '../../../components/EmotionButton';
 import { EmotionProps } from '../../../types/components';
-import { allEmotions } from '../../../utils/emotion';
+import { allEmotions } from '../../../utils/emotionConfig';
 
 interface MusicModalProps {
   showModal: boolean,

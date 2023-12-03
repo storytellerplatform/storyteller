@@ -2,18 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "../root";
 import ErrorPage from './../pages/Error';
-import Home from './../pages/Home';
 import LoadingPage from "../pages/Loading";
-import Music from '../pages/Musics/index';
 import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import TestHome from "../pages/Home/testPage";
-import TestMusic from "../pages/Musics/test";
 
 // todo: test完後復原
 import Admin from "../pages/Admin";
+import Musics from "../pages/Musics";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +36,7 @@ const router = createBrowserRouter([
         element: <LoadingPage />,
       },
       {
-        // element: <Admin />,
+        element: <Admin />,
         children: [
           {
             index: true,
@@ -54,7 +52,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/music",
-            element: <TestMusic />,
+            element: <Musics />,
           },
         ]
       }

@@ -53,8 +53,6 @@ const Collect = () => {
             : null
         }
 
-
-
         <hr className='p-0 mb-4 w-11/12 bg-white' />
 
         <div className='mb-8 w-5/6'>

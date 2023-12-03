@@ -9,8 +9,6 @@ const TestHome = () => {
 
   const token = useAppSelector(getToken);
 
-  console.log(token);
-
   const handleOpenRegisterFormClick = () => {
     dispatch(taggleRegisterForm());
   }

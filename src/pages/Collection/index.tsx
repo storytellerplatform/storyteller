@@ -6,7 +6,7 @@ import { getUserId } from '../../feature/user/userSlice';
 import { Article } from '../../types/articles';
 import CollectionDropdown from './components/CollectionDropdown';
 import CollectionSearch from './components/CollectionSearch';
-import { allEmotions } from '../../utils/emotion';
+import { allEmotions } from '../../utils/emotionConfig';
 
 const testArticles: Array<Article> = [
   {
@@ -16,7 +16,7 @@ const testArticles: Array<Article> = [
     emotions: [
       {
         emotionId: 1,
-        emotions: ["開心"]
+        emotions: ["喜歡"]
       }
     ],
     createdDate: new Date(Date.now()),
@@ -28,7 +28,6 @@ const Collection = () => {
 
   const userId: string = useAppSelector(getUserId);
   const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
-
 
   useEffect(() => {
     setArticles(articlesData || []);

@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { changeOpenForm, getRegisterForm, taggleRegisterForm } from '../feature/authSidebar';
+import { changeOpenForm, getRegisterForm, taggleLoginForm, taggleRegisterForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { SignupType } from '../types/auth';
 import { useSignupMutation } from '../feature/api/authSlice';
@@ -39,7 +39,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
   const handleSignupClick = async () => {
     try {
       await signup(user as SignupType).unwrap();
-      navigate('/signin');
+      dispatch(taggleLoginForm());
     } catch (err: any) {
       if (err.status === 403) {
         setError("帳號或密碼錯誤，請重試一次!");

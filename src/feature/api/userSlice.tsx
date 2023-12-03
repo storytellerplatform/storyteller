@@ -1,5 +1,6 @@
-import { AddNewArticleRequest, AddNewArticleResponse, GetAllArticlesResponse } from "../../types/api/user";
+import { AddNewArticleBResponse, AddNewArticleRequest, AddNewArticleResponse, GetAllArticlesResponse } from "../../types/api/user";
 import { User } from "../../types/user";
+import { emotionsTransfer } from "../../utils/emotionTransfer";
 import { apiSlice } from "./apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
@@ -34,6 +35,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: '/user/article',
         method: 'POST',
         body: article
+      }),
+      transformResponse: (response: AddNewArticleBResponse): AddNewArticleResponse => ({
+        ...response,
+        emotions: emotionsTransfer(response.emotions[response.emotions.length - 1].emotions),
       })
     }),
     CheckUsername: builder.query<boolean, string>({
