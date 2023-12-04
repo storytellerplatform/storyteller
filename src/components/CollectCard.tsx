@@ -11,12 +11,13 @@ import { EmotionProps } from '../types/components'
 
 interface CollectCardProps {
   articleId: string;
+  name: string;
   emotionId: string;
   emotions: Array<EmotionProps> | null;
-  createDate: Date;
+  createDate: string;
 }
 
-const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotions, createDate }) => {
+const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotionId, emotions, createDate }) => {
   const [play, setPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
         className='py-6 text-gray-600 text-lg font-bold cursor-pointer'
         onClick={() => navigate(`/collection/${articleId}/${emotionId}`)}
       >
-        名稱
+        {name}
       </h1>
 
       <div className={`grid grid-cols-1 gap-y-1 text-xl font-semibold lg:grid-cols-2`}>
@@ -68,7 +69,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, emotionId, emotion
       </div>
 
       {/* <span className='font-bold font-mono'>{createDate.toString().split('T')[0]}</span> */}
-      <span className='font-bold font-mono hidden md:block'>{createDate.toDateString()}</span>
+      <span className='font-bold font-mono hidden md:block'>{createDate}</span>
 
       <div className='w-1/10'>
         <DownloadButton src={TestMusic} whitemode={true} />

@@ -1,8 +1,9 @@
-import { Article } from "../articles";
+import { Article, BArticle } from "../articles";
 import { EmotionProps } from "../components";
 import { BEmotion } from "../emotion";
 
-export type GetAllArticlesResponse = Array<Article>; 
+export type GetAllArticlesResponse = Array<Article>;
+export type GetAllArticlesBResponse = Array<BArticle>;  
 
 /*
   從情緒模型傳來的，未加入 emotion ID 
@@ -21,7 +22,7 @@ export interface AddNewArticleBResponse {
   articleId: number;
   name: string;
   content: string;
-  purpose: string;
+  createdDate: Date;
   emotions: Array<BEmotion>;
 }
 
@@ -32,6 +33,6 @@ export interface AddNewArticleResponse {
   articleId: number;
   name: string;
   content: string;
-  purpose: string;
+  createdDate: Date;
   emotions: Array<EmotionProps>;
 }

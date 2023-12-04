@@ -1,69 +1,53 @@
 import React from 'react'
-
-import Music from '../../assets/music3.jpg';
-import Letter from '../../assets/letter3.jpg';
-import A from '../../assets/letter-a.png';
-import B from '../../assets/letter-b.png';
-import C from '../../assets/letter-c.png';
-import MusicIcon from '../../assets/music.png';
-import MusicNote from '../../assets/musical-note.png';
-
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { taggleRegisterForm } from '../../feature/authSidebar';
 import { Link } from 'react-router-dom';
+import { getToken } from '../../feature/auth/authSlice';
+import { toast } from 'react-toastify';
 
-const Home = () => {
+const TestHome = () => {
+  const dispatch = useAppDispatch();
+
+  const token = useAppSelector(getToken);
+
+  const handleOpenRegisterFormClick = () => {
+    dispatch(taggleRegisterForm());
+  }
+
   return (
-    <main className='relative flex flex-col w-full bg-gradient-to-br from-orange-100 to-rose-100'>
+    <>
+      <main className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-home-image bg-center bg-cover'>
 
-      <div className='w-full flex flex-row items-center justify-center'>
-        {/* 跳動文字 */}
-        <div className='w-1/4 flex flex-col items-center justify-start'>
-          <div className='w-1/3 flex flex-col select-none'>
-            <img className='w-16 self-start' src={A} alt="a" />
-            <img className='w-16 self-end' src={B} alt="b" />
-            <img className='w-16 self-center' src={C} alt="c" />
-          </div>
-        </div>
+        <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-30'></div>
 
         {/* 標題 */}
-        <div className='w-1/2  flex flex-col mt-12 items-center justify-center gap-3'>
-          {/* 主題 */}
-          <div className='flex flex-col items-center gap-6'>
-            <h1 className='font-black text-6xl'>
-              讓你的文字演奏<strong className=' text-orange-500'>旋律</strong>
-            </h1>
+        <div className='w-11/12 flex flex-col items-start sm:items-center gap-6 mt-40 sm:w-11/12 md:w-9/12 lg:w-7/12 z-20'>
+          <h2 className='text-3xl font-bold sm:text-4xl'> 說書人 </h2>
+          <h1 className='text-4xl font-extrabold sm:text-5xl xl:text-6xl' > 讓你的文字演奏旋律 </h1>
+          <h3 className='mb-4 text-xl font-semibold sm:text-2xl bg-gradient-to-r from-purple-300 via-orange-200 via-[40%] to-yellow-100 text-transparent bg-clip-text'> 將你的故事、詩或任何文字轉換為美妙的音樂 </h3>
 
-            <h3 className='text-lg font-medium'> 將你的故事、詩或任何文字轉換為美妙的音樂 </h3>
+          <div className='flex flex-col gap-6 mb-6 sm:flex-row'>
+            <Link
+              to='/music'
+              className='px-14 py-2 w-fit border border-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-white hover:text-black'
+            >
+              開始創作音樂
+            </Link>
+
+            {!token &&
+              <button
+                type='button'
+                onClick={handleOpenRegisterFormClick}
+                className='px-14 py-2 w-fit border border-white bg-white font-bold text-black text-lg rounded-full transition-all duration-300 ease-out hover:bg-black hover:text-white'
+              >
+                註冊
+              </button>
+            }
           </div>
-
-          {/* 立即試用按鈕 */}
-          <div className='flex justify-center my-12 select-none'>
-            <button className="relative inline-flex items-center justify-center mb-2 mr-2 overflow-hidden text-xl font-bold text-gray-900 rounded-lg group bg-gradient-to-br from-yellow-200 to-red-200 focus:outline-none focus:ring-0" type='button'>
-              <span className="relative px-7 py-3 transition-all ease-in duration-300 bg-white  rounded-md group-hover:bg-opacity-0">
-                <Link to="/music">
-                  立即試用
-                </Link>
-              </span>
-            </button>
-          </div>
-
         </div>
-
-        {/* 跳動音符 */}
-        <div className='flex flex-col justify-center w-1/4 gap-4 select-none'>
-          <img className='self-center w-16 rotate-12' src={MusicIcon} alt="music" />
-          <img className='self-center w-16 -rotate-12' src={MusicNote} alt="music" />
-        </div>
-      </div>
-
-
-
-      {/* 圖片 or 動畫 */}
-      <div className='flex w-full fixed bottom-0'>
-        <img className='w-1/2 object-contain' src={Letter} alt="letter"></img>
-        <img className='w-1/2 object-contain' src={Music} alt="music"></img>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 
-export default Home
+export default TestHome

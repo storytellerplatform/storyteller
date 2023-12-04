@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { changeOpenForm, getLoginForm, taggleLoginForm, taggleRegisterForm } from '../feature/authSidebar';
+import { changeOpenForm, getLoginForm, taggleLoginForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useSigninMutation } from '../feature/api/authSlice';
 import Cookies from 'js-cookie';
@@ -9,8 +9,8 @@ import { SigninType } from '../types/auth';
 import { setToken } from '../feature/auth/authSlice';
 import { setEmail, setUserId, setUsername } from '../feature/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-import Google from '../assets/google.png'
 import { FiAlertTriangle } from "react-icons/fi";
+import Spinner from './Spinner';
 
 const LoginForm: React.FC = () => {
   const isLoginFormOpen = useAppSelector(getLoginForm);
@@ -21,9 +21,10 @@ const LoginForm: React.FC = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState<string>("測試");
+  const [error, setError] = useState<string>("");
 
-  const [signin, { isLoading }] = useSigninMutation();
+
+  const [signin, { isLoading: isSignInLoading }] = useSigninMutation();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser(prevUser => ({
@@ -37,13 +38,14 @@ const LoginForm: React.FC = () => {
     dispatch(taggleLoginForm());
   };
 
-  const handleGoogleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-  };
+  // const handleGoogleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  // };
 
   const handleToRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setError("");
     dispatch(changeOpenForm());
   };
 
@@ -86,8 +88,12 @@ const LoginForm: React.FC = () => {
       navigate('/');
 
     } catch (err: any) {
-      if (err.status === 403) {
-        setError("帳號或密碼錯誤，請重試一次!");
+      if (err.status === 400 || err.status === 403) {
+        if (err.data.errorCode === 'EMAIL_INVALID') {
+          setError("您的帳戶需要進行電子郵件驗證。請檢查您的郵件信箱!");
+        } else {
+          setError("帳號或密碼錯誤，請重試一次!");
+        }
       } else if (err.status === 500) {
         setError("伺服器發生錯誤!");
       }
@@ -106,7 +112,7 @@ const LoginForm: React.FC = () => {
         </button>
       </div>
 
-      <hr className='h-[2px] w-full bg-black select-none' />
+      {/* <hr className='h-[2px] w-full bg-black select-none' />
 
       <button
         type='button'
@@ -115,18 +121,25 @@ const LoginForm: React.FC = () => {
       >
         <img className='w-4' src={Google} alt='google' />
         使用 Google 帳號登入
-      </button>
+      </button> */}
 
       <hr className='h-[2.5px] w-full bg-black select-none' />
 
-      {/* todo: error msg */}
-      <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
-        <span className='text-white text-base'>
-          <FiAlertTriangle />
-        </span>
-        {error}
-      </div>
+      {/* 
+          錯誤顯示 
+      */}
+      {error &&
+        <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+          <span className='text-white text-base'>
+            <FiAlertTriangle />
+          </span>
+          {error}
+        </div>
+      }
 
+      {/* 
+          電子郵件輸入框
+      */}
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="login-email" className='text-base font-bold' >電子郵件</label>
         <input
@@ -139,6 +152,10 @@ const LoginForm: React.FC = () => {
         />
       </div>
 
+
+      {/* 
+          密碼輸入框
+      */}
       <div className='flex flex-col gap-1 select-none mb-2'>
         <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
         <input
@@ -151,14 +168,25 @@ const LoginForm: React.FC = () => {
         />
       </div>
 
+
+      {/* 
+          登入按鈕
+      */}
       <button
         type='submit'
-        className='py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='flex justify-center py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleClick}
       >
-        登入
+        {
+          !isSignInLoading ?
+            "登入" :
+            <Spinner width='w-5' height='w-5' />
+        }
       </button>
 
+      {/* 
+          未註冊的話
+      */}
       <span className='text-sm font-bold'>
         尚未擁有帳號？立即
         <button

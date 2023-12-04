@@ -20,7 +20,7 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
-    "react-toastify": "^9.1.3",
+    "react-toastify": "^9.1.0",
     "typescript": "^4.9.5",
     "wavesurfer.js": "^7.3.8",
     "web-vitals": "^2.1.4"

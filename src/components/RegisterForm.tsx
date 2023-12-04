@@ -5,43 +5,47 @@ import { changeOpenForm, getRegisterForm, taggleLoginForm, taggleRegisterForm } 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { SignupType } from '../types/auth';
 import { useSignupMutation } from '../feature/api/authSlice';
-import { useNavigate } from 'react-router-dom';
-import Google from '../assets/google.png'
 import { FiAlertTriangle } from "react-icons/fi";
+import Spinner from './Spinner';
 
-interface RegisterFormProps {
-}
-
-const RegisterForm: React.FC<RegisterFormProps> = () => {
+const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [user, setUser] = useState<SignupType>({
     name: "",
     email: "",
     password: "",
   });
-  const [error, setError] = useState<string>("測試");
+  const [error, setError] = useState<string>("");
 
-  const [signup, { isLoading }] = useSignupMutation();
+  const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
 
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleRegisterForm());
   }
 
-  const handleGoogleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-  };
+  // const handleGoogleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  // };
 
   const handleSignupClick = async () => {
     try {
       await signup(user as SignupType).unwrap();
+      setError("");
       dispatch(taggleLoginForm());
     } catch (err: any) {
-      if (err.status === 403) {
+      console.log(err);
+
+      if (err.status === 400) {
+        if (err.data.errorCode === 'ACCOUNT_EXISTS') {
+          setError(err.data.message);
+        } else if (err.data.errorCode === 'EMAIL_EXISTS') {
+          setError(err.data.message);
+        }
+      } else if (err.status === 403) {
         setError("帳號或密碼錯誤，請重試一次!");
       } else if (err.status === 500) {
         setError("伺服器發生錯誤!");
@@ -51,6 +55,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
 
   const handleToLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setError("");
     dispatch(changeOpenForm());
   }
 
@@ -59,14 +64,17 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
       { 'translate-x-full': !isRegisterFormOpen },
       { 'delay-200': isRegisterFormOpen })}
     >
-      <div className='flex justify-between items-start'>
+      {/* 
+          Title
+      */}
+      <header className='flex justify-between items-start'>
         <h1 className='text-3xl font-extrabold'> 註冊 </h1>
         <button type='button' className='hover:opacity-50' onClick={handleCloseClick}>
           <AiOutlineCloseCircle size={24} />
         </button>
-      </div>
+      </header>
 
-      <hr className='h-[2.5px] w-full bg-black select-none' />
+      {/* <hr className='h-[2.5px] w-full bg-black select-none' />
 
       <button
         type='button'
@@ -75,17 +83,25 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
       >
         <img className='w-4' src={Google} alt='google' />
         使用 Google 帳號登入
-      </button>
+      </button> */}
 
       <hr className='h-[2.5px] w-full bg-black select-none' />
 
-      <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
-        <span className='text-white text-base'>
-          <FiAlertTriangle />
-        </span>
-        {error}
-      </div>
+      {/* 
+          錯誤顯示
+      */}
+      {error &&
+        <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+          <span className='text-white text-base'>
+            <FiAlertTriangle />
+          </span>
+          {error}
+        </div>
+      }
 
+      {/* 
+          名稱輸入框
+      */}
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="register-username" className='text-base font-bold' >名稱</label>
         <input
@@ -93,10 +109,14 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
           id="register-username"
           onChange={(e) => setUser({ ...user, name: e.target.value })}
           value={user.name}
+          // onBlur={}
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>
 
+      {/* 
+          電子郵件輸入框
+      */}
       <div className='flex flex-col gap-1 select-none'>
         <label htmlFor="register-email" className='text-base font-bold' >電子郵件</label>
         <input
@@ -108,6 +128,10 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         />
       </div>
 
+
+      {/* 
+          密碼輸入框
+      */}
       <div className='flex flex-col gap-1 select-none mb-4'>
         <label htmlFor="register-password" className='text-base font-bold' >密碼</label>
         <input
@@ -119,15 +143,25 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         />
       </div>
 
+      {/* 
+          註冊按鈕
+      */}
       <button
         type='submit'
-        className='py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='flex justify-center py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleSignupClick}
       >
-        註冊
+        {
+          !isSignupLoading ?
+            "註冊" :
+            <Spinner width='w-5' height='w-5' />
+        }
       </button>
 
-      <span className='self-start font-bold text-sm'>
+      {/* 
+          登入過的話
+      */}
+      <footer className='self-start font-bold text-sm'>
         已經有帳號了嗎？請
         <button
           type='button'
@@ -136,7 +170,7 @@ const RegisterForm: React.FC<RegisterFormProps> = () => {
         >
           登入
         </button>
-      </span>
+      </footer>
 
     </div>
   )

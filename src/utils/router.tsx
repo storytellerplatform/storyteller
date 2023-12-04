@@ -5,13 +5,12 @@ import ErrorPage from './../pages/Error';
 import LoadingPage from "../pages/Loading";
 import Collection from "../pages/Collection";
 import Collect from "../pages/Collect";
-import Signin from "../pages/Signin";
-import Signup from "../pages/Signup";
-import TestHome from "../pages/Home/testPage";
+import Home from "../pages/Home";
 
 // todo: test完後復原
 import Admin from "../pages/Admin";
 import Musics from "../pages/Musics";
+import About from "../pages/About";
 
 const router = createBrowserRouter([
   {
@@ -19,14 +18,6 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: '/signup',
-        element: <Signup />,
-      },
-      {
-        path: '/signin',
-        element: <Signin />,
-      },
       {
         path: "/error",
         element: <ErrorPage />,
@@ -36,11 +27,15 @@ const router = createBrowserRouter([
         element: <LoadingPage />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
         element: <Admin />,
         children: [
           {
             index: true,
-            element: <TestHome />,
+            element: <Home />,
           },
           {
             path: "/collection",

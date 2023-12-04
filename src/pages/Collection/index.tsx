@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import CollectCard from '../../components/CollectCard'
-import { useGetAllArticlesQuery } from '../../feature/api/userSlice';
+import { useGetAllArticlesQuery, useLazyGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
 import { getUserId } from '../../feature/user/userSlice';
 import { Article } from '../../types/articles';
@@ -11,27 +11,42 @@ import { allEmotions } from '../../utils/emotionConfig';
 const testArticles: Array<Article> = [
   {
     articleId: 1,
+    name: "讚喔",
     content: "今天天氣不錯",
-    purpose: "名稱",
     emotions: [
       {
         emotionId: 1,
         emotions: ["喜歡"]
       }
     ],
-    createdDate: new Date(Date.now()),
+    createdDate: "2023-12-15",
   }
 ]
 
 const Collection = () => {
-  const [articles, setArticles] = React.useState<Array<Article>>(testArticles);
+  const [articles, setArticles] = React.useState<Array<Article>>([]);
 
   const userId: string = useAppSelector(getUserId);
-  const { data: articlesData } = useGetAllArticlesQuery(Number(userId));
 
-  useEffect(() => {
-    setArticles(articlesData || []);
-  }, [articlesData]);
+  const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
+
+  React.useEffect(() => {
+    const getArticle = async () => {
+      await triggerGetAllArticles(Number(userId));
+    }
+
+    if (userId !== "0") {
+      getArticle();
+    }
+  }, [triggerGetAllArticles, userId]);
+
+  const { data: allArticles } = allArticlesResult;
+
+  React.useEffect(() => {
+    setArticles(allArticles || []);
+  }, [allArticles]);
+
+  console.log(articles.length);
 
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
@@ -59,20 +74,23 @@ const Collection = () => {
       </div>
 
       {/* 收藏區 */}
-      <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
+      <div className='flex flex-col flex-wrap pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
         <div className='w-full sm:w-4/5 bg-white'>
           {/* 收藏 */}
           {articles.length !== 0 && articles.map(article => {
-            return article.emotions.map((emotion) => {
-              return <CollectCard
-                key={article.articleId.toString()}
-                articleId={article.articleId.toString()}
-                emotionId={emotion.emotionId.toString()}
-                emotions={emotion.emotions}
-                createDate={article.createdDate}
-              />;
-            })
+            return article.emotions.map((emotion, index) => {
+              return (
+                <CollectCard
+                  key={`${article.articleId}_${emotion.emotionId}_${index}`} // 
+                  name={article.name}
+                  articleId={article.articleId.toString()}
+                  emotionId={emotion.emotionId.toString()}
+                  emotions={emotion.emotions}
+                  createDate={article.createdDate}
+                />
+              );
+            });
           })}
         </div>
       </div>

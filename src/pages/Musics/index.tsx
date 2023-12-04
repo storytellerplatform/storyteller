@@ -78,7 +78,7 @@ const Musics = () => {
         toast.error('格式錯誤或是傳出沒有內容的文章');
       }
 
-      toast.error('情緒模型伺服器發生錯誤!');
+      serverErrorNotify('情緒模型伺服器發生錯誤!');
       return;
     }
 
