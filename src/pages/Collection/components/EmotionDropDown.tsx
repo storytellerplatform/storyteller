@@ -1,22 +1,22 @@
 import React from 'react'
 import { AiOutlineTag } from 'react-icons/ai';
 import { FaAngleUp } from 'react-icons/fa';
+import { EmotionProps } from '../../../types/components';
 
-interface CollectionDropdownProps<T> {
-  name: T;
-  dropdownList?: Array<string>;
+interface EmotionDropDownProps {
+  name: EmotionProps;
+  dropdownList?: Array<EmotionProps>;
   isAngleIconShow?: boolean;
-  collectType?: 'Emotion' | 'other',
-  handleClick: React.MouseEventHandler<HTMLDivElement>
+  handleClick: (e: React.MouseEvent<HTMLDivElement>, target: EmotionProps) => void
 };
 
-const CollectionDropdown: React.FC<CollectionDropdownProps<any>> = ({ name, isAngleIconShow = true, dropdownList, collectType = 'other', handleClick }) => {
+const EmotionDropDown: React.FC<EmotionDropDownProps> = ({ name, isAngleIconShow = true, dropdownList, handleClick }) => {
   const [show, setShow] = React.useState<boolean>(false);
 
   return (
     <>
       <button
-        id="collectionDropdownButton"
+        id="EmotionDropDownButton"
         onClick={() => setShow(prevShow => !prevShow)}
         data-dropdown-toggle="dropdown"
         type='button'
@@ -26,7 +26,15 @@ const CollectionDropdown: React.FC<CollectionDropdownProps<any>> = ({ name, isAn
           <i className='-rotate-90'>
             <AiOutlineTag size={18} />
           </i>
-          {name}
+          {
+            name === "無" ? (
+              <>
+                搜尋情緒
+              </>
+            ) : (
+              name
+            )
+          }
         </span>
         {isAngleIconShow && <FaAngleUp />}
 
@@ -37,7 +45,7 @@ const CollectionDropdown: React.FC<CollectionDropdownProps<any>> = ({ name, isAn
               return (
                 <div
                   key={index.toString()}
-                  onClick={(e) => handleClick(e)}
+                  onClick={(e) => handleClick(e, list)}
                   role='option'
                   aria-selected='true'
                   className='pl-10 py-2.5 hover:bg-slate-800 hover:text-white'
@@ -62,4 +70,4 @@ const CollectionDropdown: React.FC<CollectionDropdownProps<any>> = ({ name, isAn
   )
 };
 
-export default CollectionDropdown;
+export default EmotionDropDown;

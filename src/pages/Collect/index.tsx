@@ -6,9 +6,12 @@ import { useGetArticleQuery } from '../../feature/api/articleSlice';
 import DownloadButton from '../../components/DownloadButton';
 import { serverErrorNotify } from '../../utils/toast';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
+import { useAppSelector } from '../../app/hooks';
+import { getToken } from '../../feature/auth/authSlice';
 
 const Collect = () => {
   const { articleId, audioId } = useParams();
+  const userToken = useAppSelector(getToken);
 
   useEffect(() => {
     if (!articleId || !audioId) {
@@ -23,7 +26,11 @@ const Collect = () => {
   useEffect(() => {
     const fetchAudio = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/audio/${audioId}`);
+        const response = await fetch(`http://localhost:8080/api/v1/audio/${audioId}`, {
+          headers: {
+            'Authorization': `Bearer ${userToken}`
+          }
+        });
 
         if (response.status !== 200) {
           serverErrorNotify("GET 音檔 API 發生錯誤");

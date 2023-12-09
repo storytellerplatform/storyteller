@@ -57,8 +57,9 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
       </div>
 
       <div className={`grid grid-cols-1 gap-y-1 text-xl font-semibold lg:grid-cols-2`}>
-        {emotions ? emotions.map((emotion) => {
+        {emotions ? emotions.map((emotion, index) => {
           return <EmotionButton
+            key={index}
             label={emotion}
             defaultStyle={false}
             className='px-4 py-1 rounded-full text-sm'

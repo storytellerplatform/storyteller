@@ -27,6 +27,7 @@ interface ArticleState {
 }
 
 const Musics = () => {
+  const userId: string = useAppSelector(getUserId);
   const [showModal, setShowModal] = React.useState<boolean>(false);
 
   const [article, setArticle] = React.useState<ArticleState>({
@@ -52,7 +53,6 @@ const Musics = () => {
   const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
   // const [updateEmotions, { isLoading: isUpdateEmotionsLoading }] = useUpdateEmotionsMutation();
 
-  const userId: string = useAppSelector(getUserId);
 
   const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -345,7 +345,7 @@ const Musics = () => {
           {
             (blobFile && article.articleId) &&
             <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
-              <MusicPost audioBlob={blobFile} articleId={article.articleId} />
+              <MusicPost name={article.articleName} audioBlob={blobFile} articleId={article.articleId} />
             </div>
           }
 

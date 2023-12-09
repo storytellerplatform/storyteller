@@ -10,15 +10,17 @@ import { useAppSelector } from '../../../app/hooks';
 import { getToken } from '../../../feature/auth/authSlice';
 import classNames from 'classnames';
 import Spinner from '../../../components/Spinner';
+import { handleDownload } from '../../../utils/handleClick';
 
 const LazyWaveSurferPlayerComponent = lazy(() => import('../../../components/WaveSurferPlayer'));
 
 interface MusicPostProps {
+  name: string;
   audioBlob: Blob;
   articleId: Number;
 };
 
-const MusicPost: React.FC<MusicPostProps> = ({ audioBlob, articleId }) => {
+const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => {
   const token = useAppSelector(getToken);
   const [success, setSuccess] = useState<boolean>(false);
   const [audioId, setAudioId] = useState<Number | null>(null);
@@ -118,10 +120,12 @@ const MusicPost: React.FC<MusicPostProps> = ({ audioBlob, articleId }) => {
           }
         </button>
 
-        <button type='button' className='p-2 rounded-full cursor-pointer hover:bg-slate-100 hover:text-slate-600'>
-          <a href={TestMusic} download>
-            <HiDownload size={24} />
-          </a>
+        <button
+          type='button'
+          onClick={() => handleDownload(audioBlob, name)}
+          className='p-2 rounded-full cursor-pointer hover:bg-slate-100 hover:text-slate-600'
+        >
+          <HiDownload size={24} />
         </button>
       </div>
     </div>
