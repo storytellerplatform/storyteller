@@ -88,11 +88,13 @@ const LoginForm: React.FC = () => {
       navigate('/');
 
     } catch (err: any) {
-      if (err.status === 400 || err.status === 403) {
-        if (err.data.errorCode === 'EMAIL_INVALID') {
+      if (err.status === 400 || err.status === 403 || err.status === 404) {
+        if (err.data && err.data.errorCode && err.data.errorCode === 'EMAIL_INVALID') {
           setError("您的帳戶需要進行電子郵件驗證。請檢查您的郵件信箱!");
+        } else if (err.data && err.data.errorCode && err.data.errorCode === "INVALID_CREDENTIALS") {
+          setError("帳號或密碼錯誤，請重試一次!!");
         } else {
-          setError("帳號或密碼錯誤，請重試一次!");
+          setError("帳號或密碼錯誤，請重試一次!!!");
         }
       } else if (err.status === 500) {
         setError("伺服器發生錯誤!");

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { useLazyGetCurrentUserQuery, useLazyGetUserDataQuery } from '../../feature/api/userSlice';
+import { useLazyGetCurrentUserQuery } from '../../feature/api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { setEmail, setUserId, setUsername } from '../../feature/user/userSlice';
 import LoadingPage from './../Loading/index';

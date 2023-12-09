@@ -1,29 +1,25 @@
 import { Article, BArticle } from "../articles";
 import { EmotionProps } from "../components";
-import { BEmotion } from "../emotion";
 
 export type GetAllArticlesResponse = Array<Article>;
 export type GetAllArticlesBResponse = Array<BArticle>;  
 
-/*
-  從情緒模型傳來的，未加入 emotion ID 
-*/
 export interface AddNewArticleRequest {
   userId: number;
   name: string;
   content: string;
-  emotionList: Array<Number>;
+  emotions: Array<Number>;
 }
 
 /*
-  從資料庫回傳，已有設立 emotion 的 ID
+  後端傳來資料未進行轉換
 */ 
 export interface AddNewArticleBResponse {
   articleId: number;
   name: string;
   content: string;
   createdDate: Date;
-  emotions: Array<BEmotion>;
+  emotions: Array<Number>;
 }
 
 /*

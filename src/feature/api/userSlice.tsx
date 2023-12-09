@@ -1,6 +1,6 @@
 import { AddNewArticleBResponse, AddNewArticleRequest, AddNewArticleResponse, GetAllArticlesBResponse, GetAllArticlesResponse } from "../../types/api/user";
 import { Article, BArticle } from "../../types/articles";
-import { BEmotion, Emotion } from "../../types/emotion";
+import { EmotionProps } from "../../types/components";
 import { User } from "../../types/user";
 import { emotionsTransfer } from "../../utils/emotionTransfer";
 import { apiSlice } from "./apiSlice";
@@ -39,16 +39,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             articleId: bArticle.articleId,
             name: bArticle.name,
             content: bArticle.content,
-            // 初始化 toArticle 的其他屬性
-            emotions: [], // 例如初始化為空陣列
+            emotions: [],
+            newestAudioId: bArticle.newestAudioId,
+            allAudioIds: bArticle.allAudioIds,
             createdDate: bArticle.createdDate.toString().split('T')[0],
           };
 
           // 處理 emotions 的轉換
-          let toEmotions: Emotion[] = bArticle.emotions.map((bEmotion: BEmotion) => ({
-            emotionId: bEmotion.emotionId,
-            emotions: emotionsTransfer(bEmotion.emotions),
-          }));
+          let toEmotions: Array<EmotionProps> = emotionsTransfer(bArticle.emotions);
 
           toArticle.emotions = toEmotions;
           articles.push(toArticle);
@@ -65,7 +63,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: AddNewArticleBResponse): AddNewArticleResponse => ({
         ...response,
-        emotions: emotionsTransfer(response.emotions[response.emotions.length - 1].emotions),
+        emotions: emotionsTransfer(response.emotions),
       })
     }),
     CheckUsername: builder.query<boolean, string>({

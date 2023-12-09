@@ -11,3 +11,7 @@
 input:focus-visible {
   outline: 0;
 }
+
+.success-notification {
+  padding: 0.5rem 0.5rem;
+}

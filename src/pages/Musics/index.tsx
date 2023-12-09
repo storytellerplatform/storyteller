@@ -8,12 +8,17 @@ import { getUserId } from '../../feature/user/userSlice';
 import { AddNewArticleRequest } from '../../types/api/user';
 import { useAppSelector } from '../../app/hooks';
 import { toast } from 'react-toastify';
-import { serverErrorNotify } from '../../utils/toast';
+import { serverErrorNotify, successNotification } from '../../utils/toast';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import { BsMusicNoteList } from 'react-icons/bs';
 import MusicPost from './components/MusicPost';
-import { useMoodAnaMutation } from '../../feature/moodAnaApi/apiSlice';
+import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
+import Spinner from '../../components/Spinner';
+import { IP } from '../../utils/config';
+
+// test
+// import TESTWAV from '../../assets/music/testmusic.wav';
 
 interface ArticleState {
   articleId: number | null,
@@ -25,17 +30,23 @@ const Musics = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
 
   const [article, setArticle] = React.useState<ArticleState>({
-    articleId: null,
+    articleId: 1,
     articleName: '',
     articleContent: ''
   })
 
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
 
+  // 用戶傳的檔案
   const [file, setFile] = React.useState<File | null>(null);
 
+  // 生成的音檔
+  const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
+  const [blobFile, setBlobFile] = React.useState<Blob | null>(null);
+
   // 分析音樂前做確認
-  const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+  // todo: 完成是改成 false
+  const [isAllSet, setIsAllSet] = React.useState<boolean>(true);
 
   const [addNewArticle, { isLoading: isAddNewArticleLoading }] = useAddNewArticleMutation();
   const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
@@ -61,16 +72,18 @@ const Musics = () => {
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const emotionList: Array<Number> = [];
+    const emotions: Array<Number> = [];
 
     const moodAnaApiReq: MoodAnaApiReq = {
       text: article.articleContent
     };
 
+    /*
+       將文章內容進行情緒分析
+    */
     try {
       const bEmotion = await analyzeMood(moodAnaApiReq).unwrap();
-      emotionList.push(bEmotion);
-      console.log(emotionList);
+      emotions.push(bEmotion);
     } catch (err: any) {
       console.log(err);
 
@@ -86,11 +99,13 @@ const Musics = () => {
       userId: Number(userId),
       name: article.articleName,
       content: article.articleContent,
-      emotionList,
+      emotions,
     }
 
+    /*
+       文章進行情緒分析完，將文章和情緒一起存入資料庫
+    */
     try {
-
       /*
         從資料庫回傳的 Article，已有設立 emotions ID 
       */
@@ -108,32 +123,44 @@ const Musics = () => {
     } catch (err: any) {
       serverErrorNotify('後端伺服器發生錯誤 ' + err.message);
       return;
+    } finally {
+      successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。你還可以在這裡添加你所想要表達的情感！");
+      setIsAllSet(true);
     }
-
-    setIsAllSet(true);
   }, [addNewArticle, analyzeMood, article, userId]);
 
+  const handleGenerateMusicClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setBlobLoading(true);
 
+    try {
+      const response = await fetch(`http://${IP}:8050/music_create`, {
+        method: 'POST'
+      });
 
-  // todo: 傳到音樂模型 API
-  // const handleGenerateMusicClick = async () => {
-  //   if (!article.articleId) {
-  //     serverErrorNotify('發生錯誤');
-  //     return;
-  //   }
+      if (response.status !== 200) {
+        serverErrorNotify('音樂模型發生錯誤');
+      }
 
-  //   const updateEmotionRequest: UpdateEmotionsRequest = {
-  //     emotions: emotions,
-  //     articleId: article.articleId
-  //   }
+      const audioData = await response.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
+      const blob = new Blob([audioData], { type: 'audio/wav' }); // 將 ArrayBuffer 轉換為 Blob'
+      setBlobFile(blob);
+    } catch (error: any) {
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        serverErrorNotify('音樂模型伺服器未開啟');
+      } else {
+        serverErrorNotify('音樂模型發生錯誤');
+      }
+    } finally {
+      setBlobLoading(false);
+    };
 
-  //   updateEmotions(updateEmotionRequest);
-  // };
+  }, []);
 
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pt-12 px-0 sm:pt-0'>
+      <div className='flex w-full pb-8 bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pt-12 px-0 sm:pt-0'>
 
         {/* 
             sidebar 空白區塊
@@ -217,12 +244,25 @@ const Musics = () => {
           */}
           <button
             onClick={handleAnalyzeClick}
-            disabled={!article.articleContent}
+            disabled={!article.articleName || !article.articleContent}
             type="submit"
-            className="flex justify-center items-center gap-1 w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300"
+            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300 disabled:cursor-not-allowed disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
           >
-            <MdOutlineManageSearch size={28} />
-            分析
+            {
+              (!isAddNewArticleLoading && !isAnalyzeMoodLoading) ? (
+                <span className='flex gap-1 h-7'>
+                  <MdOutlineManageSearch size={28} />
+                  分析
+                </span>
+              ) : (
+                <Spinner
+                  width='w-7'
+                  height='h-7'
+                  fill='fill-black'
+                  spinnerText='text-white'
+                />
+              )
+            }
           </button>
 
         </div>
@@ -278,25 +318,36 @@ const Musics = () => {
              生成音樂區域
           */}
           <button
-            onClick={handleAnalyzeClick}
+            onClick={handleGenerateMusicClick}
             type="submit"
-            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 pl-8 pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 "
+            disabled={!isAllSet}
+            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 disabled:cursor-not-allowed"
           >
-            <span className='absolute top-0 right-2/3 -rotate-12'>
+            <span className='absolute top-0 right-2/3 -rotate-6 hidden xl:block'>
               <BsMusicNoteList
                 size={50}
-                className='text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400 group-hover:animate-bouncing'
+                className={classNames(`text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400`,
+                  { 'group-hover:animate-bouncing': isAllSet })}
               />
             </span>
-            生成音樂
+            {
+              !blobLoading ? (
+                <>
+                  生成音樂
+                </>
+              ) : (
+                <Spinner width='w-7' height='h-7' fill='fill-slate-600' spinnerText='text-white' />
+              )
+            }
           </button>
 
           {/* 音樂生成列表 */}
-          <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
-            <MusicPost />
-            <MusicPost />
-            <MusicPost />
-          </div>
+          {
+            (blobFile && article.articleId) &&
+            <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
+              <MusicPost audioBlob={blobFile} articleId={article.articleId} />
+            </div>
+          }
 
         </div>
 

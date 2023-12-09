@@ -8,7 +8,8 @@ type UseWavesurferProps = Omit<WaveSurferOptions, 'container'>;
 // WaveSurfer hook
 const useWavesurfer = (
   containerRef: MutableRefObject<HTMLElement | null>,
-  options: UseWavesurferProps
+  options: UseWavesurferProps,
+  data: Blob
 ) => {
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
 
@@ -21,6 +22,8 @@ const useWavesurfer = (
       ...options,
       container: containerRef.current,
     })
+
+    ws.loadBlob(data);
 
     setWavesurfer(ws)
 

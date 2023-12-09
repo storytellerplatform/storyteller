@@ -7,7 +7,7 @@ import authSidebar from '../feature/authSidebar';
 
 // API slices
 import { apiSlice } from '../feature/api/apiSlice'
-import { moodAnaApiSlice } from '../feature/moodAnaApi/apiSlice';
+import { moodAnaApiSlice } from '../feature/api/moodAnaApi/apiSlice';
 
 const store = configureStore({
   reducer: {
@@ -16,7 +16,7 @@ const store = configureStore({
     sidebar: sidebarSlice,
     authSidebar: authSidebar,
     [apiSlice.reducerPath]: apiSlice.reducer,
-    [moodAnaApiSlice.reducerPath]: moodAnaApiSlice.reducer
+    [moodAnaApiSlice.reducerPath]: moodAnaApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     .concat(apiSlice.middleware, moodAnaApiSlice.middleware)

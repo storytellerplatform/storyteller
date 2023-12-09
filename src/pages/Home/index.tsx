@@ -3,9 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { taggleRegisterForm } from '../../feature/authSidebar';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../feature/auth/authSlice';
-import { toast } from 'react-toastify';
 
-const TestHome = () => {
+const Home = () => {
   const dispatch = useAppDispatch();
 
   const token = useAppSelector(getToken);
@@ -27,12 +26,14 @@ const TestHome = () => {
           <h3 className='mb-4 text-xl font-semibold sm:text-2xl bg-gradient-to-r from-purple-300 via-orange-200 via-[40%] to-yellow-100 text-transparent bg-clip-text'> 將你的故事、詩或任何文字轉換為美妙的音樂 </h3>
 
           <div className='flex flex-col gap-6 mb-6 sm:flex-row'>
-            <Link
-              to='/music'
-              className='px-14 py-2 w-fit border border-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-white hover:text-black'
-            >
-              開始創作音樂
-            </Link>
+            {token &&
+              <Link
+                to='/music'
+                className='px-14 py-2 w-fit border border-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-white hover:text-black'
+              >
+                開始創作音樂
+              </Link>
+            }
 
             {!token &&
               <button
@@ -50,4 +51,4 @@ const TestHome = () => {
   )
 }
 
-export default TestHome
+export default Home

@@ -67,7 +67,7 @@ const Navbar = () => {
             handleOpenLoginFormClick)
           }
 
-          {createNavLink(
+          {token && createNavLink(
             "sm:after:content-['創作音樂']",
             "sm:after:w-20",
             "sm:hover:before:w-16",

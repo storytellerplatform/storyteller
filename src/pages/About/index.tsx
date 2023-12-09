@@ -19,7 +19,7 @@ const About = () => {
       */}
         <span className='mb-2 text-white font-bold text-4xl'>簡述</span>
 
-        <p className='mb-2 text-xl w-1/2'>
+        <p className='mb-2 text-base w-1/2'>
           歡迎來到說書人！我們是一個專注於將文字轉換成音樂的平台。用戶可以輸入他們喜歡的故事、小說或其他文本，
           我們會根據文本情感和內容，將其轉換成獨特的音樂作品。
         </p>
@@ -29,7 +29,7 @@ const About = () => {
         */}
         <span className='mb-2 text-white font-bold text-4xl'>服務說明</span>
 
-        <p className='text-base w-1/2'>
+        <p className='mb-2 text-base w-1/2'>
           我們提供簡單易用的文本輸入界面，您可以在輸入框中鍵入您喜歡的文字內容，點擊轉換按鈕後，
           我們將使用先進的技術將這些文字轉換為動聽的音樂作品，並提供給您進行欣賞。
         </p>

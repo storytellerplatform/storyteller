@@ -8,13 +8,14 @@ import classNames from 'classnames';
 type UseWavesurferProps = Omit<WaveSurferOptions, 'container'>;
 interface WaveSurferPlayerProps extends UseWavesurferProps {
   playbtnStyle: string;
+  data: Blob;
 }
 
 const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [currentTime, setCurrentTime] = useState<number>(0)
-  const wavesurfer = useWavesurfer(containerRef, props)
+  // const [currentTime, setCurrentTime] = useState<number>(0)
+  const wavesurfer = useWavesurfer(containerRef, props, props.data)
 
   // On play button click
   const onPlayClick = useCallback(() => {
@@ -27,13 +28,13 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = (props) => {
   useEffect(() => {
     if (!wavesurfer) return
 
-    setCurrentTime(0)
+    // setCurrentTime(0)
     setIsPlaying(false)
 
     const subscriptions = [
       wavesurfer.on('play', () => setIsPlaying(true)),
       wavesurfer.on('pause', () => setIsPlaying(false)),
-      wavesurfer.on('audioprocess', (currentTime) => setCurrentTime(currentTime)),
+      // wavesurfer.on('audioprocess', (currentTime) => setCurrentTime(currentTime)),
     ]
 
     return () => {

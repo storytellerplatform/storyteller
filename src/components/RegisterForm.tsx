@@ -7,6 +7,7 @@ import { SignupType } from '../types/auth';
 import { useSignupMutation } from '../feature/api/authSlice';
 import { FiAlertTriangle } from "react-icons/fi";
 import Spinner from './Spinner';
+import { successNotification } from '../utils/toast';
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -36,10 +37,11 @@ const RegisterForm: React.FC = () => {
       await signup(user as SignupType).unwrap();
       setError("");
       dispatch(taggleLoginForm());
+      successNotification('感謝您的註冊！我們已向您提供的電子郵件地址發送了一封驗證郵件。請查看您的收件箱!')
     } catch (err: any) {
       console.log(err);
 
-      if (err.status === 400) {
+      if (err.status === 400 || err.status === 404) {
         if (err.data.errorCode === 'ACCOUNT_EXISTS') {
           setError(err.data.message);
         } else if (err.data.errorCode === 'EMAIL_EXISTS') {
