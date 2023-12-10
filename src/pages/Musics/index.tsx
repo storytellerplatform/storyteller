@@ -17,9 +17,6 @@ import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
 import { IP } from '../../utils/config';
 
-// test
-// import TESTWAV from '../../assets/music/testmusic.wav';
-
 interface ArticleState {
   articleId: number | null,
   articleName: string,
@@ -46,13 +43,15 @@ const Musics = () => {
   const [blobFile, setBlobFile] = React.useState<Blob | null>(null);
 
   // 分析音樂前做確認
-  // todo: 完成是改成 false
-  const [isAllSet, setIsAllSet] = React.useState<boolean>(true);
+  const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
 
   const [addNewArticle, { isLoading: isAddNewArticleLoading }] = useAddNewArticleMutation();
   const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
   // const [updateEmotions, { isLoading: isUpdateEmotionsLoading }] = useUpdateEmotionsMutation();
 
+  const isArticleSet = () => {
+    return (!article.articleName || !article.articleContent) && (!file)
+  }
 
   const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -69,14 +68,59 @@ const Musics = () => {
     setFile(e.target.files ? e.target.files[0] : null);
   }, []);
 
+  const readFileContents = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader(); // 創建FileReader物件
+
+      // 當文件讀取完成時執行的函式
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const text = e.target?.result; // 取得文件內容
+        resolve(text); // 成功時將文件內容解析為Promise的結果
+      };
+
+      reader.onerror = (e) => {
+        reject(e); // 發生錯誤時將錯誤信息解析為Promise的拒絕原因
+      };
+
+      if (file) {
+        reader.readAsText(file); // 以文本格式讀取文件內容
+      } else {
+        reject(new Error('文件無效')); // 如果文件無效則拒絕Promise
+        serverErrorNotify('文件無效');
+      }
+    })
+  };
+
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const emotions: Array<Number> = [];
 
+    /**
+     * 如果用戶先傳檔案
+     * 就以檔案為主來做情緒分析
+     */
+    let fileText: string = "";
+
+    if (file) {
+      await readFileContents(file)
+        .then((text) => {
+          fileText = text as string;
+        })
+        .catch((error) => {
+          // 讀取文件失敗時的錯誤處理邏輯
+          console.error('Error reading file:', error);
+          serverErrorNotify('文件讀取失敗');
+        });
+    }
+
+    if (file && fileText === "") {
+      serverErrorNotify("檔案內沒有任何文字!");
+    }
+
     const moodAnaApiReq: MoodAnaApiReq = {
-      text: article.articleContent
-    };
+      text: file ? (fileText || article.articleContent) : article.articleContent
+    }
 
     /*
        將文章內容進行情緒分析
@@ -97,8 +141,8 @@ const Musics = () => {
 
     const newArticle: AddNewArticleRequest = {
       userId: Number(userId),
-      name: article.articleName,
-      content: article.articleContent,
+      name: (file?.name.split('.')[0]) || article.articleName,
+      content: fileText || article.articleContent,
       emotions,
     }
 
@@ -127,7 +171,7 @@ const Musics = () => {
       successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。你還可以在這裡添加你所想要表達的情感！");
       setIsAllSet(true);
     }
-  }, [addNewArticle, analyzeMood, article, userId]);
+  }, [addNewArticle, analyzeMood, article, file, userId]);
 
   const handleGenerateMusicClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -160,7 +204,7 @@ const Musics = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full pb-8 bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pt-12 px-0 sm:pt-0'>
+      <div className='flex w-full pb-8 bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pl-6 sm:pl-24 lg:pl-0 pt-12 px-0 sm:pt-0'>
 
         {/* 
             sidebar 空白區塊
@@ -244,7 +288,7 @@ const Musics = () => {
           */}
           <button
             onClick={handleAnalyzeClick}
-            disabled={!article.articleName || !article.articleContent}
+            disabled={isArticleSet()}
             type="submit"
             className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300 disabled:cursor-not-allowed disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
           >
@@ -274,11 +318,11 @@ const Musics = () => {
           {/* 
               情感分析區域
           */}
-          <h3 className='flex flex-col text-3xl font-bold text-black opacity-90'>
+          <h3 className='flex flex-col text-3xl font-bold text-black opacity-90 mb-4'>
             情感分析
             <span className='text-sm font-bold bg-gradient-to-r from-yellow-500 via-yellow-300 to-slate-100 text-transparent bg-clip-text'> 加入您想要的情緒或情境 </span>
           </h3>
-          <div className='flex flex-row'>
+          <div className='flex flex-row mb-6 gap-2'>
 
             {/* 
                情緒選擇區域

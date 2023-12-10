@@ -1,4 +1,4 @@
-export type EmotionColorProps = 'red' | 'green' | 'yellow' | 'blue' | 'rose' | 'orange';  
+export type EmotionColorProps = 'red' | 'green' | 'yellow' | 'blue' | 'rose' | 'orange' | 'stone';  
 export type EmotionProps = '喜歡' | '悲傷' | '厭惡' | '憤怒' | '幸福' | '無';
 export type EmotionSizeProps = 'sm' | 'lg';
 

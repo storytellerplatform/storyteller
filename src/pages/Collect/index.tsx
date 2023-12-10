@@ -70,7 +70,7 @@ const Collect = () => {
                   <EmotionButton
                     defaultStyle={false}
                     label={emotion}
-                    className='text-lg px-3 py-1.5 rounded-full'
+                    className='text-lg px-5 py-1.5 rounded-full'
                   />
                 ))
               }
@@ -90,7 +90,7 @@ const Collect = () => {
                 waveColor={"#e1e1e1"}
                 barWidth={4}
                 barRadius={4}
-                progressColor={"rgba(112, 112, 112, 0.5)"}
+                progressColor={"rgba(32, 31, 31, 0.5)"}
                 hideScrollbar={true}
                 data={audioBlob}
                 playbtnStyle='dark'

@@ -1,7 +1,7 @@
 import React from 'react'
 import EmotionButton from '../../../components/EmotionButton';
 import { EmotionProps } from '../../../types/components';
-import { allEmotions } from '../../../utils/emotionConfig';
+import { selectEmotions } from '../../../utils/emotionConfig';
 
 interface MusicModalProps {
   showModal: boolean,
@@ -34,7 +34,7 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal, emotio
             {/* 情緒列表 */}
             <div className='px-12 pb-4'>
 
-              {allEmotions.map((emotion: EmotionProps, index: React.Key | null | undefined) => (
+              {selectEmotions.map((emotion: EmotionProps, index: React.Key | null | undefined) => (
                 <EmotionButton
                   key={index}
                   label={emotion}

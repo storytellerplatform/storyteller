@@ -8,6 +8,7 @@ import { useSignupMutation } from '../feature/api/authSlice';
 import { FiAlertTriangle } from "react-icons/fi";
 import Spinner from './Spinner';
 import { successNotification } from '../utils/toast';
+import { validateEmail } from '../utils/vaildateEmail';
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -33,6 +34,11 @@ const RegisterForm: React.FC = () => {
   // };
 
   const handleSignupClick = async () => {
+    if (!validateEmail(user.email)) {
+      setError("電子信箱格式錯誤");
+      return;
+    }
+
     try {
       await signup(user as SignupType).unwrap();
       setError("");
@@ -111,7 +117,6 @@ const RegisterForm: React.FC = () => {
           id="register-username"
           onChange={(e) => setUser({ ...user, name: e.target.value })}
           value={user.name}
-          // onBlur={}
           className='w-full p-2 indent-2 border border-black rounded-sm'
         />
       </div>
@@ -120,7 +125,7 @@ const RegisterForm: React.FC = () => {
           電子郵件輸入框
       */}
       <div className='flex flex-col gap-1 select-none'>
-        <label htmlFor="register-email" className='text-base font-bold' >電子郵件</label>
+        <label htmlFor="register-email" className='text-base font-bold' >電子信箱</label>
         <input
           type="email"
           id="register-email"
