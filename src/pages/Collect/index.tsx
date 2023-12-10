@@ -46,7 +46,7 @@ const Collect = () => {
     };
 
     fetchAudio();
-  }, [audioId]);
+  }, [audioId, userToken]);
 
   return (
     <div className='flex w-full'>

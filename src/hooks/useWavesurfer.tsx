@@ -1,4 +1,5 @@
 // Import React hooks
+// eslint-disable-next-line
 import react, { useState, useEffect } from 'react';
 import WaveSurfer, { WaveSurferOptions } from 'wavesurfer.js';
 import { MutableRefObject } from 'react';
@@ -30,7 +31,7 @@ const useWavesurfer = (
     return () => {
       ws.destroy()
     }
-  }, [options, containerRef])
+  }, [options, containerRef, data])
 
   return wavesurfer
 }

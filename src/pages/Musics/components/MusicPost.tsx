@@ -2,8 +2,6 @@ import React, { Suspense, lazy, memo, useState } from 'react'
 import { HiDownload } from 'react-icons/hi';
 import { FaRegHeart } from 'react-icons/fa';
 
-// test
-import TestMusic from '../../../assets/music/testmusic.wav';
 import { serverErrorNotify } from '../../../utils/toast';
 import { IP, PORT } from '../../../utils/config';
 import { useAppSelector } from '../../../app/hooks';

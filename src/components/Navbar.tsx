@@ -49,7 +49,8 @@ const Navbar = () => {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className='fixed top-0 left-0 flex flex-row justify-between items-center gap-16 p-4 pr-8 h-fit w-full bg-[#191d24] z-50 sm:w-16 sm:h-full sm:flex-col sm:justify-normal sm:pr-4'
+        // bg-[#191d24] bg-navbar-image
+        className='fixed top-0 left-0 flex flex-row justify-between items-center gap-16 p-4 pr-8 h-fit w-full bg-[#191d24] bg-left object-cover z-50 sm:w-16 sm:h-full sm:flex-col sm:justify-normal sm:pr-4'
       >
         <Link to='/'>
           <AiOutlineRead color='white' size={40} className='cursor-pointer' />
@@ -133,7 +134,7 @@ const Navbar = () => {
         </nav>
 
 
-        <div className={classNames('absolute left-full top-0 h-screen items-center bg-[#191d24] z-40 transition-all duration-150 ease-out-in',
+        <div className={classNames('absolute left-full top-0 h-screen items-center bg-[#191d24] bg-right-top z-40 transition-all duration-150 ease-out-in',
           { 'w-32': isHovered },
           { 'w-0': !isHovered })}
         >

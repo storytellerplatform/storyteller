@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store';
-import Cookies from 'js-cookie';
 
 interface AuthState {
   token: string | null;
