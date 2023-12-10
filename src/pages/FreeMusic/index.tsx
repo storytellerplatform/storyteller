@@ -352,7 +352,7 @@ const FreeMusics = () => {
           {
             (blobFile && article.articleId) &&
             <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
-              <MusicPost name={article.articleName} audioBlob={blobFile} articleId={article.articleId} />
+              <MusicPost name={article.articleName} audioBlob={blobFile} />
             </div>
           }
 
