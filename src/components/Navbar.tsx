@@ -11,6 +11,7 @@ import RegisterForm from './RegisterForm'
 import { getToken } from '../feature/auth/authSlice'
 import Cookies from 'js-cookie'
 import { LuLogOut } from 'react-icons/lu'
+import { FaPeopleGroup } from "react-icons/fa6";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -67,6 +68,19 @@ const Navbar = () => {
             handleOpenLoginFormClick)
           }
 
+          {!token && createNavLink(
+            "sm:after:content-['探索音樂']",
+            "sm:after:w-20",
+            "sm:hover:before:w-16",
+            isHovered,
+            <FiMusic
+              color='white'
+              size={24}
+              className='cursor-pointer'
+            />,
+            () => navigate('/freemusic'))
+          }
+
           {token && createNavLink(
             "sm:after:content-['創作音樂']",
             "sm:after:w-20",
@@ -90,6 +104,18 @@ const Navbar = () => {
               size={24}
             />,
             () => navigate('/collection')
+          )}
+
+          {createNavLink(
+            "sm:after:content-['關於']",
+            "sm:after:w-10",
+            "sm:hover:before:w-9",
+            isHovered,
+            <FaPeopleGroup
+              color='white'
+              size={24}
+            />,
+            () => navigate('/about')
           )}
 
           {token && createNavLink(

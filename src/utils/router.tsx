@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Admin from "../pages/Admin";
 import Musics from "../pages/Musics";
 import About from "../pages/About";
+import FreeMusics from "../pages/FreeMusic";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/loading",
         element: <LoadingPage />,
+      },
+      {
+        path: "/freemusic",
+        element: <FreeMusics />
       },
       {
         path: "/about",

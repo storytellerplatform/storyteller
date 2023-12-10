@@ -38,6 +38,7 @@ const Collection = () => {
   const [collectCards, setCollectCards] = React.useState<Array<CollectCardProps>>([]);
   const [searchEmotion, setSearchEmotion] = React.useState<EmotionProps>("無");
   const [sortDate, setSortDate] = React.useState<SortDataType>(SortDataType.DESC);
+  const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(false);
 
   const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
   const [triggerSearchByName, searchByNameResult] = useLazySearchByNameQuery();
@@ -89,9 +90,10 @@ const Collection = () => {
       setSearchEmotion(emotionName);
       setQueryType(QueryType.ALL);
     } else {
-      triggerSearchByEmotion({ userId: Number(userId), emotion: emotionNumTransfer(emotionName) })
+      triggerSearchByEmotion({ userId: Number(userId), emotion: emotionNumTransfer(emotionName) });
       setSearchEmotion(emotionName);
       setQueryType(QueryType.EMOTION);
+      setIsArticlesLoading(true);
     }
   }
 
@@ -105,6 +107,7 @@ const Collection = () => {
       else return SortDataType.ASC;
     });
     triggerSortDate({ userId: Number(userId), sort: sortDate });
+    setIsArticlesLoading(true);
   };
 
   function isArrayOfTypeAudio(arr: Array<Audio | null>): arr is Array<Audio> {
@@ -117,6 +120,7 @@ const Collection = () => {
   }
 
   useEffect(() => {
+    setIsArticlesLoading(true);
     const fetchAudioData = async (allArticles: GetAllArticlesResponse) => {
       const collectCardsData: Array<CollectCardProps> = await Promise.all(
         allArticles.map(async (article) => {
@@ -195,6 +199,8 @@ const Collection = () => {
     } else if (searchDResult && userToken && queryType === QueryType.DATE) {
       fetchAudioData(searchDResult);
     }
+
+    setIsArticlesLoading(false);
   }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken])
 
   return (
@@ -202,22 +208,22 @@ const Collection = () => {
 
       <div className='flex pt-4 pb-2 ml-2 sm:ml-16 rounded-lg md:w-auto flex-col md:flex-row md:justify-evenly pl-6 md:pl-0 gap-4 md:gap-0'>
         {/*搜尋名稱 */}
-        <div className='w-full md:w-[23%]'>
+        <div className='w-full md:w-[21%]'>
           <CollectionSearch handleKeyDown={handleKeyDown} search={search} setSearch={setSearch} />
         </div>
 
         {/* 搜尋情緒 */}
-        <div className='w-full md:w-[23%]'>
+        <div className='w-full md:w-[21%]'>
           <EmotionDropDown name={searchEmotion} dropdownList={allEmotions} handleClick={handleEmotionClick} />
         </div>
 
         {/* 搜尋情境 */}
-        <div className='w-full md:w-[23%]'>
+        <div className='w-full md:w-[21%]'>
           <CollectionDropdown handleClick={() => { }} name='搜尋情境' />
         </div>
 
         {/* 改變日期先後 */}
-        <div className='w-full md:w-[23%]'>
+        <div className='w-full md:w-[21%]'>
           <DateSort handleClick={handleSortDateClick} />
         </div>
       </div>
@@ -230,15 +236,29 @@ const Collection = () => {
           {collectCards.length !== 0 && collectCards.map(article => {
             return article.audioBlobList?.map((audio: Audio) => {
               return (
-                <CollectCard
-                  key={collectCardId}
-                  articleId={article.articleId}
-                  name={article.name}
-                  emotions={article.emotions}
-                  createDate={article.createdDate}
-                  audioBlob={audio.audioBlob}
-                  audioId={audio.audioId}
-                />
+                !isArticlesLoading ? (
+                  <CollectCard
+                    key={collectCardId}
+                    articleId={article.articleId}
+                    name={article.name}
+                    emotions={article.emotions}
+                    createDate={article.createdDate}
+                    audioBlob={audio.audioBlob}
+                    audioId={audio.audioId}
+                  />
+                ) : (
+                  <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
+                    {/* 加載時的骨架結構 */}
+                    <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                    <div className='flex gap-2 h-fit w-fit'>
+                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                    </div>
+                    <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                    <div className='bg-gray-300 h-10 w-full rounded'></div>
+                  </div>
+                )
               )
             })
           })}

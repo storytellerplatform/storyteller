@@ -12,6 +12,7 @@ import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
 import { IP } from '../../utils/config';
+import { emotionsTransfer } from './../../utils/emotionTransfer';
 
 interface ArticleState {
   articleId: number | null,
@@ -131,6 +132,8 @@ const FreeMusics = () => {
       serverErrorNotify('情緒模型伺服器發生錯誤!');
       return;
     }
+
+    setEmotions(emotionsTransfer(emotions));
 
     successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。你還可以在這裡添加你所想要表達的情感！");
     setIsAllSet(true);
