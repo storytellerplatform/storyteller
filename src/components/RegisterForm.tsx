@@ -9,6 +9,7 @@ import { FiAlertTriangle } from "react-icons/fi";
 import Spinner from './Spinner';
 import { successNotification } from '../utils/toast';
 import { validateEmail } from '../utils/vaildateEmail';
+import { FaCircleQuestion } from "react-icons/fa6";
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -140,7 +141,12 @@ const RegisterForm: React.FC = () => {
           密碼輸入框
       */}
       <div className='flex flex-col gap-1 select-none mb-4'>
-        <label htmlFor="register-password" className='text-base font-bold' >密碼</label>
+        <label htmlFor="register-password" className='flex gap-1 text-base font-bold' >
+          密碼
+          <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg hover:after:content-[''] hover:after:w-3 hover:after:h-3 hover:after:top-[1px] hover:after:absolute hover:after:left-[25px] hover:after:bg-white hover:after:border-l-2 hover:after:border-b-2 hover:after:border-black hover:after:rotate-45`}>
+            <FaCircleQuestion />
+          </span>
+        </label>
         <input
           type="password"
           id="register-password"
