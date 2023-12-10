@@ -10,6 +10,7 @@ import { setToken } from '../feature/auth/authSlice';
 import { setEmail, setUserId, setUsername } from '../feature/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { FiAlertTriangle } from "react-icons/fi";
+import { FaCircleQuestion } from "react-icons/fa6";
 import Spinner from './Spinner';
 
 const LoginForm: React.FC = () => {
@@ -103,7 +104,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
+    <div className={classNames(`login-form fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
       { 'translate-x-full': !isLoginFormOpen },
       { 'delay-200': isLoginFormOpen })}
     >
@@ -159,7 +160,12 @@ const LoginForm: React.FC = () => {
           密碼輸入框
       */}
       <div className='flex flex-col gap-1 select-none mb-2'>
-        <label htmlFor="login-password" className='text-base font-bold' >密碼</label>
+        <label htmlFor="login-password" className='flex gap-1 text-base font-bold' >
+          密碼
+          <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg hover:after:content-[''] hover:after:w-3 hover:after:h-3 hover:after:top-[1px] hover:after:absolute hover:after:left-[25px] hover:after:bg-white hover:after:border-l-2 hover:after:border-b-2 hover:after:border-black hover:after:rotate-45`}>
+            <FaCircleQuestion />
+          </span>
+        </label>
         <input
           type="password"
           name="password"

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { taggleRegisterForm } from '../../feature/authSidebar';
+import { getLoginForm, getRegisterForm, taggleLoginForm, taggleRegisterForm } from '../../feature/authSidebar';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../feature/auth/authSlice';
 
@@ -9,13 +9,26 @@ const Home = () => {
 
   const token = useAppSelector(getToken);
 
+  const registerFormOpen = useAppSelector(getRegisterForm);
+  const loginFormOpen = useAppSelector(getLoginForm);
+
   const handleOpenRegisterFormClick = () => {
     dispatch(taggleRegisterForm());
   }
 
+  const handleCloseRegister = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (registerFormOpen) {
+      if (!(e.target as Element).className.match('register-form')) dispatch(taggleRegisterForm());
+    }
+
+    if (loginFormOpen) {
+      if (!(e.target as Element).className.match('login-form')) dispatch(taggleLoginForm());
+    }
+  };
+
   return (
     <>
-      <main className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-home-image bg-center bg-cover'>
+      <main onClick={handleCloseRegister} className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-home-image bg-center bg-cover'>
 
         <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-30'></div>
 

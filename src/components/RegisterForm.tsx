@@ -24,6 +24,8 @@ const RegisterForm: React.FC = () => {
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
 
+
+
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleRegisterForm());
@@ -69,9 +71,10 @@ const RegisterForm: React.FC = () => {
   }
 
   return (
-    <div className={classNames(`fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
-      { 'translate-x-full': !isRegisterFormOpen },
-      { 'delay-200': isRegisterFormOpen })}
+    <div
+      className={classNames(`register-form fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
+        { 'translate-x-full': !isRegisterFormOpen },
+        { 'delay-200': isRegisterFormOpen })}
     >
       {/* 
           Title
