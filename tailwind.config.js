@@ -15,6 +15,7 @@ module.exports = {
         'read-book2-image': "url('./assets/readbook2.jpg')",
         'read-book3-image': "url('./assets/readbook3.jpg')",
         'star-image': "url('./assets/star.jpg')",
+        'notes-image': "url('./assets/notes.jpg')",
       },
       backgroundPosition: {
         bottom: 'bottom',

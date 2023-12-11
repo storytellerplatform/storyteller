@@ -50,9 +50,14 @@ const Collect = () => {
 
   return (
     <div className='flex w-full'>
-      {/* 左 */}
-      <div className='flex flex-col gap-8 w-7/12 ml-4 pl-20 h-auto min-h-screen p-5 bg-gradient-to-r from-slate-600 to-slate-800 backdrop-blur-lg '>
 
+      <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-notes-image bg-center bg-cover pt-12 -z-10'></div>
+
+      <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-black opacity-50 -z-10'></div>
+
+      {/* 左 */}
+      {/* bg-gradient-to-r from-slate-600 to-slate-800 backdrop-blur-lg */}
+      <div className='flex flex-col gap-8 w-7/12 ml-4 pl-20 h-auto min-h-screen p-5'>
         <input
           // 增加修改文章的 API
           // onChange={(e) => setName(e.target.value)}
@@ -111,7 +116,7 @@ const Collect = () => {
       </div>
 
       {/* 右 */}
-      <div className='w-5/12 p-8 bg-slate-800'>
+      <div className='w-5/12 p-8'>
 
         <div className='mt-8'>
           <h1 className='text-4xl font-bold mb-4 text-slate-50'> 文章 </h1>
