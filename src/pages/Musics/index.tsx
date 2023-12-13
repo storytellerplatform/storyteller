@@ -15,7 +15,7 @@ import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
-import { IP } from '../../utils/config';
+import { NORD_IP, NORD_PORT } from '../../utils/config';
 
 interface ArticleState {
   articleId: number | null,
@@ -178,7 +178,7 @@ const Musics = () => {
     setBlobLoading(true);
 
     try {
-      const response = await fetch(`http://${IP}:8050/music_create`, {
+      const response = await fetch(`http://${NORD_IP}:${NORD_PORT}/music_create`, {
         method: 'POST'
       });
 

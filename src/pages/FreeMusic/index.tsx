@@ -11,8 +11,8 @@ import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
-import { IP } from '../../utils/config';
 import { emotionsTransfer } from './../../utils/emotionTransfer';
+import { IP, NORD_IP, NORD_PORT } from '../../utils/config';
 
 interface ArticleState {
   articleId: number | null,
@@ -144,8 +144,14 @@ const FreeMusics = () => {
     setBlobLoading(true);
 
     try {
-      const response = await fetch(`http://${IP}:8050/music_create`, {
-        method: 'POST'
+      const dataToSend = { "data": {} };
+
+      const response = await fetch(`http://${NORD_IP}:${NORD_PORT}/music_create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
       });
 
       if (response.status !== 200) {
