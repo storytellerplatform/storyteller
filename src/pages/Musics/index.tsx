@@ -15,7 +15,6 @@ import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
-import { NORD_IP, NORD_PORT } from '../../utils/config';
 
 interface ArticleState {
   articleId: number | null,
@@ -26,6 +25,7 @@ interface ArticleState {
 const Musics = () => {
   const userId: string = useAppSelector(getUserId);
   const [showModal, setShowModal] = React.useState<boolean>(false);
+  const MODEL_URL = process.env.REACT_APP_MODEL_ENDPOINT;
 
   const [article, setArticle] = React.useState<ArticleState>({
     articleId: 1,
@@ -178,7 +178,7 @@ const Musics = () => {
     setBlobLoading(true);
 
     try {
-      const response = await fetch(`http://${NORD_IP}:${NORD_PORT}/music_create`, {
+      const response = await fetch(`${MODEL_URL}/music_create`, {
         method: 'POST'
       });
 
@@ -199,7 +199,7 @@ const Musics = () => {
       setBlobLoading(false);
     };
 
-  }, []);
+  }, [MODEL_URL]);
 
   return (
     <>

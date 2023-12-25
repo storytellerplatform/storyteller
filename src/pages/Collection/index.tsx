@@ -38,12 +38,14 @@ const Collection = () => {
   const [collectCards, setCollectCards] = React.useState<Array<CollectCardProps>>([]);
   const [searchEmotion, setSearchEmotion] = React.useState<EmotionProps>("無");
   const [sortDate, setSortDate] = React.useState<SortDataType>(SortDataType.DESC);
-  const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(false);
+  const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(true);
 
   const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
   const [triggerSearchByName, searchByNameResult] = useLazySearchByNameQuery();
   const [triggerSearchByEmotion, searchByEmotionResult] = useLazySearchByEmotionQuery();
   const [triggerSortDate, sortDateResult] = useLazySortByCreatedDateQuery();
+
+  console.log(isArticlesLoading);
 
   React.useEffect(() => {
     const getArticle = async () => {
@@ -188,6 +190,7 @@ const Collection = () => {
       );
 
       setCollectCards(collectCardsData);
+      setIsArticlesLoading(false);
     }
 
     if (allArticles && userToken && queryType === QueryType.ALL) {
@@ -199,8 +202,6 @@ const Collection = () => {
     } else if (searchDResult && userToken && queryType === QueryType.DATE) {
       fetchAudioData(searchDResult);
     }
-
-    setIsArticlesLoading(false);
   }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken])
 
   return (
@@ -247,17 +248,30 @@ const Collection = () => {
                     audioId={audio.audioId}
                   />
                 ) : (
-                  <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
-                    {/* 加載時的骨架結構 */}
-                    <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
-                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                    <div className='flex gap-2 h-fit w-fit'>
+                  <>
+                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
+                      {/* 加載時的骨架結構 */}
+                      <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                       <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                      <div className='flex gap-2 h-fit w-fit'>
+                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                      </div>
+                      <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                      <div className='bg-gray-300 h-10 w-full rounded'></div>
                     </div>
-                    <div className='bg-gray-300 h-8 w-24 rounded'></div>
-                    <div className='bg-gray-300 h-10 w-full rounded'></div>
-                  </div>
+                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
+                      {/* 加載時的骨架結構 */}
+                      <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                      <div className='flex gap-2 h-fit w-fit'>
+                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                      </div>
+                      <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                      <div className='bg-gray-300 h-10 w-full rounded'></div>
+                    </div>
+                  </>
                 )
               )
             })

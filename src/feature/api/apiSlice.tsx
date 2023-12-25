@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../../app/store';
-import { IP, PORT } from '../../utils/config';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://${IP}:${PORT}/api/v1/`,
-    // mode: 'no-cors',
+    baseUrl: `${process.env.REACT_APP_SERVER_ENDPOINT}`,
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state.auth.token;
@@ -14,7 +12,7 @@ export const apiSlice = createApi({
         headers.set('Authorization', 'Bearer ' + token);
       };
       return headers;
-    }
+    },
   }),
   endpoints: builder => ({
     testApi: builder.query<String, void>({

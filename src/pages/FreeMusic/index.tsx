@@ -5,14 +5,13 @@ import { EmotionProps } from '../../types/components';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { serverErrorNotify, successNotification } from '../../utils/toast';
-import { MdOutlineManageSearch } from 'react-icons/md';
-import { BsMusicNoteList } from 'react-icons/bs';
 import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
 import { emotionsTransfer } from './../../utils/emotionTransfer';
-import { IP, NORD_IP, NORD_PORT } from '../../utils/config';
+import { BsMusicNoteList } from 'react-icons/bs';
+import { MdOutlineManageSearch } from 'react-icons/md';
 
 interface ArticleState {
   articleId: number | null,
@@ -20,8 +19,12 @@ interface ArticleState {
   articleContent: string
 }
 
+const ManageSearchIcon = React.memo(MdOutlineManageSearch);
+const MusicNoteIcon = React.memo(BsMusicNoteList);
+
 const FreeMusics = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
+  const MODEL_URL = process.env.REACT_APP_MODEL_ENDPOINT;
 
   const [article, setArticle] = React.useState<ArticleState>({
     articleId: 1,
@@ -146,7 +149,7 @@ const FreeMusics = () => {
     try {
       const dataToSend = { "data": {} };
 
-      const response = await fetch(`http://${NORD_IP}:${NORD_PORT}/music_create`, {
+      const response = await fetch(`${MODEL_URL}/music_create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -171,7 +174,7 @@ const FreeMusics = () => {
       setBlobLoading(false);
     };
 
-  }, []);
+  }, [MODEL_URL]);
 
   return (
     <>
@@ -267,7 +270,7 @@ const FreeMusics = () => {
             {
               (!isAnalyzeMoodLoading) ? (
                 <span className='flex gap-1 h-7'>
-                  <MdOutlineManageSearch size={28} />
+                  <ManageSearchIcon size={28} />
                   分析
                 </span>
               ) : (
@@ -294,7 +297,7 @@ const FreeMusics = () => {
             情感分析
             <span className='text-sm font-bold bg-gradient-to-r from-yellow-500 via-yellow-300 to-slate-100 text-transparent bg-clip-text'> 加入您想要的情緒或情境 </span>
           </h3>
-          <div className='flex flex-row mb-6 gap-2'>
+          <div className='flex flex-row mb-6 gap-1'>
 
             {/* 
                情緒選擇區域
@@ -340,7 +343,7 @@ const FreeMusics = () => {
             className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 disabled:cursor-not-allowed"
           >
             <span className='absolute top-0 right-2/3 -rotate-6 hidden xl:block'>
-              <BsMusicNoteList
+              <MusicNoteIcon
                 size={50}
                 className={classNames(`text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400`,
                   { 'group-hover:animate-bouncing': isAllSet })}

@@ -10,6 +10,7 @@ import Spinner from './Spinner';
 import { successNotification } from '../utils/toast';
 import { validateEmail } from '../utils/vaildateEmail';
 import { FaCircleQuestion } from "react-icons/fa6";
+import { isPasswordValid } from '../utils/validator';
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -37,6 +38,11 @@ const RegisterForm: React.FC = () => {
   // };
 
   const handleSignupClick = async () => {
+    if (!isPasswordValid(user.password)) {
+      setError("密碼格式錯誤");
+      return;
+    }
+
     if (!validateEmail(user.email)) {
       setError("電子信箱格式錯誤");
       return;
@@ -55,6 +61,8 @@ const RegisterForm: React.FC = () => {
           setError(err.data.message);
         } else if (err.data.errorCode === 'EMAIL_EXISTS') {
           setError(err.data.message);
+        } else {
+          setError("伺服器未開啟");
         }
       } else if (err.status === 403) {
         setError("帳號或密碼錯誤，請重試一次!");

@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MoodAnaApiReq } from '../../../types/api/moodAna'
-import { NORD_IP, NORD_PORT } from '../../../utils/config'
 
 export const moodAnaApiSlice = createApi({
   reducerPath: 'moodAnaApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://${NORD_IP}:${NORD_PORT}`,
+    baseUrl: `${process.env.REACT_APP_MODEL_ENDPOINT}`,
   }),
   endpoints: builder => ({
     testApi: builder.query<Object, void>({

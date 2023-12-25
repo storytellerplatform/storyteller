@@ -13,14 +13,7 @@ const Collect = () => {
   const { articleId, audioId } = useParams();
   const userToken = useAppSelector(getToken);
 
-  useEffect(() => {
-    if (!articleId || !audioId) {
-      serverErrorNotify("????");
-    };
-  }, [articleId, audioId])
-
   const [audioBlob, setAudioBlob] = useState<Blob | null>();
-
   const { data: articleData } = useGetArticleQuery(Number(articleId));
 
   useEffect(() => {

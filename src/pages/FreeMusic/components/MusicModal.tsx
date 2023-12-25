@@ -52,4 +52,4 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal, emotio
   )
 }
 
-export default MusicModal
+export default React.memo(MusicModal);

@@ -28,5 +28,5 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({ label, onClick, color, se
   );
 };
 
-export default EmotionButton;
+export default React.memo(EmotionButton);
 

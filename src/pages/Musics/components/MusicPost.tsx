@@ -3,7 +3,6 @@ import { HiDownload } from 'react-icons/hi';
 import { FaRegHeart } from 'react-icons/fa';
 
 import { serverErrorNotify } from '../../../utils/toast';
-import { IP, PORT } from '../../../utils/config';
 import { useAppSelector } from '../../../app/hooks';
 import { getToken } from '../../../feature/auth/authSlice';
 import classNames from 'classnames';
@@ -23,6 +22,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
   const [success, setSuccess] = useState<boolean>(false);
   const [audioId, setAudioId] = useState<Number | null>(null);
   const [heartLoading, setHeartLoading] = useState<boolean>(false);
+  const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
   const handleCollectClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setHeartLoading(true);
@@ -30,7 +30,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
     if (audioId !== null) {
       try {
         await fetch(
-          `http://${IP}:${PORT}/api/v1/audio/${audioId}`,
+          `${SERVER_URL}/audio/${audioId}`,
           {
             method: 'DELETE',
             mode: 'cors',
@@ -57,7 +57,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
       const formData = new FormData();
       formData.append('audio', file);
 
-      const res = await fetch(`http://${IP}:${PORT}/api/v1/article/collect/${articleId}`, {
+      const res = await fetch(`${SERVER_URL}/article/collect/${articleId}`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
