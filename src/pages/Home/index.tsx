@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getLoginForm, getRegisterForm, taggleLoginForm, taggleRegisterForm } from '../../feature/authSidebar';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../feature/auth/authSlice';
+import { useTestApiQuery } from '../../feature/api/apiSlice';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,10 @@ const Home = () => {
 
   const registerFormOpen = useAppSelector(getRegisterForm);
   const loginFormOpen = useAppSelector(getLoginForm);
+
+  // test
+  const { data: hello } = useTestApiQuery();
+  console.log(hello);
 
   const handleOpenRegisterFormClick = () => {
     dispatch(taggleRegisterForm());
