@@ -178,8 +178,14 @@ const Musics = () => {
     setBlobLoading(true);
 
     try {
+      const dataToSend = { "data": {} };
+
       const response = await fetch(`${MODEL_URL}/music_create`, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
       });
 
       if (response.status !== 200) {
