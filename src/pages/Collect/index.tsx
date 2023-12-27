@@ -12,6 +12,7 @@ import { getToken } from '../../feature/auth/authSlice';
 const Collect = () => {
   const { articleId, audioId } = useParams();
   const userToken = useAppSelector(getToken);
+  const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
   const [audioBlob, setAudioBlob] = useState<Blob | null>();
   const { data: articleData } = useGetArticleQuery(Number(articleId));
@@ -19,7 +20,7 @@ const Collect = () => {
   useEffect(() => {
     const fetchAudio = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/audio/${audioId}`, {
+        const response = await fetch(`${SERVER_URL}/audio/${audioId}`, {
           headers: {
             'Authorization': `Bearer ${userToken}`
           }

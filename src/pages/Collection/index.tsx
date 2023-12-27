@@ -32,6 +32,7 @@ const Collection = () => {
   const collectCardId = useId();
   const userId: string = useAppSelector(getUserId);
   const userToken = useAppSelector(getToken);
+  const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
   const [search, setSearch] = useState<string>("");
   const [queryType, setQueryType] = useState<QueryType>(QueryType.ALL);
@@ -142,7 +143,7 @@ const Collection = () => {
           const audioBlobList: Array<Audio | null> = await Promise.all(
             allAudioIds.map(async (audioId: Number) => {
               try {
-                const response = await fetch(`http://localhost:8080/api/v1/audio/${audioId}`, {
+                const response = await fetch(`${SERVER_URL}/audio/${audioId}`, {
                   headers: {
                     'Authorization': `Bearer ${userToken}`,
                   }
