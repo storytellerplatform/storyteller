@@ -12,6 +12,7 @@ import Spinner from '../../components/Spinner';
 import { emotionsTransfer } from './../../utils/emotionTransfer';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { MdOutlineManageSearch } from 'react-icons/md';
+import { createMusic } from '../../api';
 
 interface ArticleState {
   articleId: number | null,
@@ -147,21 +148,13 @@ const FreeMusics = () => {
     setBlobLoading(true);
 
     try {
-      const dataToSend = { "data": {} };
-
-      const response = await fetch(`${MODEL_URL}/music_create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-      });
+      const response = await createMusic({});
 
       if (response.status !== 200) {
         serverErrorNotify('音樂模型發生錯誤');
       }
 
-      const audioData = await response.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
+      const audioData = await response.data.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
       const blob = new Blob([audioData], { type: 'audio/wav' }); // 將 ArrayBuffer 轉換為 Blob'
       setBlobFile(blob);
     } catch (error: any) {

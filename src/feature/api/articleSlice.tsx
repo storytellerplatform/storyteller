@@ -35,6 +35,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (articleId) => ({
         url: `/article/${articleId}`,
         method: 'GET',
+        providesTags: ['Article']
       }),
       transformResponse: (response: BArticle): Article => {
         const { articleId, name, content, emotions, createdDate, newestAudioId, allAudioIds } = response;
@@ -59,7 +60,8 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `/article/emotion/${articleId}`,
         method: 'POST',
         body: emotions
-      })
+      }),
+      invalidatesTags: ['Article'],
     }),
     SearchByName: builder.query<Array<Article>, SearchByNameRequest>({
       query: ({ userId, search }) => ({

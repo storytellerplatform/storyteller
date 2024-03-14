@@ -8,7 +8,7 @@ export const serverErrorNotify = (errorMsg: string) => toast.error(errorMsg, {
 
 export const successNotification = (successMsg: string) => toast.success(successMsg, {
   position: 'top-right',
-  autoClose: 5000,
+  autoClose: 6000,
   className: 'font-bold'
 });
 

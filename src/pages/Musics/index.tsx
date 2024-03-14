@@ -15,6 +15,7 @@ import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
+import { createMusic } from '../../api';
 
 interface ArticleState {
   articleId: number | null,
@@ -25,7 +26,6 @@ interface ArticleState {
 const Musics = () => {
   const userId: string = useAppSelector(getUserId);
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const MODEL_URL = process.env.REACT_APP_MODEL_ENDPOINT;
 
   const [article, setArticle] = React.useState<ArticleState>({
     articleId: 1,
@@ -168,33 +168,27 @@ const Musics = () => {
       serverErrorNotify('後端伺服器發生錯誤 ' + err.message);
       return;
     } finally {
-      successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。你還可以在這裡添加你所想要表達的情感！");
+      successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。您還可以添加你所想要表達的情感！");
       setIsAllSet(true);
     }
   }, [addNewArticle, analyzeMood, article, file, userId]);
 
-  const handleGenerateMusicClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleGenerateMusicClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBlobLoading(true);
 
     try {
-      const dataToSend = { "data": {} };
 
-      const response = await fetch(`${MODEL_URL}/music_create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-      });
+      const response = await createMusic({});
 
       if (response.status !== 200) {
         serverErrorNotify('音樂模型發生錯誤');
       }
 
-      const audioData = await response.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
+      const audioData = await response.data.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
       const blob = new Blob([audioData], { type: 'audio/wav' }); // 將 ArrayBuffer 轉換為 Blob'
       setBlobFile(blob);
+
     } catch (error: any) {
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
         serverErrorNotify('音樂模型伺服器未開啟');
@@ -205,7 +199,7 @@ const Musics = () => {
       setBlobLoading(false);
     };
 
-  }, [MODEL_URL]);
+  };
 
   return (
     <>

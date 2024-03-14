@@ -8,38 +8,36 @@ import { serverErrorNotify } from '../../utils/toast';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 import { useAppSelector } from '../../app/hooks';
 import { getToken } from '../../feature/auth/authSlice';
+import { getMusic } from '../../api';
 
 const Collect = () => {
   const { articleId, audioId } = useParams();
   const userToken = useAppSelector(getToken);
-  const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
   const [audioBlob, setAudioBlob] = useState<Blob | null>();
   const { data: articleData } = useGetArticleQuery(Number(articleId));
 
   useEffect(() => {
-    const fetchAudio = async () => {
+    const fetchAudio = async (audioId: number, userToken: string) => {
       try {
-        const response = await fetch(`${SERVER_URL}/audio/${audioId}`, {
-          headers: {
-            'Authorization': `Bearer ${userToken}`
-          }
-        });
+        const response = await getMusic(audioId, userToken);
 
         if (response.status !== 200) {
           serverErrorNotify("GET 音檔 API 發生錯誤");
           return null;
         }
 
-        const Data = await response.blob();
-        setAudioBlob(Data);
+        setAudioBlob(response.data);
       } catch (err) {
         serverErrorNotify("伺服器發生錯誤 " + err);
         return null;
       }
     };
 
-    fetchAudio();
+    if (audioId !== undefined && userToken !== null) {
+      fetchAudio(parseInt(audioId), userToken);
+    }
+
   }, [audioId, userToken]);
 
   return (

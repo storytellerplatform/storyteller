@@ -14,7 +14,7 @@ import { FaCircleQuestion } from "react-icons/fa6";
 import Spinner from './Spinner';
 
 const LoginForm: React.FC = () => {
-  const isLoginFormOpen = useAppSelector(getLoginForm);
+  const isLoginFormOpen: boolean = useAppSelector(getLoginForm);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // for admin
+    // todo: for admin
     if (user.email === 'admin@admin.com' && user.password === 'admin123') {
       Cookies.set(
         'jwtToken',
@@ -65,6 +65,8 @@ const LoginForm: React.FC = () => {
       dispatch(setUserId('0'));
       dispatch(setUsername('admin'));
       dispatch(setEmail('admin'));
+
+      dispatch(taggleLoginForm());
 
       navigate('/');
       return;

@@ -8,6 +8,7 @@ import { getToken } from '../../../feature/auth/authSlice';
 import classNames from 'classnames';
 import Spinner from '../../../components/Spinner';
 import { handleDownload } from '../../../utils/handleClick';
+import { deleteMusic } from '../../../api';
 
 const LazyWaveSurferPlayerComponent = lazy(() => import('../../../components/WaveSurferPlayer'));
 
@@ -20,28 +21,19 @@ interface MusicPostProps {
 const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => {
   const token = useAppSelector(getToken);
   const [success, setSuccess] = useState<boolean>(false);
-  const [audioId, setAudioId] = useState<Number | null>(null);
+  const [audioId, setAudioId] = useState<number | null>(null);
   const [heartLoading, setHeartLoading] = useState<boolean>(false);
   const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
   const handleCollectClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setHeartLoading(true);
 
-    if (audioId !== null) {
+    if (audioId !== null && token !== null) {
       try {
-        await fetch(
-          `${SERVER_URL}/audio/${audioId}`,
-          {
-            method: 'DELETE',
-            mode: 'cors',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            }
-          });
-
+        await deleteMusic(audioId, token);
       } catch (e) {
         serverErrorNotify("伺服器發生錯誤");
-        console.log(e);
+        console.error(e);
       } finally {
         setSuccess(false);
         setAudioId(null);
@@ -68,7 +60,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
 
       if (res.status === 200) {
         const data = await res.json();
-        const currAudioId: Number = data.newestAudioId;
+        const currAudioId: number = data.newestAudioId;
         setSuccess(true);
         setAudioId(currAudioId);
       } else {

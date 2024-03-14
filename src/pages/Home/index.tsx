@@ -33,9 +33,6 @@ const Home = () => {
 
   return (
     <>
-      {/* 沒註解 要去上一個 github 找背景 0.0 */}
-      {/* 1: bg-read-book3-image bg-bottom, bg-white opacity-10 */}
-      {/* 2:  */}
       <main onClick={handleCloseRegister} className='absolute flex flex-row justify-center h-auto min-h-screen w-auto min-w-full text-white pl-6 sm:pl-16 bg-read-book3-image bg-bottom bg-cover'>
 
         <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-white opacity-10'></div>
