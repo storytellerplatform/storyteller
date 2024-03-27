@@ -1,3 +1,3 @@
 export interface MoodAnaApiReq {
-  text: string;
+  TestData: string;
 }

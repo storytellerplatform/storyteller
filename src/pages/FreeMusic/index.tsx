@@ -13,6 +13,7 @@ import { emotionsTransfer } from './../../utils/emotionTransfer';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import { createMusic } from '../../api';
+import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 
 interface ArticleState {
   articleId: number | null,
@@ -25,7 +26,6 @@ const MusicNoteIcon = React.memo(BsMusicNoteList);
 
 const FreeMusics = () => {
   const [showModal, setShowModal] = React.useState<boolean>(false);
-  const MODEL_URL = process.env.REACT_APP_MODEL_ENDPOINT;
 
   const [article, setArticle] = React.useState<ArticleState>({
     articleId: 1,
@@ -51,21 +51,35 @@ const FreeMusics = () => {
     return (!article.articleName || !article.articleContent) && (!file)
   }
 
+  /**
+   * 更改文章名稱
+   */
   const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setArticle({ ...article, articleName: e.target.value });
   }, [article]);
 
+  /**
+   * 更改文章內容
+   */
   const handleArticleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setArticle({ ...article, articleContent: e.target.value });
   }, [article]);
 
+  /**
+   * 更改上傳的檔案內容
+   */
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setFile(e.target.files ? e.target.files[0] : null);
   }, []);
 
+  /**
+   * 讀取檔案內容
+   * @param file 
+   * @returns 
+   */
   const readFileContents = (file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader(); // 創建FileReader物件
@@ -89,6 +103,9 @@ const FreeMusics = () => {
     })
   };
 
+  /**
+   * 分析檔案回傳情緒
+   */
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -114,18 +131,24 @@ const FreeMusics = () => {
 
     if (file && fileText === "") {
       serverErrorNotify("檔案內沒有任何文字!");
+      setFile(null);
     }
 
+    // 確認是否有上傳檔案
     const moodAnaApiReq: MoodAnaApiReq = {
-      text: file ? (fileText || article.articleContent) : article.articleContent
+      TestData: file ? (fileText || article.articleContent) : article.articleContent
     }
 
     /*
        將文章內容進行情緒分析
     */
     try {
-      const bEmotion = await analyzeMood(moodAnaApiReq).unwrap();
-      emotions.push(bEmotion);
+      const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
+      const analyzedData = findIndexesGreaterThan(emotionNumData, 0.1);
+      analyzedData.forEach((data) => {
+        emotions.push(data);
+      });
+
     } catch (err: any) {
       console.log(err);
 
@@ -167,7 +190,7 @@ const FreeMusics = () => {
       setBlobLoading(false);
     };
 
-  }, [MODEL_URL]);
+  }, []);
 
   return (
     <>

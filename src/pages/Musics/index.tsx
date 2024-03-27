@@ -16,6 +16,7 @@ import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
 import { createMusic } from '../../api';
+import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 
 interface ArticleState {
   articleId: number | null,
@@ -119,15 +120,18 @@ const Musics = () => {
     }
 
     const moodAnaApiReq: MoodAnaApiReq = {
-      text: file ? (fileText || article.articleContent) : article.articleContent
+      TestData: file ? (fileText || article.articleContent) : article.articleContent
     }
 
     /*
        將文章內容進行情緒分析
     */
     try {
-      const bEmotion = await analyzeMood(moodAnaApiReq).unwrap();
-      emotions.push(bEmotion);
+      const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
+      const analyzedData = findIndexesGreaterThan(emotionNumData, 0.1);
+      analyzedData.forEach((data) => {
+        emotions.push(data);
+      });
     } catch (err: any) {
       console.log(err);
 

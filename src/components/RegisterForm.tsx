@@ -25,8 +25,6 @@ const RegisterForm: React.FC = () => {
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
 
-
-
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(taggleRegisterForm());

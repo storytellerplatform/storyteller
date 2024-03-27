@@ -10,9 +10,9 @@ export const moodAnaApiSlice = createApi({
     testApi: builder.query<Object, void>({
       query: () => '/'
     }),
-    moodAna: builder.mutation<Number, MoodAnaApiReq>({
+    moodAna: builder.mutation<number[], MoodAnaApiReq>({
       query: (moodAnaApiReq: MoodAnaApiReq) => ({
-        url: '/emotion_analysis',
+        url: '/mood_analyze',
         method: 'POST',
         body: moodAnaApiReq,
       })
