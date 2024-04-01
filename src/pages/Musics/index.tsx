@@ -107,6 +107,7 @@ const Musics = () => {
       await readFileContents(file)
         .then((text) => {
           fileText = text as string;
+          setArticle({ articleId: 1, articleName: file.name, articleContent: fileText })
         })
         .catch((error) => {
           // 讀取文件失敗時的錯誤處理邏輯
@@ -183,10 +184,17 @@ const Musics = () => {
 
     try {
 
-      const response = await createMusic({});
+      /**
+       * 在分析情緒後，已將資料放進 article stete
+       */
+      const response = await createMusic({
+        texts: article.articleContent,
+        duration: 20,
+      });
 
       if (response.status !== 200) {
         serverErrorNotify('音樂模型發生錯誤');
+        return;
       }
 
       const audioData = await response.data.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
@@ -318,7 +326,7 @@ const Musics = () => {
         {/* 
             右半部
         */}
-        <div className='flex flex-col pt-8 pl-12 gap-4 w-full lg:w-6/12 bg-white'>
+        <div className='flex flex-col pt-10 pl-12 gap-4 w-full lg:w-6/12 bg-white'>
           {/* 
               情感分析區域
           */}

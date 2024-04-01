@@ -12,8 +12,9 @@ import Spinner from '../../components/Spinner';
 import { emotionsTransfer } from './../../utils/emotionTransfer';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { MdOutlineManageSearch } from 'react-icons/md';
-import { createMusic } from '../../api';
+import { createEmotion, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
+import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 
 interface ArticleState {
   articleId: number | null,
@@ -38,14 +39,18 @@ const FreeMusics = () => {
   // 用戶傳的檔案
   const [file, setFile] = React.useState<File | null>(null);
 
+  const [emotionLoading, setEmotionLoading] = React.useState<boolean>(false);
+
   // 生成的音檔
   const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
   const [blobFile, setBlobFile] = React.useState<Blob | null>(null);
 
   // 分析音樂前做確認
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+  const [generateEmotionsProgress, setGenerateEmotionsProgress] = React.useState<number>(0);
+  const [generateMusicProgress, setGenerateMusicProgress] = React.useState<number>(0);
 
-  const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
+  // const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
 
   const isArticleSet = () => {
     return (!article.articleName || !article.articleContent) && (!file)
@@ -108,8 +113,9 @@ const FreeMusics = () => {
    */
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setEmotionLoading(true);
 
-    const emotions: Array<Number> = [];
+    let emotions: Array<number> = [];
 
     /**
      * 如果用戶先傳檔案
@@ -121,11 +127,15 @@ const FreeMusics = () => {
       await readFileContents(file)
         .then((text) => {
           fileText = text as string;
+          // 提取檔案文字後，將檔案文字放進 article state 裡
+          setArticle({ articleId: 1, articleName: file.name, articleContent: fileText })
         })
         .catch((error) => {
           // 讀取文件失敗時的錯誤處理邏輯
           console.error('Error reading file:', error);
           serverErrorNotify('文件讀取失敗');
+          setEmotionLoading(false);
+          return;
         });
     }
 
@@ -139,15 +149,28 @@ const FreeMusics = () => {
       TestData: file ? (fileText || article.articleContent) : article.articleContent
     }
 
+    const config: AxiosRequestConfig = {
+      onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+        if (progressEvent.total !== undefined) {
+          const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+          setGenerateMusicProgress(50 + percentCompleted);
+        }
+      }
+    };
+
     /*
        將文章內容進行情緒分析
     */
     try {
-      const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
-      const analyzedData = findIndexesGreaterThan(emotionNumData, 0.1);
+      // const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
+      const emotionNumData = await createEmotion(moodAnaApiReq, config);
+      const analyzedData = findIndexesGreaterThan(emotionNumData.data, 0.1);
       analyzedData.forEach((data) => {
         emotions.push(data);
       });
+      if (emotions.length > 1) {
+        emotions = emotions.filter(num => num !== 0)
+      }
 
     } catch (err: any) {
       console.log(err);
@@ -158,28 +181,49 @@ const FreeMusics = () => {
 
       serverErrorNotify('情緒模型伺服器發生錯誤!');
       return;
+
+    } finally {
+      setEmotionLoading(false);
+      setGenerateEmotionsProgress(0);
     }
 
     setEmotions(emotionsTransfer(emotions));
 
     successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。你還可以在這裡添加你所想要表達的情感！");
     setIsAllSet(true);
-  }, [analyzeMood, article, file]);
+  }, [article, file]);
 
+  /**
+   * 產生音樂
+   */
   const handleGenerateMusicClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBlobLoading(true);
 
+    const config: AxiosRequestConfig = {
+      onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+        if (progressEvent.total !== undefined) {
+          const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+          setGenerateMusicProgress(percentCompleted);
+        }
+      },
+    };
+
     try {
-      const response = await createMusic({});
+      const response = await createMusic({
+        texts: article.articleContent,
+        duration: 10,
+      }, config);
 
       if (response.status !== 200) {
         serverErrorNotify('音樂模型發生錯誤');
+        return;
       }
 
       const audioData = await response.data.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
       const blob = new Blob([audioData], { type: 'audio/wav' }); // 將 ArrayBuffer 轉換為 Blob'
       setBlobFile(blob);
+      successNotification("音樂分析成功!")
     } catch (error: any) {
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
         serverErrorNotify('音樂模型伺服器未開啟');
@@ -188,14 +232,15 @@ const FreeMusics = () => {
       }
     } finally {
       setBlobLoading(false);
+      setGenerateMusicProgress(0);
     };
 
-  }, []);
+  }, [article.articleContent]);
 
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full pb-8 bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pl-6 sm:pl-24 lg:pl-0 pt-12 px-0 sm:pt-0'>
+      <div className='flex w-full bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row lg:pl-0 sm:pl-0 sm:pt-0 pl-0 pt-12 px-0'>
 
         {/* 
             sidebar 空白區塊
@@ -205,11 +250,13 @@ const FreeMusics = () => {
         {/* 
             左半部
         */}
-        <div className='flex flex-col pt-8 pr-12 gap-4 w-5/6 lg:w-5/12'>
+        <div className='flex flex-col pt-10 pr-12 gap-4 w-full pl-12 sm:pl-24 lg:pl-4 xl:pl-0 lg:w-5/12'>
           {/* 
               文章名稱輸入
           */}
-          <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
+          <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>
+            命名您的主題
+          </label>
           <input
             type='text'
             value={article.articleName}
@@ -230,7 +277,7 @@ const FreeMusics = () => {
             rows={10}
             onChange={handleArticleChange}
             value={article.articleContent}
-            className="block mb-8 p-4 pl-6 w-full text-base font-semibold text-gray-900 bg-white rounded-lg outline-2  select-none shadow-xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
+            className="block mb-8 p-4 pl-6 w-full text-base font-medium text-gray-950 bg-white rounded-lg outline-2  select-none shadow-xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
             placeholder="我想要.....">
           </textarea>
 
@@ -281,10 +328,10 @@ const FreeMusics = () => {
             onClick={handleAnalyzeClick}
             disabled={isArticleSet()}
             type="submit"
-            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300 disabled:cursor-not-allowed disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
+            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-8 py-3 border-2 border-orange-300 text-orange-400 text-xl font-bold shadow-md rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-70 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-400 disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
           >
             {
-              (!isAnalyzeMoodLoading) ? (
+              (!emotionLoading) ? (
                 <span className='flex gap-1 h-7'>
                   <ManageSearchIcon size={28} />
                   分析
@@ -293,8 +340,9 @@ const FreeMusics = () => {
                 <Spinner
                   width='w-7'
                   height='h-7'
-                  fill='fill-black'
-                  spinnerText='text-white'
+                  spinnerText='text-orange-400'
+                  value={generateEmotionsProgress}
+                  size={48}
                 />
               )
             }
@@ -305,7 +353,7 @@ const FreeMusics = () => {
         {/* 
             右半部
         */}
-        <div className='flex flex-col pt-8 pl-12 gap-4 w-full lg:w-6/12 bg-white'>
+        <div className='flex flex-col pb-8 pt-8 pl-12 sm:pl-24 lg:pl-12 gap-4 w-full lg:w-6/12 bg-white shadow-lg rounded-xl'>
           {/* 
               情感分析區域
           */}
@@ -356,12 +404,12 @@ const FreeMusics = () => {
             onClick={handleGenerateMusicClick}
             type="submit"
             disabled={!isAllSet}
-            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 disabled:cursor-not-allowed"
+            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-3 border-2 border-orange-300 text-orange-400 text-xl font-semibold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-orange-300 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-300 disabled:border-stone-300"
           >
-            <span className='absolute top-0 right-2/3 -rotate-6 hidden xl:block'>
+            <span className='absolute top-1 right-2/3 -rotate-6 hidden xl:block'>
               <MusicNoteIcon
                 size={50}
-                className={classNames(`text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400`,
+                className={classNames(`text-orange-400 z-20 transition-all duration-200 ease-out group-hover:text-orange-300 group-disabled:text-stone-300`,
                   { 'group-hover:animate-bouncing': isAllSet })}
               />
             </span>
@@ -371,7 +419,13 @@ const FreeMusics = () => {
                   生成音樂
                 </>
               ) : (
-                <Spinner width='w-7' height='h-7' fill='fill-slate-600' spinnerText='text-white' />
+                <Spinner
+                  width='w-7'
+                  height='h-7'
+                  spinnerText='text-orange-400'
+                  value={generateMusicProgress}
+                  size={48}
+                />
               )
             }
           </button>

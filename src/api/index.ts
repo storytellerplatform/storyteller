@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import { GenerateMusicRequest } from '../types/api/musicGen';
+import { MoodAnaApiReq } from '../types/api/moodAna';
 
 export const modelRequest = axios.create({
   baseURL: process.env.REACT_APP_MODEL_ENDPOINT,
-  timeout: 5000,
 });
 
 export const serverRequest = axios.create({
@@ -10,9 +11,19 @@ export const serverRequest = axios.create({
   timeout: 5000,
 });
 
-export const createMusic = async (data: any) => modelRequest.post<Blob>(
-  '/music_create', {
-    data: JSON.stringify(data)
+export const createEmotion = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => modelRequest.post<number[]>(
+  '/mood_analyze', request, {
+    ...config
+  }
+);
+
+export const createMusic = async (request: GenerateMusicRequest, config?: AxiosRequestConfig ) => modelRequest.post<Blob>(
+  '/music_generate', request, {
+    responseType: 'blob',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    ...config
   }
 );
 
