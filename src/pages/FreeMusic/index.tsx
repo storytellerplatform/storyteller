@@ -39,16 +39,19 @@ const FreeMusics = () => {
   // 用戶傳的檔案
   const [file, setFile] = React.useState<File | null>(null);
 
-  const [emotionLoading, setEmotionLoading] = React.useState<boolean>(false);
 
   // 生成的音檔
-  const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
   const [blobFile, setBlobFile] = React.useState<Blob | null>(null);
 
   // 分析音樂前做確認
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+
+  // loading state and progression
   const [generateEmotionsProgress, setGenerateEmotionsProgress] = React.useState<number>(0);
   const [generateMusicProgress, setGenerateMusicProgress] = React.useState<number>(0);
+  const [emotionLoading, setEmotionLoading] = React.useState<boolean>(false);
+  const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
+
 
   // const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
 
@@ -114,6 +117,7 @@ const FreeMusics = () => {
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setEmotionLoading(true);
+    setGenerateEmotionsProgress(0);
 
     let emotions: Array<number> = [];
 
@@ -153,7 +157,7 @@ const FreeMusics = () => {
       onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
         if (progressEvent.total !== undefined) {
           const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-          setGenerateMusicProgress(50 + percentCompleted);
+          setGenerateEmotionsProgress(50 + percentCompleted);
         }
       }
     };
@@ -199,6 +203,7 @@ const FreeMusics = () => {
   const handleGenerateMusicClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBlobLoading(true);
+    setGenerateMusicProgress(0);
 
     const config: AxiosRequestConfig = {
       onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
@@ -342,7 +347,9 @@ const FreeMusics = () => {
                   height='h-7'
                   spinnerText='text-orange-400'
                   value={generateEmotionsProgress}
-                  size={48}
+                  size={32}
+                  thickness={4}
+                  progressWithLabel={false}
                 />
               )
             }
@@ -425,6 +432,7 @@ const FreeMusics = () => {
                   spinnerText='text-orange-400'
                   value={generateMusicProgress}
                   size={48}
+                  progressWithLabel={false}
                 />
               )
             }

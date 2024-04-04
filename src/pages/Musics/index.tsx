@@ -15,8 +15,9 @@ import MusicPost from './components/MusicPost';
 import { useMoodAnaMutation } from '../../feature/api/moodAnaApi/apiSlice';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
-import { createMusic } from '../../api';
+import { createEmotion, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
+import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 
 interface ArticleState {
   articleId: number | null,
@@ -40,20 +41,33 @@ const Musics = () => {
   const [file, setFile] = React.useState<File | null>(null);
 
   // 生成的音檔
-  const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
   const [blobFile, setBlobFile] = React.useState<Blob | null>(null);
 
   // 分析音樂前做確認
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
 
+  // loading state and progression
+  const [generateEmotionsProgress, setGenerateEmotionsProgress] = React.useState<number>(0);
+  const [generateMusicProgress, setGenerateMusicProgress] = React.useState<number>(0);
+  const [emotionLoading, setEmotionLoading] = React.useState<boolean>(false);
+  const [blobLoading, setBlobLoading] = React.useState<boolean>(false);
+
+  // RTK query
   const [addNewArticle, { isLoading: isAddNewArticleLoading }] = useAddNewArticleMutation();
-  const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
+
+  // const [analyzeMood, { isLoading: isAnalyzeMoodLoading }] = useMoodAnaMutation();
   // const [updateEmotions, { isLoading: isUpdateEmotionsLoading }] = useUpdateEmotionsMutation();
 
+  /**
+   * 確認所需條件
+   */
   const isArticleSet = () => {
     return (!article.articleName || !article.articleContent) && (!file)
   }
 
+  /**
+   * handle Change
+   */
   const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setArticle({ ...article, articleName: e.target.value });
@@ -69,6 +83,10 @@ const Musics = () => {
     setFile(e.target.files ? e.target.files[0] : null);
   }, []);
 
+  /**
+   * 讀取檔案
+   * @param file 
+   */
   const readFileContents = (file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader(); // 創建FileReader物件
@@ -92,10 +110,15 @@ const Musics = () => {
     })
   };
 
+  /**
+  * 分析檔案回傳情緒
+  */
   const handleAnalyzeClick = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setEmotionLoading(true);
+    setGenerateEmotionsProgress(0);
 
-    const emotions: Array<Number> = [];
+    let emotions: Array<Number> = [];
 
     /**
      * 如果用戶先傳檔案
@@ -113,26 +136,43 @@ const Musics = () => {
           // 讀取文件失敗時的錯誤處理邏輯
           console.error('Error reading file:', error);
           serverErrorNotify('文件讀取失敗');
+          setEmotionLoading(false);
+          return;
         });
     }
 
     if (file && fileText === "") {
       serverErrorNotify("檔案內沒有任何文字!");
+      setFile(null);
     }
 
     const moodAnaApiReq: MoodAnaApiReq = {
       TestData: file ? (fileText || article.articleContent) : article.articleContent
     }
 
+    const config: AxiosRequestConfig = {
+      onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+        if (progressEvent.total !== undefined) {
+          const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+          setGenerateEmotionsProgress(50 + percentCompleted);
+        }
+      }
+    };
+
     /*
        將文章內容進行情緒分析
     */
     try {
-      const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
-      const analyzedData = findIndexesGreaterThan(emotionNumData, 0.1);
+      const emotionNumData = await createEmotion(moodAnaApiReq, config);
+      const analyzedData = findIndexesGreaterThan(emotionNumData.data, 0.1);
       analyzedData.forEach((data) => {
         emotions.push(data);
       });
+
+      if (emotions.length > 1) {
+        emotions = emotions.filter(num => num !== 0)
+      }
+
     } catch (err: any) {
       console.log(err);
 
@@ -175,12 +215,25 @@ const Musics = () => {
     } finally {
       successNotification("文章分析成功了！現在您可以深入了解文章的情緒與情境。您還可以添加你所想要表達的情感！");
       setIsAllSet(true);
+      setEmotionLoading(false);
+      setGenerateEmotionsProgress(0);
     }
-  }, [addNewArticle, analyzeMood, article, file, userId]);
+
+  }, [addNewArticle, article, file, userId]);
 
   const handleGenerateMusicClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBlobLoading(true);
+    setGenerateMusicProgress(0);
+
+    const config: AxiosRequestConfig = {
+      onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+        if (progressEvent.total !== undefined) {
+          const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+          setGenerateMusicProgress(percentCompleted);
+        }
+      },
+    };
 
     try {
 
@@ -190,7 +243,7 @@ const Musics = () => {
       const response = await createMusic({
         texts: article.articleContent,
         duration: 20,
-      });
+      }, config);
 
       if (response.status !== 200) {
         serverErrorNotify('音樂模型發生錯誤');
@@ -209,6 +262,7 @@ const Musics = () => {
       }
     } finally {
       setBlobLoading(false);
+      setGenerateMusicProgress(0);
     };
 
   };
@@ -302,10 +356,10 @@ const Musics = () => {
             onClick={handleAnalyzeClick}
             disabled={isArticleSet()}
             type="submit"
-            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-4 px-6 py-2 border-2 border-stone-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-50 hover:border-stone-300 disabled:cursor-not-allowed disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
+            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-8 py-3 border-2 border-orange-300 text-orange-400 text-xl font-bold shadow-md rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-70 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-400 disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
           >
             {
-              (!isAddNewArticleLoading && !isAnalyzeMoodLoading) ? (
+              (!isAddNewArticleLoading && !emotionLoading) ? (
                 <span className='flex gap-1 h-7'>
                   <MdOutlineManageSearch size={28} />
                   分析
@@ -314,8 +368,10 @@ const Musics = () => {
                 <Spinner
                   width='w-7'
                   height='h-7'
-                  fill='fill-black'
-                  spinnerText='text-white'
+                  spinnerText='text-orange-400'
+                  value={generateEmotionsProgress}
+                  size={32}
+                  progressWithLabel={false}
                 />
               )
             }
@@ -377,12 +433,12 @@ const Musics = () => {
             onClick={handleGenerateMusicClick}
             type="submit"
             disabled={!isAllSet}
-            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-2 border-2 border-gray-400 text-stone-600 text-xl font-bold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-gray-400 hover:border-stone-300 disabled:cursor-not-allowed"
+            className="relative group flex justify-center items-center gap-3 w-5/6 sm:w-5/12 lg:8/12 mb-8 xl:pl-8 xl:pr-4 py-3 border-2 border-orange-300 text-orange-400 text-xl font-semibold shadow-xl rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-orange-300 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-300 disabled:border-stone-300"
           >
-            <span className='absolute top-0 right-2/3 -rotate-6 hidden xl:block'>
+            <span className='absolute top-1 right-2/3 -rotate-6 hidden xl:block'>
               <BsMusicNoteList
                 size={50}
-                className={classNames(`text-gray-600 z-20 transition-all duration-200 ease-out group-hover:text-gray-400`,
+                className={classNames(`text-orange-400 z-20 transition-all duration-200 ease-out group-hover:text-orange-300 group-disabled:text-stone-300`,
                   { 'group-hover:animate-bouncing': isAllSet })}
               />
             </span>
@@ -392,7 +448,14 @@ const Musics = () => {
                   生成音樂
                 </>
               ) : (
-                <Spinner width='w-7' height='h-7' fill='fill-slate-600' spinnerText='text-white' />
+                <Spinner
+                  width='w-7'
+                  height='h-7'
+                  spinnerText='text-orange-400'
+                  value={generateMusicProgress}
+                  size={48}
+                  progressWithLabel={false}
+                />
               )
             }
           </button>

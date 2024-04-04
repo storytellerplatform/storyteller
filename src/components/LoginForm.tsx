@@ -184,13 +184,19 @@ const LoginForm: React.FC = () => {
       */}
       <button
         type='submit'
-        className='flex justify-center py-2 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white text-sm font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleClick}
       >
         {
           !isSignInLoading ?
             "登入" :
-            <Spinner width='w-5' height='w-5' />
+            <Spinner
+              width='w-6'
+              height='h-6'
+              size={24}
+              spinnerText='text-white'
+              thickness={6}
+            />
         }
       </button>
 

@@ -30,15 +30,17 @@ const Admin = () => {
     fetchData();
   }, [jwtToken, navigate, dispatch, triggerGetCurrentUser]);
 
-  const { data: userData, isLoading: isGetUserDataLoading } = currentUserResult;
+  const { data: userData, isLoading: isGetUserDataLoading, isError } = currentUserResult;
 
   useEffect(() => {
-    if (userData) {
+    if (isError) {
+      Cookies.remove('jwtToken');
+    } else if (userData) {
       dispatch(setUserId(userData.userId || '0'));
       dispatch(setUsername(userData.name || 'user'));
       dispatch(setEmail(userData.email || 'email'));
     }
-  }, [userData, dispatch]);
+  }, [userData, dispatch, isError]);
 
   return isGetUserDataLoading ? <LoadingPage /> : <Outlet />;
 };

@@ -2,7 +2,7 @@ import React, { Suspense, lazy, memo, useState } from 'react'
 import { HiDownload } from 'react-icons/hi';
 import { FaRegHeart } from 'react-icons/fa';
 
-import { serverErrorNotify } from '../../../utils/toast';
+import { serverErrorNotify, successNotification } from '../../../utils/toast';
 import { useAppSelector } from '../../../app/hooks';
 import { getToken } from '../../../feature/auth/authSlice';
 import classNames from 'classnames';
@@ -62,6 +62,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
         const data = await res.json();
         const currAudioId: number = data.newestAudioId;
         setSuccess(true);
+        successNotification('音樂收藏成功!');
         setAudioId(currAudioId);
       } else {
         console.log(await res.json());
@@ -105,7 +106,14 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
             !heartLoading ? (
               <FaRegHeart size={24} />
             ) : (
-              <Spinner width='w-5' height='h-5' fill='fill-rose-400' spinnerText='text-white' />
+              <Spinner
+                width='w-5'
+                height='h-5'
+                spinnerText='text-rose-400'
+                hoverColor='hover:text-rose-500'
+                size={20}
+                thickness={5}
+              />
             )
           }
         </button>
