@@ -15,6 +15,7 @@ import { MdOutlineManageSearch } from 'react-icons/md';
 import { createEmotion, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
+import { Slider } from '@mui/material';
 
 interface ArticleState {
   articleId: number | null,
@@ -45,6 +46,9 @@ const FreeMusics = () => {
 
   // 分析音樂前做確認
   const [isAllSet, setIsAllSet] = React.useState<boolean>(false);
+
+  // 秒數
+  const [seconds, setSeconds] = React.useState<number>(20);
 
   // loading state and progression
   const [generateEmotionsProgress, setGenerateEmotionsProgress] = React.useState<number>(0);
@@ -82,6 +86,10 @@ const FreeMusics = () => {
     e.preventDefault();
     setFile(e.target.files ? e.target.files[0] : null);
   }, []);
+
+  const handleSecondsChange = (event: Event, newValue: number | number[]) => {
+    setSeconds(newValue as number);
+  };
 
   /**
    * 讀取檔案內容
@@ -217,7 +225,7 @@ const FreeMusics = () => {
     try {
       const response = await createMusic({
         texts: article.articleContent,
-        duration: 10,
+        duration: seconds,
       }, config);
 
       if (response.status !== 200) {
@@ -401,6 +409,21 @@ const FreeMusics = () => {
               setShowModal={setShowModal}
               emotions={emotions}
               setEmotions={setEmotions}
+            />
+          </div>
+
+          {/* 
+              秒數設置
+          */}
+          <div className="w-3/4 mb-4">
+            <h3 className='text-xl font-bold text-black opacity-70 mb-2'>音樂秒數設置</h3>
+            <Slider
+              value={seconds}
+              min={5}
+              onChange={handleSecondsChange}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              color={'warning'}
             />
           </div>
 

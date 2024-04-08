@@ -249,8 +249,8 @@ const Collection = () => {
                     audioId={audio.audioId}
                   />
                 ) : (
-                  <>
-                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
+                  <div>
+                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
                       {/* 加載時的骨架結構 */}
                       <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                       <div className='bg-gray-300 h-8 w-16 rounded'></div>
@@ -261,7 +261,7 @@ const Collection = () => {
                       <div className='bg-gray-300 h-8 w-24 rounded'></div>
                       <div className='bg-gray-300 h-10 w-full rounded'></div>
                     </div>
-                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 min-w-[12rem] animate-pulse'>
+                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
                       {/* 加載時的骨架結構 */}
                       <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                       <div className='bg-gray-300 h-8 w-16 rounded'></div>
@@ -272,7 +272,7 @@ const Collection = () => {
                       <div className='bg-gray-300 h-8 w-24 rounded'></div>
                       <div className='bg-gray-300 h-10 w-full rounded'></div>
                     </div>
-                  </>
+                  </div>
                 )
               )
             })

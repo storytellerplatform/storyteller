@@ -87,7 +87,7 @@ const Collect = () => {
                 waveColor={"#e1e1e1"}
                 barWidth={4}
                 barRadius={4}
-                progressColor={"rgba(32, 31, 31, 0.5)"}
+                progressColor={"rgba(199, 199, 199, 0.5)"}
                 hideScrollbar={true}
                 data={audioBlob}
                 playbtnStyle='dark'

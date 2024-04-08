@@ -164,7 +164,7 @@ const LoginForm: React.FC = () => {
       <div className='flex flex-col gap-1 select-none mb-2'>
         <label htmlFor="login-password" className='flex gap-1 text-base font-bold' >
           密碼
-          <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg hover:after:content-[''] hover:after:w-3 hover:after:h-3 hover:after:top-[1px] hover:after:absolute hover:after:left-[25px] hover:after:bg-white hover:after:border-l-2 hover:after:border-b-2 hover:after:border-black hover:after:rotate-45`}>
+          <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg`}>
             <FaCircleQuestion />
           </span>
         </label>
@@ -184,7 +184,7 @@ const LoginForm: React.FC = () => {
       */}
       <button
         type='submit'
-        className='flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='group flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleClick}
       >
         {
@@ -194,7 +194,7 @@ const LoginForm: React.FC = () => {
               width='w-6'
               height='h-6'
               size={24}
-              spinnerText='text-white'
+              spinnerText='text-white group-hover:text-black'
               thickness={6}
             />
         }
