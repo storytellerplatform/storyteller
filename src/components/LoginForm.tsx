@@ -61,7 +61,7 @@ const LoginForm: React.FC = () => {
     }
 
     if (!validateEmail(user.email)) {
-      setError("電子信箱格式錯誤");
+      setError("帳號或密碼錯誤，請重試一次!!!");
       return;
     }
 
