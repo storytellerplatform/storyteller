@@ -203,7 +203,7 @@ const Collection = () => {
     } else if (searchDResult && userToken && queryType === QueryType.DATE) {
       fetchAudioData(searchDResult);
     }
-  }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken])
+  }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken, SERVER_URL])
 
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>

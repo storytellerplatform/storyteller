@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { FiAlertTriangle } from "react-icons/fi";
 import { FaCircleQuestion } from "react-icons/fa6";
 import Spinner from './Spinner';
+import { isPasswordValid } from '../utils/validator';
+import { validateEmail } from '../utils/vaildateEmail';
 
 const LoginForm: React.FC = () => {
   const isLoginFormOpen: boolean = useAppSelector(getLoginForm);
@@ -52,6 +54,16 @@ const LoginForm: React.FC = () => {
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!isPasswordValid(user.password)) {
+      setError("密碼格式錯誤");
+      return;
+    }
+
+    if (!validateEmail(user.email)) {
+      setError("電子信箱格式錯誤");
+      return;
+    }
 
     // todo: for admin
     if (user.email === 'admin@admin.com' && user.password === 'admin123') {

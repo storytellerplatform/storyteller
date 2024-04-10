@@ -23,7 +23,6 @@ const RegisterForm: React.FC = () => {
     password: "",
   });
   const [error, setError] = useState<string>("");
-  const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
 
@@ -38,13 +37,6 @@ const RegisterForm: React.FC = () => {
   // };
 
   const handleSignupClick = async () => {
-    if (cancelToken) {
-      cancelToken.cancel('Previous request canceled');
-    }
-
-    const newCancelToken = axios.CancelToken.source();
-    setCancelToken(newCancelToken);
-
     if (!isPasswordValid(user.password)) {
       setError("密碼格式錯誤");
       return;

@@ -236,7 +236,7 @@ const FreeMusics = () => {
       const audioData = await response.data.arrayBuffer(); // 將獲取的數據轉為 ArrayBuffer
       const blob = new Blob([audioData], { type: 'audio/wav' }); // 將 ArrayBuffer 轉換為 Blob'
       setBlobFile(blob);
-      successNotification("音樂分析成功!")
+      successNotification("音樂生成成功!")
     } catch (error: any) {
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
         serverErrorNotify('音樂模型伺服器未開啟');
