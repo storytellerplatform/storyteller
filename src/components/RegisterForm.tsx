@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { changeOpenForm, getRegisterForm, taggleLoginForm, taggleRegisterForm } from '../feature/authSidebar';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -11,6 +11,7 @@ import { successNotification } from '../utils/toast';
 import { validateEmail } from '../utils/vaildateEmail';
 import { FaCircleQuestion } from "react-icons/fa6";
 import { isPasswordValid } from '../utils/validator';
+import axios, { CancelTokenSource } from 'axios';
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -22,6 +23,7 @@ const RegisterForm: React.FC = () => {
     password: "",
   });
   const [error, setError] = useState<string>("");
+  const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
 
@@ -36,6 +38,13 @@ const RegisterForm: React.FC = () => {
   // };
 
   const handleSignupClick = async () => {
+    if (cancelToken) {
+      cancelToken.cancel('Previous request canceled');
+    }
+
+    const newCancelToken = axios.CancelToken.source();
+    setCancelToken(newCancelToken);
+
     if (!isPasswordValid(user.password)) {
       setError("密碼格式錯誤");
       return;
@@ -109,7 +118,7 @@ const RegisterForm: React.FC = () => {
           錯誤顯示
       */}
       {error &&
-        <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+        <div className='flex items-center gap-2 pl-4 pr-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
           <span className='text-white text-base'>
             <FiAlertTriangle />
           </span>

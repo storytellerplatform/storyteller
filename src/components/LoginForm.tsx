@@ -91,6 +91,7 @@ const LoginForm: React.FC = () => {
       navigate('/');
 
     } catch (err: any) {
+      console.log(err);
       if (err.status === 400 || err.status === 403 || err.status === 404) {
         if (err.data && err.data.errorCode && err.data.errorCode === 'EMAIL_INVALID') {
           setError("您的帳戶需要進行電子郵件驗證。請檢查您的郵件信箱!");
