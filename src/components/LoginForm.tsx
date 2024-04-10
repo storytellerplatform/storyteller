@@ -56,7 +56,7 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     if (!isPasswordValid(user.password)) {
-      setError("密碼格式錯誤");
+      setError("帳號或密碼錯誤，請重試一次!!!");
       return;
     }
 
