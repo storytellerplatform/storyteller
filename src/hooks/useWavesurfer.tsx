@@ -10,7 +10,7 @@ type UseWavesurferProps = Omit<WaveSurferOptions, 'container'>;
 const useWavesurfer = (
   containerRef: MutableRefObject<HTMLElement | null>,
   options: UseWavesurferProps,
-  data?: Blob
+  data: Blob | null
 ) => {
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
 
@@ -31,7 +31,7 @@ const useWavesurfer = (
     return () => {
       ws.destroy()
     }
-  }, [options, containerRef, data])
+  }, [options, data])
 
   return wavesurfer
 }

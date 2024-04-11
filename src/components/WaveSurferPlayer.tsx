@@ -8,7 +8,7 @@ import classNames from 'classnames';
 type UseWavesurferProps = Omit<WaveSurferOptions, 'container'>;
 interface WaveSurferPlayerProps extends UseWavesurferProps {
   playbtnStyle: string;
-  data?: Blob;
+  data: Blob | null;
 }
 
 const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = (props) => {

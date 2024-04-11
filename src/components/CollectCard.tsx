@@ -13,39 +13,52 @@ interface CollectCardProps {
   createDate: string;
   audioBlob: Blob;
   audioId: Number;
+  play?: boolean;
+  setPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  setAudioData: React.Dispatch<React.SetStateAction<Blob | null>>;
 }
 
-const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, createDate, audioBlob, audioId }) => {
-  const [play, setPlay] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, createDate, audioBlob, audioId, play, setPlay, setAudioData }) => {
+  // const [play, setPlay] = useState(false);
+  // const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
 
-  function toggleAudio(): void {
-    if (play) {
-      audioRef.current?.pause();
-      setPlay(false);
-    } else {
-      void audioRef.current?.play();
-      setPlay(true);
+  const toggleAudio = () => {
+    if (!play) {
+      setAudioData(audioBlob);
     }
-  }
 
-  useEffect(() => {
-    if (audioBlob && audioRef.current) {
-      audioRef.current.src = URL.createObjectURL(audioBlob);
-      audioRef.current.load();
-    }
-  }, [audioBlob])
+    setPlay((preState) => !preState);
+  };
+
+  // function toggleAudio(): void {
+  //   if (play) {
+  //     audioRef.current?.pause();
+  //     setPlay(false);
+  //   } else {
+  //     void audioRef.current?.play();
+  //     setPlay(true);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (audioBlob && audioRef.current) {
+  //     audioRef.current.src = URL.createObjectURL(audioBlob);
+  //     audioRef.current.load();
+  //   }
+  // }, [audioBlob])
 
   return (
     <div className='grid grid-cols-5 gap-6 mb-8 w-full p-4 items-center border border-white bg-white min-w-[12rem]'>
 
-      {play ?
+      <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
+
+      {/* {play ?
         <BiPauseCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
         :
         <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
-      }
-      <audio ref={audioRef} />
+      } */}
+      {/* <audio ref={audioRef} /> */}
 
       <div
         className='py-6'
@@ -74,6 +87,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
       <div className='w-1/10'>
         <DownloadButton fileName={name} blobData={audioBlob} whitemode={true} />
       </div>
+
     </div>
   )
 }

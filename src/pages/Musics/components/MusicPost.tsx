@@ -91,6 +91,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
             hideScrollbar={true}
             data={audioBlob}
             playbtnStyle='light'
+
           />
         </Suspense>
       </div>

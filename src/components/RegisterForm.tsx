@@ -55,6 +55,12 @@ const RegisterForm: React.FC = () => {
     } catch (err: any) {
       console.log(err);
 
+      if (err.name === 'AbortError') {
+        setError("");
+        dispatch(taggleLoginForm());
+        successNotification('感謝您的註冊！我們已向您提供的電子郵件地址發送了一封驗證郵件。請查看您的收件箱!')
+      };
+
       if (err.status === 400 || err.status === 404) {
         if (err.data.errorCode === 'ACCOUNT_EXISTS') {
           setError(err.data.message);

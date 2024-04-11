@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useState } from 'react'
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import CollectCard from '../../components/CollectCard'
 import { useLazyGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
@@ -16,6 +16,9 @@ import { emotionNumTransfer } from '../../utils/emotionTransfer';
 import EmotionDropDown from './components/EmotionDropDown';
 import CollectionDropdown from './components/CollectionDropdown';
 import DateSort from './components/DateSort';
+import WaveSurferPlayer from '../../components/WaveSurferPlayer';
+import useWavesurfer from '../../hooks/useWavesurfer';
+import { BiPlayCircle } from 'react-icons/bi';
 
 interface CollectCardProps extends Article {
   audioBlobList?: Array<Audio>
@@ -40,13 +43,25 @@ const Collection = () => {
   const [searchEmotion, setSearchEmotion] = React.useState<EmotionProps>("無");
   const [sortDate, setSortDate] = React.useState<SortDataType>(SortDataType.DESC);
   const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(true);
+  const [play, setPlay] = React.useState<boolean>(false);
+  const [audioData, setAudioData] = React.useState<Blob | null>(null);
 
   const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
   const [triggerSearchByName, searchByNameResult] = useLazySearchByNameQuery();
   const [triggerSearchByEmotion, searchByEmotionResult] = useLazySearchByEmotionQuery();
   const [triggerSortDate, sortDateResult] = useLazySortByCreatedDateQuery();
 
-  console.log(isArticlesLoading);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  const wavesurfer = useWavesurfer(footerRef,
+    {},
+    audioData
+  );
+
+  const togglePlayClick = useCallback(() => {
+    if (!wavesurfer) return
+    wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play()
+  }, [wavesurfer])
+
 
   React.useEffect(() => {
     const getArticle = async () => {
@@ -205,6 +220,19 @@ const Collection = () => {
     }
   }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken, SERVER_URL])
 
+  useEffect(() => {
+    if (!wavesurfer) return
+
+    const subscriptions = [
+      wavesurfer.on('play', () => setPlay(true)),
+      wavesurfer.on('pause', () => setPlay(false)),
+    ]
+
+    return () => {
+      subscriptions.forEach((unsub) => unsub())
+    }
+  }, [wavesurfer])
+
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
 
@@ -247,6 +275,9 @@ const Collection = () => {
                     createDate={article.createdDate}
                     audioBlob={audio.audioBlob}
                     audioId={audio.audioId}
+                    play={play}
+                    setPlay={setPlay}
+                    setAudioData={setAudioData}
                   />
                 ) : (
                   <div>
@@ -279,6 +310,27 @@ const Collection = () => {
           })}
         </div>
       </div>
+
+      {audioData &&
+        <footer className='w-full pl-24 pb-6 pr-16 pt-2'>
+          <BiPlayCircle
+            onClick={togglePlayClick}
+            size={36}
+            className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60'
+          />
+          <div ref={footerRef}></div>
+          {/* <WaveSurferPlayer
+            height={60}
+            waveColor={"#e1e1e1"}
+            barWidth={4}
+            barRadius={4}
+            progressColor={"rgba(112, 112, 112, 0.8)"}
+            hideScrollbar={true}
+            data={audioData}
+            playbtnStyle='light'
+          /> */}
+        </footer>
+      }
     </div >
   )
 }
