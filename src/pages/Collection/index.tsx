@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useId, useState } from 'react'
 import CollectCard from '../../components/CollectCard'
 import { useLazyGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
@@ -17,8 +17,7 @@ import EmotionDropDown from './components/EmotionDropDown';
 import CollectionDropdown from './components/CollectionDropdown';
 import DateSort from './components/DateSort';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
-import useWavesurfer from '../../hooks/useWavesurfer';
-import { BiPlayCircle } from 'react-icons/bi';
+import FooterMusicCard from './components/FooterMusicCard';
 
 interface CollectCardProps extends Article {
   audioBlobList?: Array<Audio>
@@ -44,24 +43,13 @@ const Collection = () => {
   const [sortDate, setSortDate] = React.useState<SortDataType>(SortDataType.DESC);
   const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(true);
   const [play, setPlay] = React.useState<boolean>(false);
+  const [playedName, setPlayedName] = React.useState<string>('');
   const [audioData, setAudioData] = React.useState<Blob | null>(null);
 
   const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
   const [triggerSearchByName, searchByNameResult] = useLazySearchByNameQuery();
   const [triggerSearchByEmotion, searchByEmotionResult] = useLazySearchByEmotionQuery();
   const [triggerSortDate, sortDateResult] = useLazySortByCreatedDateQuery();
-
-  const footerRef = useRef<HTMLDivElement | null>(null);
-  const wavesurfer = useWavesurfer(footerRef,
-    {},
-    audioData
-  );
-
-  const togglePlayClick = useCallback(() => {
-    if (!wavesurfer) return
-    wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play()
-  }, [wavesurfer])
-
 
   React.useEffect(() => {
     const getArticle = async () => {
@@ -220,19 +208,6 @@ const Collection = () => {
     }
   }, [allArticles, queryType, searchNResult, searchEResult, searchDResult, userToken, SERVER_URL])
 
-  useEffect(() => {
-    if (!wavesurfer) return
-
-    const subscriptions = [
-      wavesurfer.on('play', () => setPlay(true)),
-      wavesurfer.on('pause', () => setPlay(false)),
-    ]
-
-    return () => {
-      subscriptions.forEach((unsub) => unsub())
-    }
-  }, [wavesurfer])
-
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
 
@@ -261,7 +236,7 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='flex flex-col w-full sm:w-4/5 bg-slate-100'>
+        <div className='flex flex-col sm:w-4/5 w-full bg-slate-100'>
           {/* 收藏 */}
           {collectCards.length !== 0 && collectCards.map(article => {
             return article.audioBlobList?.map((audio: Audio) => {
@@ -277,6 +252,7 @@ const Collection = () => {
                     audioId={audio.audioId}
                     play={play}
                     setPlay={setPlay}
+                    setPlayedName={setPlayedName}
                     setAudioData={setAudioData}
                   />
                 ) : (
@@ -312,15 +288,10 @@ const Collection = () => {
       </div>
 
       {audioData &&
-        <footer className='w-full pl-24 pb-6 pr-16 pt-2'>
-          <BiPlayCircle
-            onClick={togglePlayClick}
-            size={36}
-            className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60'
-          />
-          <div ref={footerRef}></div>
-          {/* <WaveSurferPlayer
-            height={60}
+        <footer className='w-full md:pl-24 pl-8 pb-6 md:pr-16 pr-8 pt-2'>
+          <FooterMusicCard
+            playedName={playedName}
+            height={40}
             waveColor={"#e1e1e1"}
             barWidth={4}
             barRadius={4}
@@ -328,7 +299,7 @@ const Collection = () => {
             hideScrollbar={true}
             data={audioData}
             playbtnStyle='light'
-          /> */}
+          />
         </footer>
       }
     </div >

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { BiPauseCircle, BiPlayCircle } from 'react-icons/bi'
+import React from 'react'
+import { BiPlayCircle } from 'react-icons/bi'
 
 import EmotionButton from './EmotionButton'
 import DownloadButton from './DownloadButton'
@@ -16,9 +16,10 @@ interface CollectCardProps {
   play?: boolean;
   setPlay: React.Dispatch<React.SetStateAction<boolean>>;
   setAudioData: React.Dispatch<React.SetStateAction<Blob | null>>;
+  setPlayedName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, createDate, audioBlob, audioId, play, setPlay, setAudioData }) => {
+const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, createDate, audioBlob, audioId, play, setPlay, setAudioData, setPlayedName }) => {
   // const [play, setPlay] = useState(false);
   // const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
   const toggleAudio = () => {
     if (!play) {
       setAudioData(audioBlob);
+      setPlayedName(name);
     }
 
     setPlay((preState) => !preState);
@@ -49,8 +51,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
   // }, [audioBlob])
 
   return (
-    <div className='grid grid-cols-5 gap-6 mb-8 w-full p-4 items-center border border-white bg-white min-w-[12rem]'>
-
+    <div className='fixed grid md:grid-cols-5 grid-cols-3 gap-6 mb-8 w-5/6 p-4 items-center border border-white bg-white min-w-[30rem] overflow-visible'>
       <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
 
       {/* {play ?
@@ -69,7 +70,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
         </h3>
       </div>
 
-      <div className={`grid grid-cols-1 gap-y-1 text-xl font-semibold lg:grid-cols-2`}>
+      <div className={`md:grid hidden grid-cols-1 gap-y-1 text-xl font-semibold lg:grid-cols-2`}>
         {emotions ? emotions.map((emotion, index) => {
           return <EmotionButton
             key={index}

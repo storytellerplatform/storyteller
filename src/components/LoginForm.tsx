@@ -114,9 +114,9 @@ const LoginForm: React.FC = () => {
         }
       } else if (err.status === 500) {
         setError("伺服器發生錯誤!");
+      } else {
+        setError("出現其他錯誤!");
       }
-
-      setError("出現其他錯誤!");
     }
   };
 
