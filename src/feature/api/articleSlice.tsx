@@ -35,6 +35,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (articleId) => ({
         url: `/article/${articleId}`,
         method: 'GET',
+        timeout: 10000
       }),
       transformResponse: (response: BArticle): Article => {
         const { articleId, name, content, emotions, createdDate, newestAudioId, allAudioIds } = response;
