@@ -51,7 +51,8 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
   // }, [audioBlob])
 
   return (
-    <div className='fixed grid md:grid-cols-5 grid-cols-3 gap-6 mb-8 w-5/6 p-4 items-center border border-white bg-white min-w-[30rem] overflow-visible'>
+    <div className='fixed grid md:grid-cols-6 grid-cols-3 gap-2 mb-8 w-5/6 p-4 items-center border border-white bg-white min-w-[30rem] overflow-visible'>
+
       <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
 
       {/* {play ?
@@ -70,19 +71,20 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
         </h3>
       </div>
 
-      <div className={`md:grid hidden grid-cols-1 gap-y-1 text-xl font-semibold lg:grid-cols-2`}>
+      <div className={`md:grid hidden ml-4 grid-cols-1 lg:grid-cols-2 gap-y-1 text-xl font-semibold`}>
         {emotions ? emotions.map((emotion, index) => {
           return <EmotionButton
             key={index}
             label={emotion}
             defaultStyle={false}
-            className='px-4 py-1 rounded-full text-sm'
+            className='mr-2 py-1 rounded-full text-sm'
           />
         })
           : <span className='px-3 w-16'>無</span>
         }
       </div>
 
+      <div></div>
       <span className='font-bold font-mono hidden md:block'>{createDate}</span>
 
       <div className='w-1/10'>

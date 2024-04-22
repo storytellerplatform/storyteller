@@ -236,28 +236,30 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='flex flex-col sm:w-4/5 w-full bg-slate-100'>
+        <div className='flex flex-col h-fit sm:w-4/5 w-full bg-slate-100'>
           {/* 收藏 */}
           {collectCards.length !== 0 && collectCards.map(article => {
             return article.audioBlobList?.map((audio: Audio) => {
               return (
                 !isArticlesLoading ? (
-                  <CollectCard
-                    key={collectCardId}
-                    articleId={article.articleId}
-                    name={article.name}
-                    emotions={article.emotions}
-                    createDate={article.createdDate}
-                    audioBlob={audio.audioBlob}
-                    audioId={audio.audioId}
-                    play={play}
-                    setPlay={setPlay}
-                    setPlayedName={setPlayedName}
-                    setAudioData={setAudioData}
-                  />
+                  <div className='mb-36'>
+                    <CollectCard
+                      key={collectCardId}
+                      articleId={article.articleId}
+                      name={article.name}
+                      emotions={article.emotions}
+                      createDate={article.createdDate}
+                      audioBlob={audio.audioBlob}
+                      audioId={audio.audioId}
+                      play={play}
+                      setPlay={setPlay}
+                      setPlayedName={setPlayedName}
+                      setAudioData={setAudioData}
+                    />
+                  </div>
                 ) : (
-                  <div>
-                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+                  <div className='flex flex-col gap-4'>
+                    <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
                       {/* 加載時的骨架結構 */}
                       <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                       <div className='bg-gray-300 h-8 w-16 rounded'></div>
@@ -265,20 +267,21 @@ const Collection = () => {
                         <div className='bg-gray-300 h-8 w-16 rounded'></div>
                         <div className='bg-gray-300 h-8 w-16 rounded'></div>
                       </div>
+                      <div></div>
                       <div className='bg-gray-300 h-8 w-24 rounded'></div>
                       <div className='bg-gray-300 h-10 w-full rounded'></div>
                     </div>
-                    <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
-                      {/* 加載時的骨架結構 */}
-                      <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
-                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                      <div className='flex gap-2 h-fit w-fit'>
-                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                      </div>
-                      <div className='bg-gray-300 h-8 w-24 rounded'></div>
-                      <div className='bg-gray-300 h-10 w-full rounded'></div>
-                    </div>
+                    {/* <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'> */}
+                    {/* 加載時的骨架結構 */}
+                    {/* <div className='bg-gray-300 h-10 w-10 rounded-full'></div> */}
+                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
+                    {/* <div className='flex gap-2 h-fit w-fit'> */}
+                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
+                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
+                    {/* </div> */}
+                    {/* <div className='bg-gray-300 h-8 w-24 rounded'></div> */}
+                    {/* <div className='bg-gray-300 h-10 w-full rounded'></div> */}
+                    {/* </div> */}
                   </div>
                 )
               )
