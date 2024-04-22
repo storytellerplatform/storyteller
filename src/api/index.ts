@@ -6,12 +6,16 @@ export const modelRequest = axios.create({
   baseURL: process.env.REACT_APP_MODEL_ENDPOINT,
 });
 
+export const moodAnaRequest = axios.create({
+  baseURL: process.env.REACT_APP_MOODANA_MODEL_ENDPOINT
+});
+
 export const serverRequest = axios.create({
   baseURL: process.env.REACT_APP_SERVER_ENDPOINT,
   timeout: 5000,
 });
 
-export const createEmotion = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => modelRequest.post<number[]>(
+export const createEmotion = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => moodAnaRequest.post<number[]>(
   '/mood_analyze', request, {
     ...config
   }
