@@ -354,10 +354,10 @@ const FreeMusics = () => {
                   width='w-7'
                   height='h-7'
                   spinnerText='text-orange-400'
-                  value={generateEmotionsProgress}
-                  size={32}
-                  thickness={4}
-                  progressWithLabel={false}
+                  // value={generateEmotionsProgress}
+                  size={24}
+                  thickness={5}
+                // progressWithLabel={false}
                 />
               )
             }
