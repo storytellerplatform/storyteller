@@ -377,9 +377,8 @@ const Musics = () => {
                   width='w-7'
                   height='h-7'
                   spinnerText='text-orange-400'
-                  // value={generateEmotionsProgress}
-                  size={32}
-                  // progressWithLabel={false}
+                  size={24}
+                  thickness={5}
                 />
               )
             }

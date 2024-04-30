@@ -7,7 +7,6 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_SERVER_ENDPOINT}`,
     // baseUrl: 'http://localhost:8080/api/v1',
-    timeout: 5000,
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state.auth.token;

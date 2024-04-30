@@ -248,7 +248,7 @@ const FreeMusics = () => {
       setGenerateMusicProgress(0);
     };
 
-  }, [article.articleContent]);
+  }, [article.articleContent, seconds]);
 
   return (
     <>
@@ -354,10 +354,8 @@ const FreeMusics = () => {
                   width='w-7'
                   height='h-7'
                   spinnerText='text-orange-400'
-                  // value={generateEmotionsProgress}
                   size={24}
                   thickness={5}
-                // progressWithLabel={false}
                 />
               )
             }
