@@ -6,7 +6,7 @@ export const apiSlice = createApi({
   tagTypes: ['Article'],
   baseQuery: fetchBaseQuery({
     // baseUrl: `${process.env.REACT_APP_SERVER_ENDPOINT}`,
-    baseUrl: 'http://localhost:8080/api/v1',
+    baseUrl: 'https://2539-140-123-57-204.ngrok-free.app/api/v1',
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state.auth.token;
