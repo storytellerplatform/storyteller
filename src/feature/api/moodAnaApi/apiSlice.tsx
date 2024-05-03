@@ -4,7 +4,7 @@ import { MoodAnaApiReq } from '../../../types/api/moodAna'
 export const moodAnaApiSlice = createApi({
   reducerPath: 'moodAnaApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_MOODANA_MODEL_ENDPOINT}`,
+    baseUrl: `${process.env.REACT_APP_MODEL_ENDPOINT}`,
   }),
   endpoints: builder => ({
     testApi: builder.query<Object, void>({
