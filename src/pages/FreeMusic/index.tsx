@@ -451,7 +451,8 @@ const FreeMusics = () => {
                   width='w-7'
                   height='h-7'
                   spinnerText='text-orange-400'
-                  size={48}
+                  size={28}
+                  thickness={6}
                 />
               )
             }
