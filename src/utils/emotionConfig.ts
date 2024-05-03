@@ -2,7 +2,7 @@ import { EmotionProps } from "../types/components";
 
 export const allEmotions: Array<EmotionProps> = ['無', '喜歡', '悲傷', '厭惡', '憤怒', '幸福'];
 export const selectEmotions: Array<EmotionProps> = ['喜歡', '悲傷', '厭惡', '憤怒', '幸福'];
-const englishEmotions = {
+export const englishEmotions = {
   "喜歡": "Like",
   "悲傷": "Sadness",
   "厭惡": "Disgust",

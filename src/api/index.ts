@@ -7,7 +7,7 @@ export const modelRequest = axios.create({
 });
 
 export const moodAnaRequest = axios.create({
-  baseURL: process.env.REACT_APP_MODEL_ENDPOINT
+  baseURL: process.env.REACT_APP_MOODANA_MODEL_ENDPOINT
 });
 
 export const serverRequest = axios.create({

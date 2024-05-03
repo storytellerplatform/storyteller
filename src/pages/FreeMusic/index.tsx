@@ -16,6 +16,7 @@ import { createEmotion, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 import { Slider } from '@mui/material';
+import { englishEmotions } from '../../utils/emotionConfig';
 
 interface ArticleState {
   articleId: number | null,
@@ -223,6 +224,12 @@ const FreeMusics = () => {
     };
 
     try {
+      // const musicRequestText: string = "";
+
+      // emotions.forEach(emotion => {
+      // musicRequestText.concat(englishEmotions[emotion]);
+      // });
+
       const response = await createMusic({
         texts: article.articleContent,
         duration: seconds,
