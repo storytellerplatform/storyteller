@@ -451,9 +451,7 @@ const FreeMusics = () => {
                   width='w-7'
                   height='h-7'
                   spinnerText='text-orange-400'
-                  value={generateMusicProgress}
                   size={48}
-                  progressWithLabel={false}
                 />
               )
             }

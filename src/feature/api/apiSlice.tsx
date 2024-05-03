@@ -5,8 +5,8 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   tagTypes: ['Article'],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_SERVER_ENDPOINT}`,
-    // baseUrl: 'http://localhost:8080/api/v1',
+    // baseUrl: `${process.env.REACT_APP_SERVER_ENDPOINT}`,
+    baseUrl: 'http://localhost:8080/api/v1',
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state.auth.token;
