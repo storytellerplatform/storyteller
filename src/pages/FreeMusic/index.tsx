@@ -162,21 +162,12 @@ const FreeMusics = () => {
       TestData: file ? (fileText || article.articleContent) : article.articleContent
     }
 
-    const config: AxiosRequestConfig = {
-      onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-        if (progressEvent.total !== undefined) {
-          const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-          setGenerateEmotionsProgress(50 + percentCompleted);
-        }
-      }
-    };
-
     /*
        將文章內容進行情緒分析
     */
     try {
       // const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
-      const emotionNumData = await createEmotion(moodAnaApiReq, config);
+      const emotionNumData = await createEmotion(moodAnaApiReq);
       const analyzedData = findIndexesGreaterThan(emotionNumData.data, 0.1);
       analyzedData.forEach((data) => {
         emotions.push(data);

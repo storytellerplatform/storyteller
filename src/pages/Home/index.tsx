@@ -15,7 +15,7 @@ const Home = () => {
 
   // test
   const { data: hello } = useTestApiQuery();
-  console.log(hello);
+  // console.log(hello);
 
   const handleOpenRegisterFormClick = () => {
     dispatch(taggleRegisterForm());

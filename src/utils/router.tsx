@@ -18,22 +18,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/error",
-        element: <ErrorPage />,
-      },
-      {
-        path: "/loading",
-        element: <LoadingPage />,
-      },
-      {
-        path: "/freemusic",
-        element: <FreeMusics />
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
         element: <Admin />,
         children: [
           {
@@ -52,9 +36,25 @@ const router = createBrowserRouter([
             path: "/music",
             element: <Musics />,
           },
+          {
+            path: "/error",
+            element: <ErrorPage />,
+          },
+          {
+            path: "/loading",
+            element: <LoadingPage />,
+          },
+          {
+            path: "/freemusic",
+            element: <FreeMusics />,
+          },
+          {
+            path: "/about",
+            element: <About />,
+          },
         ]
       }
-    ],
+    ]
   },
 ])
 

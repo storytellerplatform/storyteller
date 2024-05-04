@@ -36,15 +36,15 @@ const Collection = () => {
   const userToken = useAppSelector(getToken);
   const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
 
+  const [audioData, setAudioData] = React.useState<Blob | null>(null);
+  const [play, setPlay] = React.useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
+  const [playedName, setPlayedName] = React.useState<string>('');
   const [queryType, setQueryType] = useState<QueryType>(QueryType.ALL);
   const [collectCards, setCollectCards] = React.useState<Array<CollectCardProps>>([]);
-  const [searchEmotion, setSearchEmotion] = React.useState<EmotionProps>("無");
   const [sortDate, setSortDate] = React.useState<SortDataType>(SortDataType.DESC);
+  const [searchEmotion, setSearchEmotion] = React.useState<EmotionProps>("無");
   const [isArticlesLoading, setIsArticlesLoading] = React.useState<boolean>(true);
-  const [play, setPlay] = React.useState<boolean>(false);
-  const [playedName, setPlayedName] = React.useState<string>('');
-  const [audioData, setAudioData] = React.useState<Blob | null>(null);
 
   const [triggerGetAllArticles, allArticlesResult] = useLazyGetAllArticlesQuery();
   const [triggerSearchByName, searchByNameResult] = useLazySearchByNameQuery();
@@ -65,6 +65,8 @@ const Collection = () => {
   const { data: searchNResult } = searchByNameResult;
   const { data: searchEResult } = searchByEmotionResult;
   const { data: searchDResult } = sortDateResult;
+
+  console.log(allArticles)
 
   /**
    * 處理按键按下事件。
@@ -239,12 +241,14 @@ const Collection = () => {
         <div className='flex flex-col h-fit sm:w-4/5 w-full bg-slate-100'>
           {/* 收藏 */}
           {collectCards.length !== 0 && collectCards.map(article => {
-            return article.audioBlobList?.map((audio: Audio) => {
-              return (
-                !isArticlesLoading ? (
-                  <div className='mb-36'>
+            return !isArticlesLoading ? (
+              article.audioBlobList?.map((audio: Audio) => {
+                return (
+                  <div
+                    key={collectCardId}
+                    className='mb-36'
+                  >
                     <CollectCard
-                      key={collectCardId}
                       articleId={article.articleId}
                       name={article.name}
                       emotions={article.emotions}
@@ -257,35 +261,34 @@ const Collection = () => {
                       setAudioData={setAudioData}
                     />
                   </div>
-                ) : (
-                  <div className='flex flex-col gap-4'>
-                    <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
-                      {/* 加載時的骨架結構 */}
-                      <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
-                      <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                      <div className='flex gap-2 h-fit w-fit'>
-                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                        <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                      </div>
-                      <div></div>
-                      <div className='bg-gray-300 h-8 w-24 rounded'></div>
-                      <div className='bg-gray-300 h-10 w-full rounded'></div>
-                    </div>
-                    {/* <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'> */}
-                    {/* 加載時的骨架結構 */}
-                    {/* <div className='bg-gray-300 h-10 w-10 rounded-full'></div> */}
-                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
-                    {/* <div className='flex gap-2 h-fit w-fit'> */}
-                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
-                    {/* <div className='bg-gray-300 h-8 w-16 rounded'></div> */}
-                    {/* </div> */}
-                    {/* <div className='bg-gray-300 h-8 w-24 rounded'></div> */}
-                    {/* <div className='bg-gray-300 h-10 w-full rounded'></div> */}
-                    {/* </div> */}
-                  </div>
                 )
-              )
-            })
+              })
+            )
+              :
+              <div className='flex flex-col gap-4'>
+                <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+                  {/* 加載時的骨架結構 */}
+                  <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                  <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                  <div className='flex gap-2 h-fit w-fit'>
+                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                  </div>
+                  <div></div>
+                  <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                  <div className='bg-gray-300 h-10 w-full rounded'></div>
+                </div>
+                <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+                  <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                  <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                  <div className='flex gap-2 h-fit w-fit'>
+                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                  </div>
+                  <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                  <div className='bg-gray-300 h-10 w-full rounded'></div>
+                </div>
+              </div>
           })}
         </div>
       </div>

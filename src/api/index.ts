@@ -4,15 +4,23 @@ import { MoodAnaApiReq } from '../types/api/moodAna';
 
 export const modelRequest = axios.create({
   baseURL: process.env.REACT_APP_MODEL_ENDPOINT,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  },
 });
 
 export const moodAnaRequest = axios.create({
-  baseURL: process.env.REACT_APP_MODEL_ENDPOINT
+  baseURL: process.env.REACT_APP_MOODANA_MODEL_ENDPOINT,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  },
 });
 
 export const serverRequest = axios.create({
   baseURL: process.env.REACT_APP_SERVER_ENDPOINT,
-  timeout: 5000,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  },
 });
 
 export const createEmotion = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => moodAnaRequest.post<number[]>(

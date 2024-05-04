@@ -35,7 +35,7 @@ const Admin = () => {
   useEffect(() => {
     if (isError) {
       console.log(isError);
-      // Cookies.remove('jwtToken');
+      Cookies.remove('jwtToken');
     } else if (userData) {
       dispatch(setUserId(userData.userId || '0'));
       dispatch(setUsername(userData.name || 'user'));
