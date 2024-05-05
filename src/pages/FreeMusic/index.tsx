@@ -12,7 +12,7 @@ import Spinner from '../../components/Spinner';
 import { emotionsTransfer } from './../../utils/emotionTransfer';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { MdOutlineManageSearch } from 'react-icons/md';
-import { createEmotion, createMusic } from '../../api';
+import { createEmotion, createEmotionDicVer, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 import { Slider } from '@mui/material';
@@ -168,6 +168,9 @@ const FreeMusics = () => {
     try {
       // const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
       const emotionNumData = await createEmotion(moodAnaApiReq);
+
+      console.log();
+
       const analyzedData = findIndexesGreaterThan(emotionNumData.data, 0.1);
       analyzedData.forEach((data) => {
         emotions.push(data);
@@ -215,14 +218,30 @@ const FreeMusics = () => {
     };
 
     try {
-      // const musicRequestText: string = "";
+      let emotionsText = "";
 
-      // emotions.forEach(emotion => {
-      // musicRequestText.concat(englishEmotions[emotion]);
-      // });
+      emotions.forEach((emotion) => {
+        emotionsText += englishEmotions[emotion];
+        emotionsText += " ";
+      });
+
+      const moodAnaApiReq: MoodAnaApiReq = {
+        TestData: article.articleContent
+      }
+
+      const emotionsResponse = await createEmotionDicVer(moodAnaApiReq);
+
+      const emotionsDivVer = emotionsResponse.data;
+
+      emotionsDivVer.forEach((emotion) => {
+        emotionsText += emotion
+        emotionsText += " ";
+      });
+
+      console.log(emotionsText);
 
       const response = await createMusic({
-        texts: article.articleContent,
+        texts: emotionsText,
         duration: seconds,
       }, config);
 
@@ -246,7 +265,7 @@ const FreeMusics = () => {
       setGenerateMusicProgress(0);
     };
 
-  }, [article.articleContent, seconds]);
+  }, [article.articleContent, emotions, seconds]);
 
   return (
     <>
@@ -459,7 +478,7 @@ const FreeMusics = () => {
           {/* 音樂生成列表 */}
           {
             (blobFile && article.articleId) &&
-            <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
+            <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-10/12 sm:w-11/12'>
               <MusicPost name={article.articleName} audioBlob={blobFile} />
             </div>
           }

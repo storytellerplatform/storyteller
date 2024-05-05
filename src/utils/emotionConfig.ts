@@ -3,11 +3,12 @@ import { EmotionProps } from "../types/components";
 export const allEmotions: Array<EmotionProps> = ['無', '喜歡', '悲傷', '厭惡', '憤怒', '幸福'];
 export const selectEmotions: Array<EmotionProps> = ['喜歡', '悲傷', '厭惡', '憤怒', '幸福'];
 export const englishEmotions = {
-  "喜歡": "Like",
-  "悲傷": "Sadness",
-  "厭惡": "Disgust",
-  "憤怒": "Anger",
-  "幸福": "Happiness"
+  "無": "",
+  "喜歡": "like",
+  "悲傷": "sadness",
+  "厭惡": "disgust",
+  "憤怒": "anger",
+  "幸福": "happiness"
 };
 
 export const emotionStyles = {

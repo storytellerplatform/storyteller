@@ -14,7 +14,7 @@ import { BsMusicNoteList } from 'react-icons/bs';
 import MusicPost from './components/MusicPost';
 import { MoodAnaApiReq } from '../../types/api/moodAna';
 import Spinner from '../../components/Spinner';
-import { createEmotion, createMusic } from '../../api';
+import { createEmotion, createEmotionDicVer, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 import { Slider } from '@mui/material';
@@ -234,12 +234,32 @@ const Musics = () => {
     };
 
     try {
+      let emotionsText = "";
+
+      console.log(emotions);
+      emotions.forEach((emotion) => {
+        emotionsText += emotion;
+      });
+
+      const moodAnaApiReq: MoodAnaApiReq = {
+        TestData: article.articleContent
+      }
+
+      const emotionsResponse = await createEmotionDicVer(moodAnaApiReq);
+
+      const emotionsDivVer = emotionsResponse.data;
+
+      emotionsDivVer.forEach((emotion) => {
+        emotionsText += emotion
+      });
+
+      console.log(emotionsText);
 
       /**
        * 在分析情緒後，已將資料放進 article stete
        */
       const response = await createMusic({
-        texts: article.articleContent,
+        texts: emotionsText,
         duration: seconds,
       }, config);
 
