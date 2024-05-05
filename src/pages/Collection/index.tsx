@@ -66,7 +66,7 @@ const Collection = () => {
   const { data: searchEResult } = searchByEmotionResult;
   const { data: searchDResult } = sortDateResult;
 
-  console.log(allArticles)
+  console.log(allArticles, isArticlesLoading)
 
   /**
    * 處理按键按下事件。
@@ -239,15 +239,11 @@ const Collection = () => {
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
         <div className='flex flex-col h-fit sm:w-4/5 w-full bg-slate-100'>
-          {/* 收藏 */}
-          {collectCards.length !== 0 && collectCards.map(article => {
-            return !isArticlesLoading ? (
-              article.audioBlobList?.map((audio: Audio) => {
-                return (
-                  <div
-                    key={collectCardId}
-                    className='mb-36'
-                  >
+          {!isArticlesLoading ? (
+            <>
+              {collectCards.map((article) =>
+                article.audioBlobList?.map((audio: Audio) => (
+                  <div key={audio.audioId.toString()} className='mb-36'>
                     <CollectCard
                       articleId={article.articleId}
                       name={article.name}
@@ -261,35 +257,35 @@ const Collection = () => {
                       setAudioData={setAudioData}
                     />
                   </div>
-                )
-              })
-            )
-              :
-              <div className='flex flex-col gap-4'>
-                <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
-                  {/* 加載時的骨架結構 */}
-                  <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                ))
+              )}
+            </>
+          ) : (
+            <div className='flex flex-col gap-4'>
+              <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+                <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                <div className='flex gap-2 h-fit w-fit'>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                  <div className='flex gap-2 h-fit w-fit'>
-                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                  </div>
-                  <div></div>
-                  <div className='bg-gray-300 h-8 w-24 rounded'></div>
-                  <div className='bg-gray-300 h-10 w-full rounded'></div>
-                </div>
-                <div className='grid grid-cols-5 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
-                  <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                  <div className='flex gap-2 h-fit w-fit'>
-                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                    <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                  </div>
-                  <div className='bg-gray-300 h-8 w-24 rounded'></div>
-                  <div className='bg-gray-300 h-10 w-full rounded'></div>
                 </div>
+                <div></div>
+                <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                <div className='bg-gray-300 h-10 w-full rounded'></div>
               </div>
-          })}
+              <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+                <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
+                <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                <div className='flex gap-2 h-fit w-fit'>
+                  <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                  <div className='bg-gray-300 h-8 w-16 rounded'></div>
+                </div>
+                <div></div>
+                <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                <div className='bg-gray-300 h-10 w-full rounded'></div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

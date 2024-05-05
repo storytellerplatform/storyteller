@@ -4,8 +4,8 @@ import React from 'react'
 const LoadingPage = () => {
   return (
     <div className='flex items-center justify-center h-screen w-full'>
-      <div role="status" className='text-orange-400'>
-        <CircularProgress size={52} color={'inherit'} thickness={5} />
+      <div role="status" className='text-black'>
+        <CircularProgress size={60} color={'inherit'} thickness={6} />
         <span className="sr-only">Loading...</span>
       </div>
 

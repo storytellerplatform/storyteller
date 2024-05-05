@@ -291,7 +291,7 @@ const Musics = () => {
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full pb-8 bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row pl-6 sm:pl-24 lg:pl-0 pt-12 px-0 sm:pt-0'>
+      <div className='flex w-full bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row lg:pl-0 sm:pl-0 sm:pt-0 pl-0 pt-12 px-0'>
 
         {/* 
             sidebar 空白區塊
@@ -301,7 +301,7 @@ const Musics = () => {
         {/* 
             左半部
         */}
-        <div className='flex flex-col pt-8 pr-12 gap-4 w-5/6 lg:w-5/12'>
+        <div className='flex flex-col pt-10 pr-12 gap-4 w-full pl-12 sm:pl-24 lg:pl-4 xl:pl-0 lg:w-5/12'>
           {/* 
               文章名稱輸入
           */}
@@ -402,7 +402,7 @@ const Musics = () => {
         {/* 
             右半部
         */}
-        <div className='flex flex-col pt-10 pl-12 gap-4 w-full lg:w-6/12 bg-white'>
+        <div className='flex flex-col pb-8 pt-8 pl-12 sm:pl-24 lg:pl-12 gap-4 w-full lg:w-6/12 bg-white shadow-lg rounded-xl'>
           {/* 
               情感分析區域
           */}
@@ -497,7 +497,7 @@ const Musics = () => {
           {/* 音樂生成列表 */}
           {
             (blobFile && article.articleId) &&
-            <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-full sm:w-11/12'>
+            <div className='flex flex-col gap-10 mb-8 sm:mb-2 w-10/12 sm:w-11/12'>
               <MusicPost name={article.articleName} audioBlob={blobFile} articleId={article.articleId} />
             </div>
           }

@@ -41,7 +41,7 @@ const Collect = () => {
   }, [audioId, userToken]);
 
   return (
-    <div className='flex w-full'>
+    <div className='flex w-full flex-col sm:flex-row'>
 
       <div className='fixed left-0 top-0 w-auto min-w-full h-auto min-h-full bg-notes-image bg-center bg-cover pt-12 -z-10'></div>
 
@@ -49,12 +49,12 @@ const Collect = () => {
 
       {/* 左 */}
       {/* bg-gradient-to-r from-slate-600 to-slate-800 backdrop-blur-lg */}
-      <div className='flex flex-col gap-8 w-7/12 ml-4 pl-20 h-auto min-h-screen p-5'>
+      <div className='flex flex-col gap-8 w-full sm:w-7/12 mt-20 sm:mt-0 ml-4 pl-4 sm:pl-20 sm:h-auto sm:min-h-screen p-5'>
         <input
           // 增加修改文章的 API
           // onChange={(e) => setName(e.target.value)}
           value={articleData?.name}
-          className='w-1/2 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
+          className='w-full sm:w-1/2 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
         />
 
         {/* 對上 emotionId */}
@@ -96,11 +96,11 @@ const Collect = () => {
           )
         }
 
-        <div className='w-1/4'>
+        <div className='w-10/12 sm:w-1/4'>
           {
             audioBlob &&
             (
-              <DownloadButton blobData={audioBlob} fileName={articleData?.name || '說書人音樂'} whitemode={false} />
+              <DownloadButton classnames='py-4 gap-2' blobData={audioBlob} fileName={articleData?.name || '說書人音樂'} whitemode={false} />
             )
           }
         </div>
@@ -108,7 +108,7 @@ const Collect = () => {
       </div>
 
       {/* 右 */}
-      <div className='w-5/12 p-8'>
+      <div className='w-full sm:w-5/12 p-8'>
 
         <div className='mt-8'>
           <h1 className='text-4xl font-bold mb-4 text-slate-50'> 文章 </h1>

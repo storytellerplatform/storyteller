@@ -11,7 +11,6 @@ import { successNotification } from '../utils/toast';
 import { validateEmail } from '../utils/vaildateEmail';
 import { FaCircleQuestion } from "react-icons/fa6";
 import { isPasswordValid } from '../utils/validator';
-import axios, { CancelTokenSource } from 'axios';
 
 const RegisterForm: React.FC = () => {
   const isRegisterFormOpen = useAppSelector(getRegisterForm);
@@ -85,7 +84,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div
-      className={classNames(`register-form fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-6 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
+      className={classNames(`register-form fixed top-0 right-0 flex flex-col gap-4 h-screen w-full sm:w-4/5 md:w-3/5 lg:w-5/12 px-16 sm:px-24 pt-10 bg-white text-black z-50 overflow-auto transition-all duration-150 ease-in drop-shadow-2xl shadow-2xl`,
         { 'translate-x-full': !isRegisterFormOpen },
         { 'delay-200': isRegisterFormOpen })}
     >
