@@ -18,6 +18,7 @@ import { createEmotion, createEmotionDicVer, createMusic } from '../../api';
 import findIndexesGreaterThan from '../../utils/findIndexesGreaterThan';
 import { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 import { Slider } from '@mui/material';
+import { englishEmotions } from '../../utils/emotionConfig';
 
 interface ArticleState {
   articleId: number | null,
@@ -236,9 +237,9 @@ const Musics = () => {
     try {
       let emotionsText = "";
 
-      console.log(emotions);
       emotions.forEach((emotion) => {
-        emotionsText += emotion;
+        emotionsText += englishEmotions[emotion];
+        emotionsText += " ";
       });
 
       const moodAnaApiReq: MoodAnaApiReq = {
@@ -251,6 +252,7 @@ const Musics = () => {
 
       emotionsDivVer.forEach((emotion) => {
         emotionsText += emotion
+        emotionsText += " ";
       });
 
       console.log(emotionsText);
