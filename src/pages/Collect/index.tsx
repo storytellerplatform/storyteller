@@ -8,17 +8,25 @@ import { serverErrorNotify } from '../../utils/toast';
 import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 import { useAppSelector } from '../../app/hooks';
 import { getToken } from '../../feature/auth/authSlice';
-import { getMusic } from '../../api';
+import { createEmotionDicVer, getMusic } from '../../api';
+import LoadingPage from '../Loading';
+import { MoodAnaApiReq } from '../../types/api/moodAna';
+import { CircularProgress } from '@mui/material';
 
 const Collect = () => {
   const { articleId, audioId } = useParams();
   const userToken = useAppSelector(getToken);
 
   const [audioBlob, setAudioBlob] = useState<Blob | null>();
-  const { data: articleData } = useGetArticleQuery(Number(articleId));
+  const [emotionsDic, setEmotionsDic] = React.useState<Array<Array<string>>>([]);
+  const [audioLoading, setAudioLoading] = React.useState<boolean>(false);
+
+  const { data: articleData, isLoading: isGetArticleLoading } = useGetArticleQuery(Number(articleId));
 
   useEffect(() => {
     const fetchAudio = async (audioId: number, userToken: string) => {
+      setAudioLoading(true);
+
       try {
         const response = await getMusic(audioId, userToken);
 
@@ -31,6 +39,8 @@ const Collect = () => {
       } catch (err) {
         serverErrorNotify("伺服器發生錯誤 " + err);
         return null;
+      } finally {
+        setAudioLoading(false);
       }
     };
 
@@ -39,6 +49,27 @@ const Collect = () => {
     }
 
   }, [audioId, userToken]);
+
+  React.useEffect(() => {
+    const fetchEmoDic = async () => {
+      try {
+        const moodAnaApiReq: MoodAnaApiReq = {
+          TestData: articleData?.content || "",
+        };
+
+        const response = await createEmotionDicVer(moodAnaApiReq);
+        setEmotionsDic(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchEmoDic();
+
+  }, [articleData?.content])
+
+  if (isGetArticleLoading) {
+    return <LoadingPage />
+  }
 
   return (
     <div className='flex w-full flex-col sm:flex-row'>
@@ -60,43 +91,61 @@ const Collect = () => {
         {/* 對上 emotionId */}
         {/* 確認 emotions 內 是否有 emotions 如果沒有就回傳 null */}
         {
-          articleData?.emotions && articleData.emotions.length > 0 ? (
+          articleData?.emotions && articleData.emotions.length > 0 && (
             <div className='flex w-full select-none'>
               {
-                articleData.emotions.map(emotion => (
+                articleData.emotions.map((emotion, index) => (
                   <EmotionButton
+                    key={index}
                     defaultStyle={false}
                     label={emotion}
                     className='text-lg px-5 py-1.5 rounded-full'
                   />
                 ))
               }
+
+              {
+                emotionsDic.map((emotion, index) => [
+                  <EmotionButton
+                    key={index}
+                    other={emotion[1]}
+                    className='text-lg px-5 py-1.5 rounded-full'
+                    defaultStyle={false}
+                  />
+                ])
+              }
             </div>
           )
-            : null
         }
 
         <hr className='p-0 mb-4 w-11/12 bg-white' />
 
         {
-          audioBlob &&
-          (
-            <div className='mb-8 w-5/6'>
-              <WaveSurferPlayer
-                height={80}
-                waveColor={"#e1e1e1"}
-                barWidth={4}
-                barRadius={4}
-                progressColor={"rgba(199, 199, 199, 0.5)"}
-                hideScrollbar={true}
-                data={audioBlob}
-                playbtnStyle='dark'
-              />
+          !audioLoading ?
+            <>
+              {audioBlob &&
+                (
+                  <div className='mb-8 w-5/6'>
+                    <WaveSurferPlayer
+                      height={80}
+                      waveColor={"#e1e1e1"}
+                      barWidth={4}
+                      barRadius={4}
+                      progressColor={"rgba(199, 199, 199, 0.5)"}
+                      hideScrollbar={true}
+                      data={audioBlob}
+                      playbtnStyle='dark'
+                    />
+                  </div>
+                )}
+            </>
+            :
+            <div className='w-full text-white items-center justify-center p-6'>
+              <CircularProgress color='inherit' thickness={5} />
             </div>
-          )
         }
 
-        <div className='w-10/12 sm:w-1/4'>
+        <div className='w-10/12 sm:w-1/2 md:w-1/3 lg:w-1/4'>
           {
             audioBlob &&
             (

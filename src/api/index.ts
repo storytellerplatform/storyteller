@@ -36,7 +36,7 @@ export const createEmotion = async (request: MoodAnaApiReq, config?: AxiosReques
   '/mood_analyze/', request, config
 );
 
-export const createEmotionDicVer = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => modelRequest.post<Array<string>>('mood_analyze_dic_version/', request, config);
+export const createEmotionDicVer = async (request: MoodAnaApiReq, config?: AxiosRequestConfig) => modelRequest.post<Array<Array<string>>>('mood_analyze_dic_version/', request, config);
 
 export const createMusic = async (request: GenerateMusicRequest, config?: AxiosRequestConfig ) => modelRequest.post<Blob>(
   '/music_generate/', request, {

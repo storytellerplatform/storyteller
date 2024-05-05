@@ -3,7 +3,8 @@ export type EmotionProps = '喜歡' | '悲傷' | '厭惡' | '憤怒' | '幸福' 
 export type EmotionSizeProps = 'sm' | 'lg';
 
 export interface EmotionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  label: EmotionProps;
+  label?: EmotionProps;
+  other?: string;
   color?: EmotionColorProps;
   onClick?: () => void;
   selected?: boolean;

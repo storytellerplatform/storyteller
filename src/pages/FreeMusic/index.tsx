@@ -37,6 +37,7 @@ const FreeMusics = () => {
   })
 
   const [emotions, setEmotions] = React.useState<Array<EmotionProps>>([]);
+  const [emotionsDic, setEmotionsDic] = React.useState<Array<Array<string>>>([]);
 
   // 用戶傳的檔案
   const [file, setFile] = React.useState<File | null>(null);
@@ -127,6 +128,7 @@ const FreeMusics = () => {
     e.preventDefault();
     setEmotionLoading(true);
     setGenerateEmotionsProgress(0);
+    setEmotionsDic([]);
 
     let emotions: Array<number> = [];
 
@@ -166,10 +168,7 @@ const FreeMusics = () => {
        將文章內容進行情緒分析
     */
     try {
-      // const emotionNumData = await analyzeMood(moodAnaApiReq).unwrap();
       const emotionNumData = await createEmotion(moodAnaApiReq);
-
-      console.log();
 
       const analyzedData = findIndexesGreaterThan(emotionNumData.data, 0.1);
       analyzedData.forEach((data) => {
@@ -178,6 +177,10 @@ const FreeMusics = () => {
       if (emotions.length > 1) {
         emotions = emotions.filter(num => num !== 0)
       }
+
+      const emotionsResponse = await createEmotionDicVer(moodAnaApiReq);
+      setEmotionsDic(emotionsResponse.data);
+      console.log(emotionsResponse.data);
 
     } catch (err: any) {
       console.log(err);
@@ -225,20 +228,10 @@ const FreeMusics = () => {
         emotionsText += " ";
       });
 
-      const moodAnaApiReq: MoodAnaApiReq = {
-        TestData: article.articleContent
-      }
-
-      const emotionsResponse = await createEmotionDicVer(moodAnaApiReq);
-
-      const emotionsDivVer = emotionsResponse.data;
-
-      emotionsDivVer.forEach((emotion) => {
-        emotionsText += emotion
+      emotionsDic.forEach((emotion) => {
+        emotionsText += emotion[0]
         emotionsText += " ";
       });
-
-      console.log(emotionsText);
 
       const response = await createMusic({
         texts: emotionsText,
@@ -401,6 +394,13 @@ const FreeMusics = () => {
                 key={index}
                 label={selectedEmotion}
                 onClick={() => setEmotions(preEmotions => preEmotions.filter(emotion => emotion !== selectedEmotion))}
+              />
+            ))}
+
+            {emotionsDic.map((selectedEmotion: Array<string>, index: React.Key | null | undefined) => (
+              <EmotionButton
+                key={index}
+                other={selectedEmotion[1]}
               />
             ))}
 

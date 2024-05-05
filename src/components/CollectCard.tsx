@@ -5,6 +5,8 @@ import EmotionButton from './EmotionButton'
 import DownloadButton from './DownloadButton'
 import { useNavigate } from 'react-router-dom'
 import { EmotionProps } from '../types/components'
+import { createEmotionDicVer } from '../api'
+import { MoodAnaApiReq } from '../types/api/moodAna'
 
 interface CollectCardProps {
   articleId: Number;
@@ -13,16 +15,19 @@ interface CollectCardProps {
   createDate: string;
   audioBlob: Blob;
   audioId: Number;
+  content: string;
   play?: boolean;
   setPlay: React.Dispatch<React.SetStateAction<boolean>>;
   setAudioData: React.Dispatch<React.SetStateAction<Blob | null>>;
   setPlayedName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, createDate, audioBlob, audioId, play, setPlay, setAudioData, setPlayedName }) => {
+const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, content, createDate, audioBlob, audioId, play, setPlay, setAudioData, setPlayedName }) => {
   // const [play, setPlay] = useState(false);
   // const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
+
+  const [emotionsDic, setEmotionsDic] = React.useState<Array<Array<string>>>([]);
 
   const toggleAudio = () => {
     if (!play) {
@@ -32,6 +37,22 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
 
     setPlay((preState) => !preState);
   };
+
+  React.useEffect(() => {
+    const fetchEmoDic = async () => {
+      try {
+        const moodAnaApiReq: MoodAnaApiReq = {
+          TestData: content
+        };
+
+        const response = await createEmotionDicVer(moodAnaApiReq);
+        setEmotionsDic(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchEmoDic();
+  }, [content])
 
   // function toggleAudio(): void {
   //   if (play) {
@@ -72,16 +93,23 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, cr
       </div>
 
       <div className={`md:grid hidden ml-4 grid-cols-1 lg:grid-cols-2 gap-y-1 text-xl font-semibold`}>
-        {emotions ? emotions.map((emotion, index) => {
+        {emotions && emotions.map((emotion, index) => {
           return <EmotionButton
             key={index}
             label={emotion}
             defaultStyle={false}
             className='mr-2 py-1 rounded-full text-sm'
           />
-        })
-          : <span className='px-3 w-16'>無</span>
-        }
+        })}
+
+        {emotionsDic && emotionsDic.map((emotion, index) => {
+          return <EmotionButton
+            key={index}
+            other={emotion[1]}
+            defaultStyle={false}
+            className='mr-2 py-1 rounded-full text-sm'
+          />
+        })}
       </div>
 
       <div></div>

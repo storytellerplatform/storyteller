@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CollectCard from '../../components/CollectCard'
 import { useLazyGetAllArticlesQuery } from '../../feature/api/userSlice';
 import { useAppSelector } from '../../app/hooks';
@@ -16,7 +16,6 @@ import { emotionNumTransfer } from '../../utils/emotionTransfer';
 import EmotionDropDown from './components/EmotionDropDown';
 import CollectionDropdown from './components/CollectionDropdown';
 import DateSort from './components/DateSort';
-import WaveSurferPlayer from '../../components/WaveSurferPlayer';
 import FooterMusicCard from './components/FooterMusicCard';
 
 interface CollectCardProps extends Article {
@@ -31,7 +30,6 @@ enum QueryType {
 }
 
 const Collection = () => {
-  const collectCardId = useId();
   const userId: string = useAppSelector(getUserId);
   const userToken = useAppSelector(getToken);
   const SERVER_URL = process.env.REACT_APP_SERVER_ENDPOINT;
@@ -66,7 +64,7 @@ const Collection = () => {
   const { data: searchEResult } = searchByEmotionResult;
   const { data: searchDResult } = sortDateResult;
 
-  console.log(allArticles, isArticlesLoading)
+  console.log(allArticles, audioData, isArticlesLoading)
 
   /**
    * 處理按键按下事件。
@@ -151,6 +149,7 @@ const Collection = () => {
                 const response = await fetch(`${SERVER_URL}/audio/${audioId}`, {
                   headers: {
                     'Authorization': `Bearer ${userToken}`,
+                    'ngrok-skip-browser-warning': '69420'
                   }
                 });
                 if (response.status !== 200) {
@@ -249,6 +248,7 @@ const Collection = () => {
                       name={article.name}
                       emotions={article.emotions}
                       createDate={article.createdDate}
+                      content={article.content}
                       audioBlob={audio.audioBlob}
                       audioId={audio.audioId}
                       play={play}

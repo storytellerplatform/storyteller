@@ -6,9 +6,14 @@ import { emotionStyles } from '../utils/emotionConfig';
 import emotionToColor from '../utils/emotionToColor';
 
 
-const EmotionButton: React.FC<EmotionButtonProps> = ({ label, onClick, color, selected, disabled, size, className, defaultStyle = true }) => {
-  let toColor: EmotionColorProps = color || emotionToColor(label);
-  const emotionClass = emotionStyles[toColor];
+const EmotionButton: React.FC<EmotionButtonProps> = ({ label, other = "", onClick, color, selected, disabled, size, className, defaultStyle = true }) => {
+  let toColor: EmotionColorProps | undefined = color || (label && emotionToColor(label));
+  let emotionClass;
+  if (!toColor) {
+    emotionClass = emotionStyles['orange']
+  } else {
+    emotionClass = emotionStyles[toColor];
+  }
 
   return (
     <button
@@ -23,7 +28,7 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({ label, onClick, color, se
         { 'rounded-3xl px-4 py-2 text-lg': defaultStyle })
       }
     >
-      {label}
+      {other || label}
     </button>
   );
 };
