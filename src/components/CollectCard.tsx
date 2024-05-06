@@ -72,7 +72,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, co
   // }, [audioBlob])
 
   return (
-    <div className='fixed grid md:grid-cols-6 grid-cols-3 gap-2 mb-8 w-5/6 p-4 items-center border border-white bg-white min-w-[30rem] overflow-visible'>
+    <div className='grid grid-cols-3 gap-0 md:grid-cols-6 sm:gap-2 mb-8 p-4 items-center border border-white bg-white overflow-visible'>
 
       <BiPlayCircle onClick={toggleAudio} size={36} className='text-black cursor-pointer  transition-all ease-in-out hover:opacity-60' />
 
@@ -112,10 +112,10 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, co
         })}
       </div>
 
-      <div></div>
-      <span className='font-mono hidden md:block'>{createDate}</span>
+      <div className='hidden md:block'></div>
+      <span className='font-mono hidden md:block font-bold'>{createDate}</span>
 
-      <div className='w-1/10'>
+      <div className='w-full'>
         <DownloadButton fileName={name} blobData={audioBlob} whitemode={true} />
       </div>
 

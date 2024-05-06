@@ -237,12 +237,12 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='flex flex-col h-fit sm:w-4/5 w-full bg-slate-100'>
+        <div className='flex flex-col h-fit ml-24 sm:ml-12 md:ml-0 w-full sm:w-4/5 bg-slate-100'>
           {!isArticlesLoading ? (
             <>
               {collectCards.map((article) =>
                 article.audioBlobList?.map((audio: Audio) => (
-                  <div key={audio.audioId.toString()} className='mb-36'>
+                  <div key={audio.audioId.toString()} className='mb-0'>
                     <CollectCard
                       articleId={article.articleId}
                       name={article.name}

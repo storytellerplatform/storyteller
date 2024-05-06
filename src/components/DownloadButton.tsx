@@ -22,7 +22,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ whitemode, classnames, 
         { 'border-black text-black hover:text-white hover:bg-black': whitemode })}
     >
       <LiaDownloadSolid size={24} />
-      下載
+      <span className='text-base'>下載</span>
     </button>
   )
 }
