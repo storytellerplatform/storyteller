@@ -85,7 +85,7 @@ const Collect = () => {
           // 增加修改文章的 API
           // onChange={(e) => setName(e.target.value)}
           value={articleData?.name}
-          className='w-full sm:w-1/2 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
+          className='w-full sm:w-10/12 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
         />
 
         {/* 對上 emotionId */}
@@ -158,13 +158,12 @@ const Collect = () => {
 
       {/* 右 */}
       <div className='w-full sm:w-5/12 p-8'>
-
-        <div className='mt-8'>
+        <div className='mt-4'>
           <h1 className='text-4xl font-bold mb-4 text-slate-50'> 文章 </h1>
           <textarea
-            className='h-32 w-full mb-4 p-2 px-4 bg-slate-200 rounded-lg drop-shadow-lg font-bold outline-0 text-black'
+            className='h-32 sm:h-96 w-full mb-4 p-2 px-4 bg-slate-200 rounded-lg drop-shadow-lg font-bold outline-0 text-black'
             spellCheck={false}
-            cols={40}
+            cols={64}
             value={articleData?.content}
             readOnly
           ></textarea>
