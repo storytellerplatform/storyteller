@@ -258,12 +258,12 @@ const FreeMusics = () => {
       setGenerateMusicProgress(0);
     };
 
-  }, [article.articleContent, emotions, seconds]);
+  }, [emotions, emotionsDic, seconds]);
 
   return (
     <>
       {/* 主題 */}
-      <div className='flex w-full bg-slate-50 h-auto min-h-screen dark:bg-black flex-col lg:flex-row lg:pl-0 sm:pl-0 sm:pt-0 pl-0 pt-12 px-0'>
+      <div className='flex w-full bg-slate-100 h-auto min-h-screen dark:bg-black flex-col lg:flex-row lg:pl-0 sm:pl-0 sm:pt-0 pl-0 pt-12 px-0'>
 
         {/* 
             sidebar 空白區塊
