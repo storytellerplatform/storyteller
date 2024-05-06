@@ -126,7 +126,7 @@ const LoginForm: React.FC = () => {
       { 'delay-200': isLoginFormOpen })}
     >
       <div className='flex justify-between items-start'>
-        <h1 className='text-3xl font-extrabold'> 登入 </h1>
+        <h1 className='text-3xl'> 登入 </h1>
         <button type='button' className='hover:opacity-50' onClick={handleCloseClick}>
           <AiOutlineCloseCircle size={24} />
         </button>

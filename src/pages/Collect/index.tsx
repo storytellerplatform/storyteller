@@ -85,7 +85,7 @@ const Collect = () => {
           // 增加修改文章的 API
           // onChange={(e) => setName(e.target.value)}
           value={articleData?.name}
-          className='w-full sm:w-10/12 text-5xl font-extrabold text-white bg-transparent mt-6 focus-visible:outline-none'
+          className='w-full sm:w-10/12 text-5xl text-white bg-transparent mt-6 focus-visible:outline-none'
         />
 
         {/* 對上 emotionId */}

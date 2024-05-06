@@ -292,7 +292,7 @@ const FreeMusics = () => {
           {/* 
               文章內容輸入
           */}
-          <label htmlFor="article" className="block text-2xl font-extrabold text-gray-900 dark:text-white">
+          <label htmlFor="article" className="block text-2xl text-gray-900 dark:text-white">
             分享您的故事，開始創作音樂
           </label>
           <textarea

@@ -24,7 +24,7 @@ const About = () => {
           main content
       */}
       <main className='w-11/12 flex flex-col ml-12 md:ml-8 mb-8 sm:mb-0 mt-12 md:mt-0 gap-4 text-white pr-12'>
-        <header className='mb-4 text-sky-300 font-extrabold text-5xl'>關於我們</header>
+        <header className='mb-4 text-sky-300 text-5xl'>關於我們</header>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-y-4'>
           {/*   

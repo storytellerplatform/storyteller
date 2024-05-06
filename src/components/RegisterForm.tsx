@@ -92,7 +92,7 @@ const RegisterForm: React.FC = () => {
           Title
       */}
       <header className='flex justify-between items-start'>
-        <h1 className='text-3xl font-extrabold'> 註冊 </h1>
+        <h1 className='text-3xl'> 註冊 </h1>
         <button type='button' className='hover:opacity-50' onClick={handleCloseClick}>
           <AiOutlineCloseCircle size={24} />
         </button>
