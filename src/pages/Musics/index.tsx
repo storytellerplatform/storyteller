@@ -302,12 +302,12 @@ const Musics = () => {
           {/* 
               文章名稱輸入
           */}
-          <label htmlFor='name' className='block text-3xl font-bold text-gray-700 dark:text-white'>命名您的主題</label>
+          <label htmlFor='name' className='block text-3xl text-gray-700 dark:text-white'>命名您的主題</label>
           <input
             type='text'
             value={article.articleName}
             onChange={handleNameChange}
-            className='block mb-8 px-2 py-4 indent-4 w-full text-base font-semibold text-gray-900 shadow-xl rounded focus-visible:outline-none dark:bg-gray-700 dark:text-gray-400'
+            className='block mb-8 px-2 py-4 indent-4 w-full text-base font-semibold text-gray-900 shadow-2xl rounded focus-visible:outline-none dark:bg-gray-700 dark:text-gray-400'
             maxLength={20}
             placeholder='說書人...'
           />
@@ -323,14 +323,14 @@ const Musics = () => {
             rows={10}
             onChange={handleArticleChange}
             value={article.articleContent}
-            className="block mb-8 p-4 pl-6 w-full text-base font-semibold text-gray-900 bg-white rounded-lg outline-2  select-none shadow-xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
+            className="block mb-8 p-4 pl-6 w-full text-base font-semibold text-gray-900 bg-white rounded-lg outline-2  select-none shadow-2xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
             placeholder="我想要.....">
           </textarea>
 
           {/*  
               OR 線
           */}
-          <span className='mb-8 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:translate-x-1/4 after:w-fit after:text-2xl after:font-bold after:px-2 after:bg-slate-50 after:text-stone-400 dark:after:bg-black'> </span>
+          <span className='mb-8 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:translate-x-1/4 after:w-fit after:text-2xl after:px-2 after:bg-slate-50 after:text-stone-400 dark:after:bg-black'> </span>
 
 
           {/* 
@@ -339,7 +339,7 @@ const Musics = () => {
           <div className="flex flex-col gap-1 justify-center w-full">
             <label htmlFor="dropzone-file" className="m-0 first-letter:flex flex-col items-center justify-center w-full border border-gray-200 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
               <div className="w-full flex flex-row items-center cursor-pointer">
-                <span className='py-2 px-4 text-white bg-gray-700 border-r-2 border-l-gray-200 font-bold text-base rounded-l-lg'> 選擇檔案 </span>
+                <span className='py-2 px-4 text-white bg-gray-700 border-r-2 border-l-gray-200 text-base rounded-l-lg'> 選擇檔案 </span>
                 <span className='py-2 px-4 font-semibold text-gray-500 text-sm'>
                   {!file ?
                     "沒有選擇檔案" :
@@ -374,7 +374,7 @@ const Musics = () => {
             onClick={handleAnalyzeClick}
             disabled={isArticleSet()}
             type="submit"
-            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-8 py-3 border-2 border-orange-300 text-orange-400 text-xl font-bold shadow-md rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-70 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-400 disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
+            className="flex justify-center items-center bg-white w-1/2 xl:w-1/3 mb-8 py-3 border-2 border-orange-300 text-orange-400 text-xl shadow-md rounded-3xl cursor-pointer transition-all duration-200 ease-out hover:text-opacity-70 hover:border-orange-200 disabled:cursor-not-allowed disabled:text-stone-400 disabled:hover:text-opacity-100 disabled:border-stone-400 disabled:transition-none disabled:opacity-60"
           >
             {
               (!isAddNewArticleLoading && !emotionLoading) ? (
@@ -403,9 +403,9 @@ const Musics = () => {
           {/* 
               情感分析區域
           */}
-          <h3 className='flex flex-col text-3xl font-bold text-black opacity-90 mb-4'>
+          <h3 className='flex flex-col text-3xl text-black opacity-90 mb-4'>
             情感分析
-            <span className='text-sm font-bold bg-gradient-to-r from-yellow-500 via-yellow-300 to-slate-100 text-transparent bg-clip-text'> 加入您想要的情緒或情境 </span>
+            <span className='text-sm bg-gradient-to-r from-yellow-500 via-yellow-300 to-slate-100 text-transparent bg-clip-text'> 加入您想要的情緒或情境 </span>
           </h3>
           <div className='flex flex-row mb-6 gap-2'>
 
@@ -432,7 +432,7 @@ const Musics = () => {
             */}
             <button
               type='button'
-              className={classNames(`my-2 w-8 h-8 self-center flex items-center justify-center text-lg font-bold text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
+              className={classNames(`my-2 w-8 h-8 self-center flex items-center justify-center text-lg text-orange-400 ring-2 ring-inset ring-orange-400 rounded-full hover:ring-orange-300 hover:text-orange-300`,
                 { 'my-1': emotions })}
               onClick={() => setShowModal(true)}
             >
@@ -454,7 +454,7 @@ const Musics = () => {
               秒數設置
           */}
           <div className="w-3/4 mb-4">
-            <h3 className='text-xl font-bold text-black opacity-70 mb-2'>音樂秒數設置</h3>
+            <h3 className='text-xl text-black opacity-70 mb-2'>音樂秒數設置</h3>
             <Slider
               value={seconds}
               min={5}

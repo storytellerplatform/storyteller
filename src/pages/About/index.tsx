@@ -31,7 +31,7 @@ const About = () => {
             簡述
           */}
           <div className='w-full'>
-            <h3 className='mb-4 text-cyan-300 font-bold text-4xl'>簡述</h3>
+            <h3 className='mb-4 text-cyan-300 text-4xl'>簡述</h3>
 
             <p className='mb-2 text-lg w-full md:w-8/12'>
               歡迎來到說書人！我們是一個專注於將文字轉換成音樂的平台。各位可以輸入他們喜歡的故事、小說或其他文本，
@@ -43,7 +43,7 @@ const About = () => {
             服務說明
           */}
           <div className='w-full'>
-            <h3 className='mb-4 text-sky-300 font-bold text-4xl'>團隊介紹</h3>
+            <h3 className='mb-4 text-sky-300 text-4xl'>團隊介紹</h3>
 
             <ul className='ml-4'>
               <li className='list-disc text-lg mb-1'> 資管三 410530036 邱柏勳 </li>
@@ -55,7 +55,7 @@ const About = () => {
              專案介紹 
           */}
           <div className='w-full'>
-            <h3 className='mb-4 text-sky-300 font-bold text-4xl'>情緒分析技術</h3>
+            <h3 className='mb-4 text-sky-300 text-4xl'>情緒分析技術</h3>
 
             <ul className='w-full md:w-10/12 ml-4'>
               <li className='list-disc text-lg mb-1'> 導入 bert-base-chinese 預訓練模型 </li>
@@ -68,7 +68,7 @@ const About = () => {
             服務說明
           */}
           <div className='w-full'>
-            <h3 className='mb-4 text-sky-300 font-bold text-4xl'>音樂生成技術</h3>
+            <h3 className='mb-4 text-sky-300 text-4xl'>音樂生成技術</h3>
 
             <ul className='ml-4'>
               <li className='list-disc text-lg mb-1'> 導入中研院研發的 <strong> Compound Word Transformer </strong> 加以訓練 </li>

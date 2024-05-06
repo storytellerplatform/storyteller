@@ -29,7 +29,7 @@ const MusicModal: React.FC<MusicModalProps> = ({ showModal, setShowModal, emotio
               <i className="fa-solid fa-xmark fa-xl"></i>
             </button>
 
-            <h3 className='self-center mb-4 text-2xl font-bold text-gray-900'> 添加更多感受 </h3>
+            <h3 className='self-center mb-4 text-2xl text-gray-900'> 添加更多感受 </h3>
 
             {/* 情緒列表 */}
             <div className='px-12 pb-4'>

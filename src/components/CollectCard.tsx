@@ -87,7 +87,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, co
         className='py-6'
         onClick={() => navigate(`/collection/${articleId}/${audioId}`)}
       >
-        <h3 className='w-fit text-gray-600 text-lg font-bold cursor-pointer'>
+        <h3 className='w-fit text-gray-600 text-lg cursor-pointer'>
           {name}
         </h3>
       </div>
@@ -113,7 +113,7 @@ const CollectCard: React.FC<CollectCardProps> = ({ articleId, name, emotions, co
       </div>
 
       <div></div>
-      <span className='font-bold font-mono hidden md:block'>{createDate}</span>
+      <span className='font-mono hidden md:block'>{createDate}</span>
 
       <div className='w-1/10'>
         <DownloadButton fileName={name} blobData={audioBlob} whitemode={true} />

@@ -102,7 +102,7 @@ const RegisterForm: React.FC = () => {
 
       <button
         type='button'
-        className='flex justify-center items-center gap-2 py-3 w-full border border-black text-sm font-bold rounded-md'
+        className='flex justify-center items-center gap-2 py-3 w-full border border-black text-sm rounded-md'
         onClick={handleGoogleClick}
       >
         <img className='w-4' src={Google} alt='google' />
@@ -115,7 +115,7 @@ const RegisterForm: React.FC = () => {
           錯誤顯示
       */}
       {error &&
-        <div className='flex items-center gap-2 pl-4 pr-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+        <div className='flex items-center gap-2 pl-4 pr-4 py-2 w-full bg-red-500 text-white text-sm '>
           <span className='text-white text-base'>
             <FiAlertTriangle />
           </span>
@@ -127,7 +127,7 @@ const RegisterForm: React.FC = () => {
           名稱輸入框
       */}
       <div className='flex flex-col gap-1 select-none'>
-        <label htmlFor="register-username" className='text-base font-bold' >名稱</label>
+        <label htmlFor="register-username" className='text-base' >名稱</label>
         <input
           type="text"
           id="register-username"
@@ -141,7 +141,7 @@ const RegisterForm: React.FC = () => {
           電子郵件輸入框
       */}
       <div className='flex flex-col gap-1 select-none'>
-        <label htmlFor="register-email" className='text-base font-bold' >電子信箱</label>
+        <label htmlFor="register-email" className='text-base' >電子信箱</label>
         <input
           type="email"
           id="register-email"
@@ -156,7 +156,7 @@ const RegisterForm: React.FC = () => {
           密碼輸入框
       */}
       <div className='flex flex-col gap-1 select-none mb-2'>
-        <label htmlFor="register-password" className='flex gap-1 text-base font-bold' >
+        <label htmlFor="register-password" className='flex gap-1 text-base' >
           密碼
           <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg`}>
             <FaCircleQuestion />
@@ -176,7 +176,7 @@ const RegisterForm: React.FC = () => {
       */}
       <button
         type='submit'
-        className='group flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='group flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleSignupClick}
       >
         {
@@ -195,7 +195,7 @@ const RegisterForm: React.FC = () => {
       {/* 
           登入過的話
       */}
-      <footer className='self-start font-bold text-sm'>
+      <footer className='self-start text-sm'>
         已經有帳號了嗎？請
         <button
           type='button'

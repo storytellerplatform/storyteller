@@ -159,9 +159,9 @@ const Collect = () => {
       {/* 右 */}
       <div className='w-full sm:w-5/12 p-8'>
         <div className='mt-4'>
-          <h1 className='text-4xl font-bold mb-4 text-slate-50'> 文章 </h1>
+          <h1 className='text-4xl mb-4 text-slate-50'> 文章 </h1>
           <textarea
-            className='h-32 sm:h-96 w-full mb-4 p-2 px-4 bg-slate-200 rounded-lg drop-shadow-lg font-bold outline-0 text-black'
+            className='h-32 sm:h-96 w-full mb-4 p-2 px-4 bg-slate-200 rounded-lg drop-shadow-lg outline-0 text-black'
             spellCheck={false}
             cols={64}
             value={articleData?.content}

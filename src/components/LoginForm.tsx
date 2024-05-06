@@ -136,7 +136,7 @@ const LoginForm: React.FC = () => {
 
       <button
         type='button'
-        className='flex justify-center items-center gap-2 py-3 w-full border border-black text-sm font-bold rounded-md'
+        className='flex justify-center items-center gap-2 py-3 w-full border border-black text-sm  rounded-md'
         onClick={handleGoogleClick}
       >
         <img className='w-4' src={Google} alt='google' />
@@ -149,7 +149,7 @@ const LoginForm: React.FC = () => {
           錯誤顯示 
       */}
       {error &&
-        <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm font-bold'>
+        <div className='flex items-center gap-2 pl-4 py-2 w-full bg-red-500 text-white text-sm'>
           <span className='text-white text-base'>
             <FiAlertTriangle />
           </span>
@@ -161,7 +161,7 @@ const LoginForm: React.FC = () => {
           電子郵件輸入框
       */}
       <div className='flex flex-col gap-1 select-none'>
-        <label htmlFor="login-email" className='text-base font-bold' >電子郵件</label>
+        <label htmlFor="login-email" className='text-base' >電子郵件</label>
         <input
           type="email"
           name="email"
@@ -177,7 +177,7 @@ const LoginForm: React.FC = () => {
           密碼輸入框
       */}
       <div className='flex flex-col gap-1 select-none mb-2'>
-        <label htmlFor="login-password" className='flex gap-1 text-base font-bold' >
+        <label htmlFor="login-password" className='flex gap-1 text-base' >
           密碼
           <span className={`my-auto relative hover:before:content-["請確保您的密碼包含字母和數字，並至少有7個字符。"] hover:before:absolute hover:before:-top-full hover:before:left-[30px] hover:before:w-56 hover:before:h-fit hover:before:p-2 hover:before:bg-white hover:before:border-2 hover:before:border-black hover:before:rounded-lg`}>
             <FaCircleQuestion />
@@ -199,7 +199,7 @@ const LoginForm: React.FC = () => {
       */}
       <button
         type='submit'
-        className='group flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white font-bold rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
+        className='group flex justify-center py-3 px-8 mb-2 w-1/2 border-2 border-black bg-black text-white rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:text-black'
         onClick={handleClick}
       >
         {
@@ -218,7 +218,7 @@ const LoginForm: React.FC = () => {
       {/* 
           未註冊的話
       */}
-      <span className='text-sm font-bold'>
+      <span className='text-sm'>
         尚未擁有帳號？立即
         <button
           type='button'
