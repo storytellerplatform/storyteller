@@ -212,7 +212,7 @@ const Collection = () => {
   return (
     <div className='flex flex-col h-screen w-full gap-3 pt-16 sm:pt-0'>
 
-      <div className='flex pt-4 pb-2 ml-2 sm:ml-16 rounded-lg md:w-auto flex-col md:flex-row md:justify-evenly pl-6 md:pl-0 gap-4 md:gap-0'>
+      <div className='flex pt-4 pb-2 mt-2 sm:mt-0 ml-2 sm:ml-16 rounded-lg md:w-auto flex-col md:flex-row md:justify-evenly pl-6 md:pl-0 gap-4 md:gap-0'>
         {/*搜尋名稱 */}
         <div className='w-full md:w-[21%]'>
           <CollectionSearch handleKeyDown={handleKeyDown} search={search} setSearch={setSearch} />
@@ -237,7 +237,7 @@ const Collection = () => {
       {/* 收藏區 */}
       <div className='flex flex-col pt-6 items-center w-full h-screen bg-slate-100'>
         {/* table */}
-        <div className='flex flex-col h-fit ml-24 sm:ml-12 md:ml-0 w-full sm:w-4/5 bg-slate-100'>
+        <div className='flex flex-col h-fit ml-2 mr-2 sm:mr-0 sm:ml-12 md:ml-0 w-full sm:w-4/5 bg-slate-100'>
           {!isArticlesLoading ? (
             <>
               {collectCards.map((article) =>
@@ -262,26 +262,26 @@ const Collection = () => {
             </>
           ) : (
             <div className='flex flex-col gap-4'>
-              <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+              <div className='grid grid-cols-3 sm:grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
                 <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                 <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                <div className='flex gap-2 h-fit w-fit'>
+                <div className='hidden sm:flex gap-2 h-fit w-fit'>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
                 </div>
-                <div></div>
-                <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                <div className='hidden sm:block' ></div>
+                <div className='hidden sm:block bg-gray-300 h-8 w-24 rounded'></div>
                 <div className='bg-gray-300 h-10 w-full rounded'></div>
               </div>
-              <div className='grid grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
+              <div className='grid grid-cols-3 sm:grid-cols-6 gap-6 mb-8 w-full px-4 py-8 items-center border border-white bg-gray-200 rounded-lg min-w-[12rem] animate-pulse'>
                 <div className='bg-gray-300 h-10 w-10 rounded-full'></div>
                 <div className='bg-gray-300 h-8 w-16 rounded'></div>
-                <div className='flex gap-2 h-fit w-fit'>
+                <div className='hidden sm:flex gap-2 h-fit w-fit'>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
                   <div className='bg-gray-300 h-8 w-16 rounded'></div>
                 </div>
-                <div></div>
-                <div className='bg-gray-300 h-8 w-24 rounded'></div>
+                <div className='hidden sm:block' ></div>
+                <div className='hidden sm:block bg-gray-300 h-8 w-24 rounded'></div>
                 <div className='bg-gray-300 h-10 w-full rounded'></div>
               </div>
             </div>

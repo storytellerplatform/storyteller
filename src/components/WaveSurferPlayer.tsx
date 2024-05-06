@@ -51,14 +51,14 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = (props) => {
               { 'text-white': props.playbtnStyle === 'dark' },
               { 'text-black': props.playbtnStyle === 'light' }
             )}>
-              <BiPauseCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
+              <BiPauseCircle size={42} className='w-7 sm:w-10 transition-all ease-in-out hover:opacity-60' />
             </span> :
 
             <span className={classNames(
               { 'text-white': props.playbtnStyle === 'dark' },
               { 'text-black': props.playbtnStyle === 'light' }
             )}>
-              <BiPlayCircle size={42} className='transition-all ease-in-out hover:opacity-60' />
+              <BiPlayCircle size={42} className='w-7 sm:w-10 transition-all ease-in-out hover:opacity-60' />
             </span>}
 
         </button>

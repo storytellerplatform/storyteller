@@ -273,7 +273,7 @@ const FreeMusics = () => {
         {/* 
             左半部
         */}
-        <div className='flex flex-col pt-10 pr-12 gap-4 w-full pl-12 sm:pl-24 lg:pl-4 xl:pl-0 lg:w-5/12'>
+        <div className='flex flex-col pt-10 pr-12 gap-4 w-full pl-6 sm:pl-24 lg:pl-4 xl:pl-0 lg:w-5/12'>
           {/* 
               文章名稱輸入
           */}
@@ -376,7 +376,7 @@ const FreeMusics = () => {
         {/* 
             右半部
         */}
-        <div className='flex flex-col pb-8 pt-8 pl-12 sm:pl-24 lg:pl-12 gap-4 w-full lg:w-6/12 bg-white shadow-lg rounded-xl'>
+        <div className='flex flex-col pb-8 pt-8 pl-6 sm:pl-24 lg:pl-12 gap-4 w-full lg:w-6/12 bg-white shadow-lg rounded-xl'>
           {/* 
               情感分析區域
           */}

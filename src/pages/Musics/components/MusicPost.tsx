@@ -100,7 +100,7 @@ const MusicPost: React.FC<MusicPostProps> = ({ name, audioBlob, articleId }) => 
         <button
           type='button'
           onClick={handleCollectClick}
-          className={classNames(`flex items-center justify-center p-2 rounded-full cursor-pointer hover:bg-slate-100 hover:text-rose-400`,
+          className={classNames(`flex items-center justify-center ml-2 p-2 rounded-full cursor-pointer hover:bg-slate-100 hover:text-rose-400`,
             { 'text-rose-400': success })}
         >
           {
