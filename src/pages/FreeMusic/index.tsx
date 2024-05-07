@@ -307,7 +307,7 @@ const FreeMusics = () => {
           {/*  
               OR 線
           */}
-          <span className='mb-8 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:translate-x-1/4 after:w-fit after:text-2xl after:px-2 after:bg-slate-50 after:text-stone-400 dark:after:bg-black'> </span>
+          <span className='mb-8 relative w-auto h-[2px] bg-stone-300 select-none after:content-["or"] after:absolute after:top-1/2 after:-translate-y-1/2 after:right-1/2 after:translate-x-1/4 after:w-fit after:text-2xl after:px-2 after:bg-slate-100 after:text-stone-400 dark:after:bg-black'> </span>
 
 
           {/* 
