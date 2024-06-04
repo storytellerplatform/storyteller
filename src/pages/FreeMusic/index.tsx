@@ -284,7 +284,7 @@ const FreeMusics = () => {
             type='text'
             value={article.articleName}
             onChange={handleNameChange}
-            className='block mb-8 px-2 py-4 indent-4 w-full text-base font-semibold text-gray-900 shadow-2xl rounded focus-visible:outline-none dark:bg-gray-700 dark:text-gray-400'
+            className='block mb-8 px-2 py-4 indent-4 w-full text-base font-semibold text-gray-900 shadow-xl rounded focus-visible:outline-none dark:bg-gray-700 dark:text-gray-400'
             maxLength={20}
             placeholder='說書人...'
           />
@@ -300,7 +300,7 @@ const FreeMusics = () => {
             rows={10}
             onChange={handleArticleChange}
             value={article.articleContent}
-            className="block mb-8 p-4 pl-6 w-full text-base font-medium text-gray-950 bg-white rounded-lg outline-2  select-none shadow-2xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
+            className="block mb-8 p-4 pl-6 w-full text-base font-medium text-gray-950 bg-white rounded-lg outline-2  select-none shadow-xl focus-visible:outline-none dark:text-gray-400 dark:bg-slate-700"
             placeholder="我想要.....">
           </textarea>
 
